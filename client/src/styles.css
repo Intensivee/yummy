@@ -20,6 +20,13 @@ nav, main {
 /* ======== GLOBAL COMPONENTS ========*/
 
 .link {
+  padding: .5em .2em;
   color: black;
   cursor: pointer;
+  transition: color ease-in .2s, margin ease-in .1s;
+}
+
+.link:hover {
+  margin: .1em;
+  color: #00b100;
 }

@@ -64,6 +64,8 @@ span {
 .btn-black-fill, .btn-green {
   font-weight: 700;
   border-radius: 4px;
+  cursor: pointer;
+  transition: color .6s, background-color .4s;
 }
 
 .btn-black-fill {
@@ -71,12 +73,23 @@ span {
   padding: 12px 15px;
   border: none;
   color: white;
-  background: #2D2D2D 0 0 no-repeat padding-box;
+  background-color: #2D2D2D;
 }
 
 .btn-green {
   padding: 12px 25px;
   border: 1px solid #419A1C;
   color: #419A1C;
-  background: white;
+  background-color: white;
+}
+
+.btn-green:hover {
+  color: white;
+  background-color: #2d6215;
+}
+
+.btn-black-fill:hover {
+  color: black;
+  background-color: white;
+  border: 1px solid black;
 }
