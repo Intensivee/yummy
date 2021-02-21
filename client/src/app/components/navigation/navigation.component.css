@@ -1,0 +1,37 @@
+/* ========== LAYOUTS ===========*/
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left-nav-wrapper {
+  display: flex;
+  margin-left: 40px;
+}
+
+/* ========== COMPONENTS ===========*/
+
+.nav-list,
+.nav-icon-list {
+  list-style-type: none;
+}
+
+.nav-list li,
+.nav-icon-list li {
+  display: inline-block;
+  margin: 0;
+  padding: 0 20px;
+  font-size: 1.3em;
+  font-weight: 700;
+}
+
+.nav-icon-list {
+  margin-right: 30px;
+  font-size: 1.3em;
+}
+
+.logo-img {
+  height: 55px;
+}
