@@ -30,7 +30,7 @@ main {
   align-items: center;
   justify-content: space-around;
   height: 320px;
-  width: 60%;
+  width: 445px;
   border-radius: 35px;
   background: #FBFBFB;
   box-shadow: 7px 10px 10px #00000029;
@@ -92,4 +92,79 @@ span {
   color: black;
   background-color: white;
   border: 1px solid black;
+}
+
+/* ========== MEDIA QUERIES ===========*/
+
+@media only screen and (max-width: 1500px) {
+
+  .login-window {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+
+  main {
+    grid-template-columns: 50% auto;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+
+  main {
+    font-size: 1.1em;
+  }
+
+  .login-window {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+
+  main {
+    grid-template-columns: 1fr;
+  }
+
+  .img-container {
+    display: none;
+  }
+
+  .login-window {
+    width: 60%;
+    height: 400px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+
+  .login-container {
+    background-color: white;
+  }
+
+  .login-window {
+    justify-content: flex-start;
+    width: 100%;
+    height: 90%;
+    background: white;
+    box-shadow: none;
+  }
+
+  .welcome-paragraph {
+    margin-top: 2em;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: auto 0 15px 0;
+    width: 50%;
+  }
+
+  .btn-green,
+  .btn-black-fill {
+    margin-top: 10px;
+    width: 100%;
+  }
 }

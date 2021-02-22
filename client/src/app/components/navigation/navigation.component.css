@@ -35,3 +35,11 @@ nav {
 .logo-img {
   height: 55px;
 }
+
+/* TODO*/
+@media only screen and (max-width: 950px) {
+  .nav-list,
+  .nav-icon-list {
+    display: none;
+  }
+}
