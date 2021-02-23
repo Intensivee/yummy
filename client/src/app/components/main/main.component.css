@@ -1,11 +1,9 @@
-/* ======== LAYOUTS ==========*/
-
 main {
   display: grid;
-  grid-template-rows: 25% 35% auto;
+  grid-template-rows: 25% 45% auto;
 }
 
-/* TIME SECTION */
+/* ======== TIME SECTION ==========*/
 
 .time-section {
   display: flex;
@@ -24,18 +22,6 @@ main {
   display: flex;
   justify-content: space-between;
 }
-
-/* ===========      ============*/
-
-.red {
-  color: #CF1717;
-}
-
-.green {
-  color: #419A1C;
-}
-
-/* BUTTONS */
 
 .btn {
   display: flex;
@@ -57,8 +43,6 @@ main {
   background-color: #ececec;
 }
 
-/*============ ICONS ==========*/
-
 .clock-icon {
   font-size: 4em;
   margin-right: .8em;
@@ -67,3 +51,54 @@ main {
 .btn-icon {
   font-size: 2em;
 }
+
+.red {
+  color: #CF1717;
+}
+
+.green {
+  color: #419A1C;
+}
+
+/* ======== RECIPES SECTION ==========*/
+
+.recipes-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recipes-title {
+  margin-left: 15%;
+  margin-right: auto;
+}
+
+.recipes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recipe {
+  margin: 0 .5em;
+  width: 17vw;
+  min-width: 300px;
+}
+
+.recipe-img {
+  width: 100%;
+  height: 11vw;
+  min-height: 180px;
+  object-fit: cover;
+}
+
+.recipe-title {
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 700;
+  transition: .3s;
+}
+
+/* ======== CATEGORIES ==========*/
+
+
