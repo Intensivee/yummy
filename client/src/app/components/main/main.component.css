@@ -1,0 +1,69 @@
+/* ======== LAYOUTS ==========*/
+
+main {
+  display: grid;
+  grid-template-rows: 25% 35% auto;
+}
+
+/* TIME SECTION */
+
+.time-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.time-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ===========      ============*/
+
+.red {
+  color: #CF1717;
+}
+
+.green {
+  color: #419A1C;
+}
+
+/* BUTTONS */
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .3em .8em;
+  margin: 1em;
+  width: 190px;
+  background: #FFFFFF;
+  border: 2px solid #707070;
+  border-radius: 4px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.btn:hover {
+  background-color: #ececec;
+}
+
+/*============ ICONS ==========*/
+
+.clock-icon {
+  font-size: 4em;
+  margin-right: .8em;
+}
+
+.btn-icon {
+  font-size: 2em;
+}

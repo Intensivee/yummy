@@ -6,12 +6,14 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import {RouterModule} from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { MainComponent } from './components/main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
-    NavigationComponent
+    NavigationComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
