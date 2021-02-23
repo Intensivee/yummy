@@ -1,6 +1,7 @@
 main {
   display: grid;
-  grid-template-rows: 25% 45% auto;
+  grid-template-rows: 25% 50% auto;
+  grid-gap: 1.5em;
 }
 
 /* ======== TIME SECTION ==========*/
@@ -66,6 +67,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 45%;
 }
 
 .recipes-title {
@@ -94,11 +96,49 @@ main {
 
 .recipe-title {
   text-align: center;
-  font-size: 1.1em;
+  font-size: 1.2em;
   font-weight: 700;
   transition: .3s;
 }
 
 /* ======== CATEGORIES ==========*/
 
+.categories-section {
+  margin-top: 1em;
+}
 
+.header-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../../assets/img/categories.jpg);
+  cursor: pointer;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  color: white;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.header-text h1 {
+  margin: .2em;
+  transition: .3s;
+}
+
+.header-text span {
+  text-align: center;
+}
+
+.header-img:hover .header-text h1 {
+  margin: .5em;
+}
