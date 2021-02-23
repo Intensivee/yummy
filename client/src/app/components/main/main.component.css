@@ -30,7 +30,7 @@ main {
   justify-content: space-between;
   padding: .3em .8em;
   margin: 1em;
-  width: 190px;
+  width: 12em;
   background: #FFFFFF;
   border: 2px solid #707070;
   border-radius: 4px;
@@ -67,11 +67,10 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 45%;
 }
 
 .recipes-title {
-  margin-left: 15%;
+  margin-left: 20%;
   margin-right: auto;
 }
 
@@ -98,7 +97,6 @@ main {
   text-align: center;
   font-size: 1.2em;
   font-weight: 700;
-  transition: .3s;
 }
 
 /* ======== CATEGORIES ==========*/
@@ -141,4 +139,124 @@ main {
 
 .header-img:hover .header-text h1 {
   margin: .5em;
+}
+
+/* ======== MEDIA QUERIES ==========*/
+
+@media only screen and (max-width: 1600px) {
+  main {
+    font-size: .9em;
+  }
+
+  .recipes-title {
+    margin-left: 10%;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+
+  .recipes-title {
+    margin-left: 3%;
+  }
+}
+
+@media only screen and (max-width: 950px) {
+
+  .recipe:last-child {
+    display: none;
+  }
+
+  .recipe-title {
+    margin-top: .3em;
+    min-height: 2em;
+  }
+}
+
+@media only screen and (max-width: 670px) {
+
+  main {
+    grid-template-rows: 40% 37% auto;
+  }
+
+  /* TIME SECTION */
+
+  .title-container {
+    font-size: 1.1em;
+  }
+
+  .time-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    margin: .5em;
+  }
+
+  /* RECIPES SECTION */
+
+  .recipes-title {
+    margin: .5em 0 1em 0;
+  }
+
+  .recipe {
+    margin: 0 .3em;
+    width: 50%;
+    min-width: 0;
+  }
+
+  .recipe-img {
+    height: 30vw;
+    min-height: 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+
+  /* TITLE SECTION */
+
+  .clock-icon {
+    margin-right: .4em;
+  }
+
+  /* RECIPES SECTION */
+
+  .recipe:nth-child(2) {
+    display: none;
+  }
+
+  .recipes-title {
+    margin: .2em;
+    font-size: 1.7em;
+  }
+
+  .recipe {
+    width: 65%;
+  }
+
+  .recipe-img {
+    height: 40vw;
+  }
+
+  .recipe-title {
+    font-size: 1.4em;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+
+  main {
+    font-size: .8em;
+  }
+
+  .title-container {
+    font-size: 1em;
+  }
+
+  .recipe {
+    width: 80%;
+  }
+
+  .recipe-img {
+    height: 50vw;
+  }
 }
