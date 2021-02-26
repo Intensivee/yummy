@@ -49,8 +49,8 @@ main {
 .recipe {
   display: flex;
   flex-direction: column;
+  margin: 1.5em .5em;
   width: 300px;
-  margin: 2em 1em;
 }
 
 .recipe-img {
@@ -71,6 +71,7 @@ main {
 }
 
 .recipe-title {
+  margin: 10px 5px 15px 5px;
   height: 2em;
   text-align: center;
 }
@@ -83,6 +84,32 @@ main {
   margin: 10px;
 }
 
-.recipe-title {
-  margin: 10px 5px 15px 5px;
+/* ======== MEDIA QUERIES ==========*/
+
+@media only screen and (max-width: 800px) {
+  .recipes-section {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+
+  .recipe {
+    margin: 1.5em 0;
+    width: 100%;
+  }
+
+  .recipe-img {
+    height: 65vw;
+  }
+
+  .recipe-description {
+    height: 105px;
+    background-color: #efefef;
+  }
+
+  .recipe-title {
+    margin-top: 3px;
+    margin-bottom: 15px;
+  }
 }
