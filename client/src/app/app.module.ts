@@ -7,13 +7,15 @@ import {RouterModule} from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { MainComponent } from './components/main/main.component';
+import { RecipesComponent } from './components/recipes/recipes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
     NavigationComponent,
-    MainComponent
+    MainComponent,
+    RecipesComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,88 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ======== HEADER SECTION ==========*/
+
+.header-section {
+  width: 100vw;
+  height: 20vh;
+}
+
+.header-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image:  url(../../../assets/img/wood.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.header-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.7em;
+  font-weight: 700;
+}
+
+/* ======== RECIPES SECTION ==========*/
+
+.recipes-section {
+  width: 80%;
+}
+
+.pagination {
+  margin: 2em;
+  text-align: center;
+}
+
+.recipes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.recipe {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 2em 1em;
+}
+
+.recipe-img {
+  width: 100%;
+  height: 180px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.recipe-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 120px;
+  border: 1px solid black;
+  border-top: none;
+  font-weight: 700;
+}
+
+.recipe-title {
+  height: 2em;
+  text-align: center;
+}
+
+.rate {
+  margin: 0;
+}
+
+.recipe-time {
+  margin: 10px;
+}
+
+.recipe-title {
+  margin: 10px 5px 15px 5px;
+}
