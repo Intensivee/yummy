@@ -111,6 +111,15 @@ section {
 
 .reviews-section {
   margin-top: 1em;
+  margin-bottom: 5em;
+}
+
+.reviews {
+  overflow-y: auto;
+  margin-bottom: .5em;
+  padding: 2em;
+  height: 250px;
+  background-color: #ececec;
 }
 
 .review-details {
@@ -133,4 +142,24 @@ section {
 .review-date {
   margin: auto 0;
   font-weight: 500;
+}
+
+.review {
+  margin: 0 0 2em 5em
+}
+
+.comment-container {
+  display: flex;
+  height: 60px;
+  align-items: flex-end;
+}
+
+textarea {
+  overflow: auto;
+  height: 60px;
+  width: 90%;
+  background-color: #d9d9d9;
+  outline: none;
+  resize: none;
+  border: none;
 }
