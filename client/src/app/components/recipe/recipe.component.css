@@ -1,0 +1,136 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+section {
+  width: 60%;
+}
+
+/* ======== CENTRAL SECTION ==========*/
+
+.central-section {
+  display: flex;
+}
+
+.recipe-img {
+  min-width: 500px;
+  height: 320px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.ingredients {
+  margin-left: 4em;
+}
+
+.ingredients-header {
+  margin-top: 0;
+}
+
+.ingredients p {
+  margin: .25em;
+}
+
+/* ======== TAGS SECTION ==========*/
+
+.tags-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 1em 0;
+  width: 60%;
+}
+
+.tags-header {
+  margin: auto 1em auto 0;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.tag-btn {
+  padding: .5em .7em;
+  margin: 0.2em;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  color: white;
+  font-weight: bold;
+  background: #419A1C;
+  cursor: pointer;
+}
+
+/* ======== INFO SECTION ==========*/
+
+.info-section {
+  display: flex;
+  margin: 1em 0;
+  font-weight: bold;
+}
+
+.red-btn {
+  height: 2.4em;
+  padding: 0 .7em;
+  margin: auto 5% auto 0;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  color: white;
+  font-weight: bold;
+  background: #CF1717;
+  cursor: pointer;
+}
+
+.rate {
+  margin-right: 5%;
+}
+
+.recipe-time {
+  display: flex;
+}
+
+.iconify {
+  margin: 0 .5em 0 0;
+}
+
+
+/* ======== DIRECTIONS SECTION ==========*/
+
+.step-header {
+  margin-bottom: .1em;
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+.step-description {
+  margin-top: 0;
+}
+
+/* ======== REVIEWS SECTION ==========*/
+
+.reviews-section {
+  margin-top: 1em;
+}
+
+.review-details {
+  display: flex;
+}
+
+.profile-img {
+  margin: auto 0 auto 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+
+.username {
+  margin: auto 1em auto .5em;
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.review-date {
+  margin: auto 0;
+  font-weight: 500;
+}
