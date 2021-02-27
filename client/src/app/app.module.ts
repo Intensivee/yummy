@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { MainComponent } from './components/main/main.component';
 import { RecipesComponent } from './components/recipes/recipes.component';
+import { RecipeComponent } from './components/recipe/recipe.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { RecipesComponent } from './components/recipes/recipes.component';
     WelcomeComponent,
     NavigationComponent,
     MainComponent,
-    RecipesComponent
+    RecipesComponent,
+    RecipeComponent
   ],
   imports: [
     BrowserModule,
