@@ -51,6 +51,7 @@ main {
   flex-direction: column;
   margin: 1.5em .5em;
   width: 300px;
+  cursor: pointer;
 }
 
 .recipe-img {
@@ -68,6 +69,11 @@ main {
   border: 1px solid black;
   border-top: none;
   font-weight: 700;
+  transition: .1s;
+}
+
+.recipe:hover .recipe-description{
+  background-color: #efefef;
 }
 
 .recipe-title {
