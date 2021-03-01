@@ -1,0 +1,75 @@
+main {
+  display: flex;
+  justify-content: center;
+  margin-top: 4em;
+}
+
+/* ======== USER SECTION ==========*/
+
+.user-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 17%;
+  height: 75vh;
+  background: #FFFFFF;
+  box-shadow: 10px 10px 50px #00000029;
+  border-radius: 10px;
+}
+
+.user-img {
+  margin-top: 2em;
+  width: 40%;
+  border-radius: 100%;
+}
+
+.description {
+  width: 80%;
+  font-size: 1em;
+  color: #707070;
+}
+
+.badges {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+  width: 70%;
+  background: #FFFFFF;
+  box-shadow: 0 3px 6px #00000029;
+  opacity: 1;
+}
+
+.badge .far {
+  width: 1em;
+  margin-left: .5em;
+  font-size: 1.8em;
+  color: #419A1C;
+}
+
+.badge-text {
+  margin-left: 1.5em;
+}
+
+.badge-header {
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.badge-value {
+  margin-top: .1em;
+  font-size: .9em;
+}
+
+
+/* ======== RECIPES SECTION ==========*/
+
+.recipes-section {
+  width: 50%;
+}
