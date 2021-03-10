@@ -71,7 +71,6 @@ main {
   font-size: .9em;
 }
 
-
 /* ======== RECIPES SECTION ==========*/
 
 .recipes-section {
@@ -97,4 +96,104 @@ main {
 
 .recipe-description {
   height: 90px;
+}
+
+/* ======== MEDIA QUERIES ==========*/
+
+@media only screen and (max-width: 1700px) {
+
+  main {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+
+  main {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+
+  .recipes-section {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 950px) {
+
+  main {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1em;
+    width: 100vw;
+  }
+
+  /* User section */
+  .user-section {
+    margin-top: 0;
+    width: 100vw;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  .user-img {
+    width: 10em;
+  }
+
+  .badges {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .badge {
+    width: 30%;
+  }
+
+  /* Recipes section */
+  .recipes-section {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+
+  /* User section */
+  .badges {
+    flex-direction: column;
+    margin-bottom: 3em;
+  }
+
+  .badge {
+    width: 60%;
+  }
+
+  /* Recipes section */
+  .recipe {
+    margin: 1em .2em;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+
+  /* User section */
+  .badge {
+    width: 80%;
+  }
+
+  /* Recipes section */
+  .recipes-section {
+    margin-top: 1em;
+    width: 80%;
+  }
+
+  .recipe {
+    margin-bottom: 2em;
+    width: 300px;
+  }
+
+  .recipe-img {
+    height: 180px;
+  }
 }
