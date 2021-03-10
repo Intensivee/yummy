@@ -18,9 +18,8 @@ section {
 
 .recipe-img {
   min-width: 500px;
+  width: 500px;
   height: 320px;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 .ingredients {

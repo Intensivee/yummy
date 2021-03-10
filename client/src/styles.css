@@ -1,4 +1,6 @@
-html, body, .body-container {
+html,
+body,
+.body-container {
   margin: 0;
   padding: 0;
   width: 100vw;
@@ -12,7 +14,8 @@ html, body, .body-container {
   grid-template-rows: minmax(55px, 7vh) auto;
 }
 
-nav, main {
+nav,
+main {
   width: 100%;
   height: 100%;
 }
@@ -29,4 +32,58 @@ nav, main {
 .link:hover {
   margin: .1em;
   color: #00b100;
+}
+
+/* ======== RECIPE SHARED ========*/
+
+.pagination {
+  margin: 2em;
+  text-align: center;
+}
+
+.recipes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.recipe {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5em .5em;
+  cursor: pointer;
+}
+
+.recipe-img {
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.recipe-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+  border-top: none;
+  font-weight: 700;
+  transition: .1s;
+}
+
+.recipe:hover .recipe-description {
+  background-color: #efefef;
+}
+
+.recipe-title {
+  margin: 10px 5px 15px 5px;
+  height: 2em;
+  text-align: center;
+}
+
+.rate {
+  margin: 0;
+}
+
+.recipe-time {
+  margin: 10px;
 }

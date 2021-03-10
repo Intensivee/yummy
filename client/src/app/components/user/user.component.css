@@ -1,7 +1,9 @@
 main {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  margin: auto;
   margin-top: 4em;
+  width: 70%;
 }
 
 /* ======== USER SECTION ==========*/
@@ -10,11 +12,12 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 17%;
-  height: 75vh;
+  width: 300px;
+  min-width: 300px;
+  height: 650px;
   background: #FFFFFF;
   box-shadow: 10px 10px 50px #00000029;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .user-img {
@@ -40,7 +43,7 @@ main {
   display: flex;
   align-items: center;
   margin-top: 1em;
-  width: 70%;
+  width: 80%;
   background: #FFFFFF;
   box-shadow: 0 3px 6px #00000029;
   opacity: 1;
@@ -49,12 +52,13 @@ main {
 .badge .far {
   width: 1em;
   margin-left: .5em;
-  font-size: 1.8em;
+  font-size: 1.6em;
   color: #419A1C;
 }
 
 .badge-text {
   margin-left: 1.5em;
+  font-size: .9em;
 }
 
 .badge-header {
@@ -71,5 +75,26 @@ main {
 /* ======== RECIPES SECTION ==========*/
 
 .recipes-section {
-  width: 50%;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  align-items: center;
+  width: 60%;
+  max-width: 800px;
+}
+
+.recipes-header {
+  margin: 0;
+}
+
+.recipe {
+  width: 210px;
+}
+
+.recipe-img {
+  height: 126px;
+}
+
+.recipe-description {
+  height: 90px;
 }
