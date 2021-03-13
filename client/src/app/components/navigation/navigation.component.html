@@ -1,11 +1,10 @@
 <nav>
-
   <div class="left-nav-wrapper">
     <img class="logo-img" src="./assets/img/logo.png" alt="site logo">
     <ul class="nav-list">
       <li><a class="link">Tips and tricks</a></li>
-      <li><a class="link">Ingredients</a></li>
-      <li><a class="link">Recipes</a></li>
+      <li><a class="link" mat-button [matMenuTriggerFor]="ingredients" >Ingredients</a></li>
+      <li><a class="link" mat-button [matMenuTriggerFor]="recipes" >Recipes</a></li>
     </ul>
   </div>
 
@@ -13,5 +12,37 @@
     <li><a class="link"><em class="fas fa-globe"></em></a></li>
     <li><a class="link"><em class="fas fa-search"></em></a></li>
   </ul>
-
 </nav>
+
+<!--MAT MENU COMPONENTS-->
+<mat-menu #recipes="matMenu">
+  <button mat-menu-item >Dessert</button>
+  <button mat-menu-item >Breakfast</button>
+  <button mat-menu-item >Diner</button>
+  <button mat-menu-item >Christmas dishes</button>
+</mat-menu>
+
+<mat-menu #ingredients="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="fruits" >Fruits</button>
+  <button mat-menu-item [matMenuTriggerFor]="vegetables" >Vegetables</button>
+  <button mat-menu-item [matMenuTriggerFor]="meat" >Meat</button>
+</mat-menu>
+
+<mat-menu #fruits="matMenu">
+  <button mat-menu-item >Apple</button>
+  <button mat-menu-item >Banana</button>
+  <button mat-menu-item >Plump</button>
+</mat-menu>
+
+<mat-menu #vegetables="matMenu">
+  <button mat-menu-item >Potato</button>
+  <button mat-menu-item >Beetroot</button>
+  <button mat-menu-item >courgette</button>
+</mat-menu>
+
+<mat-menu #meat="matMenu">
+  <button mat-menu-item >Chicken</button>
+  <button mat-menu-item >Beef</button>
+  <button mat-menu-item >Sausage</button>
+  <button mat-menu-item >Bacon</button>
+</mat-menu>

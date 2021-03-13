@@ -43,3 +43,7 @@ nav {
     display: none;
   }
 }
+
+mat-menu {
+  position: absolute;
+}

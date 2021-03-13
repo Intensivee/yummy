@@ -10,6 +10,13 @@ import { MainComponent } from './components/main/main.component';
 import { RecipesComponent } from './components/recipes/recipes.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { UserComponent } from './components/user/user.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+const MAT_MODULES = [
+  MatMenuModule,
+  BrowserAnimationsModule
+];
 
 @NgModule({
   declarations: [
@@ -22,6 +29,7 @@ import { UserComponent } from './components/user/user.component';
     UserComponent
   ],
   imports: [
+    MAT_MODULES,
     BrowserModule,
     RouterModule,
     FontAwesomeModule
