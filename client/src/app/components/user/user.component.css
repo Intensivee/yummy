@@ -2,8 +2,12 @@ main {
   display: flex;
   justify-content: space-around;
   margin: auto;
-  margin-top: 4em;
   width: 70%;
+  overflow: hidden;
+}
+
+.user-section, .recipes-section {
+  margin-top: 4em;
 }
 
 /* ======== USER SECTION ==========*/
@@ -17,7 +21,12 @@ main {
   height: 650px;
   background: #FFFFFF;
   box-shadow: 10px 10px 50px #00000029;
-  border-radius: 5px;
+  border-radius: 10px;
+  transition: .2s;
+}
+
+.user-section:hover {
+  box-shadow: 10px 10px 90px #00000045;
 }
 
 .user-img {
@@ -49,11 +58,16 @@ main {
   opacity: 1;
 }
 
+.badge:hover > .far {
+  transform: rotate(360deg);
+}
+
 .badge .far {
   width: 1em;
   margin-left: .5em;
   font-size: 1.6em;
   color: #419A1C;
+  transition: 1s;
 }
 
 .badge-text {
