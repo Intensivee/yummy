@@ -2,8 +2,14 @@
 
 nav {
   display: flex;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 65px;
   align-items: center;
   justify-content: space-between;
+  background-color: #fafafa;
+  z-index: 1;
 }
 
 .left-nav-wrapper {
@@ -43,8 +49,11 @@ nav {
   height: 55px;
 }
 
-/* TODO*/
 @media only screen and (max-width: 950px) {
+  nav {
+    background-color: #FFFFFF;
+  }
+  
   .left-nav-wrapper,
   .nav-icon-list {
     display: none;
@@ -53,8 +62,4 @@ nav {
   .hamburger {
     display: block;
   }
-}
-
-mat-menu {
-  position: absolute;
 }
