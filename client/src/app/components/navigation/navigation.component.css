@@ -12,6 +12,13 @@ nav {
 }
 
 /* ========== COMPONENTS ===========*/
+.hamburger {
+  display: none;
+  padding: .2em;
+  margin: .6em 0 0 .6em;
+  font-size: 1.9em;
+  cursor: pointer;
+}
 
 .nav-list,
 .nav-icon-list {
@@ -38,9 +45,13 @@ nav {
 
 /* TODO*/
 @media only screen and (max-width: 950px) {
-  .nav-list,
+  .left-nav-wrapper,
   .nav-icon-list {
     display: none;
+  }
+
+  .hamburger {
+    display: block;
   }
 }
 
