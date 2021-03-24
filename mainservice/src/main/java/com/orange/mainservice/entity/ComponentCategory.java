@@ -4,7 +4,12 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "ComponentCategory")
-@Table(name = "component_categories")
+@Table(
+        name = "component_categories",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "component_category_name_unique", columnNames = "name")
+        }
+)
 public class ComponentCategory {
 
     @Id

@@ -6,7 +6,12 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "Rate")
-@Table(name = "rates")
+@Table(
+        name = "rates",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "rate_user_recipe_unique", columnNames = {"user_id", "recipe_id"})
+        }
+)
 public class Rate {
 
     @Id

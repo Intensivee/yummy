@@ -3,7 +3,12 @@ package com.orange.mainservice.entity;
 import javax.persistence.*;
 
 @Entity(name = "Direction")
-@Table(name = "directions")
+@Table(
+        name = "directions",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "direction_order_unique", columnNames = {"recipe_id", "direction_order"})
+        }
+)
 public class Direction {
 
     @Id

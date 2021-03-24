@@ -4,7 +4,13 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "User")
-@Table(name = "users")
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "user_email_unique", columnNames = "email"),
+                @UniqueConstraint(name = "user_username_unique", columnNames = "username")
+        }
+)
 public class User {
 
     @Id
