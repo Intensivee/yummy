@@ -22,7 +22,7 @@ public class Direction {
     @Column(name = "description", nullable = false, columnDefinition = "VARCHAR(300)")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 

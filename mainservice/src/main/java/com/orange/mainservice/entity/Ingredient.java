@@ -18,11 +18,11 @@ public class Ingredient {
     @Column(name = "amount_type", nullable = false, columnDefinition = "amount_type")
     private AmountType amountType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "component_id", nullable = false)
     private Component component;
 

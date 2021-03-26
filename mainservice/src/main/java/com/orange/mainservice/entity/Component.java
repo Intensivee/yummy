@@ -23,10 +23,10 @@ public class Component {
     @Column(name = "is_accepted", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isAccepted;
 
-    @OneToMany(mappedBy = "component")
+    @OneToMany(mappedBy = "component", fetch = FetchType.LAZY)
     private Set<Ingredient> ingredients;
 
-    @ManyToMany(mappedBy = "components")
+    @ManyToMany(mappedBy = "components", fetch = FetchType.LAZY)
     private Set<ComponentCategory> categories;
 
     public Component() {

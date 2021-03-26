@@ -33,17 +33,20 @@ public class User {
     @Column(name = "last_name", columnDefinition = "VARCHAR(25)")
     private String lastName;
 
+    @Column(name = "img_url")
+    private String imgUrl;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, columnDefinition = "user_role_type")
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Recipe> recipes;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Comment> comments;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Rate> rates;
 
     public enum UserRole {

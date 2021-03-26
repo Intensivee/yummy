@@ -20,7 +20,7 @@ public class ComponentCategory {
     @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(25)")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "component_categories_component",
             joinColumns = @JoinColumn(name = "component_category_id"),
