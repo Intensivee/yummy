@@ -4,7 +4,10 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "Recipe")
-@Table(name = "recipes")
+@Table(
+        name = "recipes",
+        indexes = @Index( name = "recipes_user_id_index", columnList = "user_id")
+)
 public class Recipe {
 
     @Id

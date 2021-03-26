@@ -10,7 +10,8 @@ import java.util.Date;
         name = "rates",
         uniqueConstraints = {
                 @UniqueConstraint(name = "rate_user_recipe_unique", columnNames = {"user_id", "recipe_id"})
-        }
+        },
+        indexes = @Index( name = "rates_recipe_id_index", columnList = "recipe_id")
 )
 public class Rate {
 

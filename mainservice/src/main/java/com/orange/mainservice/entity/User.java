@@ -9,7 +9,8 @@ import java.util.Set;
         uniqueConstraints = {
                 @UniqueConstraint(name = "user_email_unique", columnNames = "email"),
                 @UniqueConstraint(name = "user_username_unique", columnNames = "username")
-        }
+        },
+        indexes = @Index( name = "users_username_index", columnList = "username", unique = true)
 )
 public class User {
 

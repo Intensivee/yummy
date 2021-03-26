@@ -7,7 +7,8 @@ import javax.persistence.*;
         name = "directions",
         uniqueConstraints = {
                 @UniqueConstraint(name = "direction_order_unique", columnNames = {"recipe_id", "direction_order"})
-        }
+        },
+        indexes = @Index( name = "directions_recipe_id_index", columnList = "recipe_id")
 )
 public class Direction {
 

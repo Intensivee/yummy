@@ -6,7 +6,10 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "Comment")
-@Table(name = "comments")
+@Table(
+        name = "comments",
+        indexes = @Index( name = "comments_recipe_id_index", columnList = "recipe_id")
+)
 public class Comment {
 
     @Id

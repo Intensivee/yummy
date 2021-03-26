@@ -3,7 +3,10 @@ package com.orange.mainservice.entity;
 import javax.persistence.*;
 
 @Entity(name = "Ingredient")
-@Table(name = "ingredients")
+@Table(
+        name = "ingredients",
+        indexes = @Index( name = "ingredients_recipe_id_index", columnList = "recipe_id")
+)
 public class Ingredient {
 
     @Id
