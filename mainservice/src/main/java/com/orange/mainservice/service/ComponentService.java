@@ -1,21 +1,24 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.Component;
+import com.orange.mainservice.mapper.response.ComponentResponseMapper;
 import com.orange.mainservice.repository.ComponentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.orange.mainservice.response.ComponentResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ComponentService {
 
     private final ComponentRepository componentRepository;
+    private final ComponentResponseMapper responseMapper;
 
-    @Autowired
-    public ComponentService(ComponentRepository componentRepository) {
-        this.componentRepository = componentRepository;
+    public ComponentResponse getResponseById(Long id){
+        return responseMapper.componentToResponse(getById(id));
     }
 
-    public Component getById(Long id) {
+    private Component getById(Long id) {
         return this.componentRepository.getById(id)
                 .orElseThrow(RuntimeException::new);
     }

@@ -1,16 +1,27 @@
 package com.orange.mainservice.service;
 
+import com.orange.mainservice.entity.Ingredient;
+import com.orange.mainservice.mapper.response.IngredientResponseMapper;
 import com.orange.mainservice.repository.IngredientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.orange.mainservice.response.IngredientResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
+@AllArgsConstructor
 public class IngredientService {
 
     private final IngredientRepository ingredientRepository;
+    private final IngredientResponseMapper responseMapper;
 
-    @Autowired
-    public IngredientService(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
+    public IngredientResponse getResponseById(Long id){
+        return responseMapper.ingredientToResponse(getById(id));
+    }
+
+    private Ingredient getById(Long id){
+        return ingredientRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
     }
 }

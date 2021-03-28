@@ -16,10 +16,12 @@ public class RecipeService {
     private final RecipeRepository recipeRepository;
     private final RecipeResponseMapper responseMapper;
 
+    public RecipeResponse getResponseById(Long id){
+        return responseMapper.recipeToResponse(getById(id));
+    }
 
-    public RecipeResponse findById(Long id){
-        Recipe r = recipeRepository.findById(id)
+    private Recipe getById(Long id){
+        return recipeRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        return responseMapper.recipeToResponse(r);
     }
 }
