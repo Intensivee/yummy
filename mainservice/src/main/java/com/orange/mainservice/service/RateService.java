@@ -13,4 +13,9 @@ public class RateService {
     public RateService(RateRepository rateRepository) {
         this.rateRepository = rateRepository;
     }
+
+    public Double getRecipeAvgRate(Long recipeId) {
+        return rateRepository.getRecipeAverageRate(recipeId)
+                .orElse(0D);
+    }
 }
