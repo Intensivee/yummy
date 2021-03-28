@@ -1,13 +1,12 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.Rate;
+import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.mapper.response.RateResponseMapper;
 import com.orange.mainservice.repository.RateRepository;
 import com.orange.mainservice.response.RateResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +26,6 @@ public class RateService {
 
     private Rate getById(Long id){
         return rateRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Rate", "id", id));
     }
 }

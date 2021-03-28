@@ -1,6 +1,7 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.Component;
+import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.mapper.response.ComponentResponseMapper;
 import com.orange.mainservice.repository.ComponentRepository;
 import com.orange.mainservice.response.ComponentResponse;
@@ -20,6 +21,6 @@ public class ComponentService {
 
     private Component getById(Long id) {
         return this.componentRepository.getById(id)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Component", "id", id));
     }
 }
