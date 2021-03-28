@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ComponentResponse {
+public final class ComponentResponse {
 
-    private Long componentId;
-    private String name;
+    private final Long componentId;
+    private final String name;
 }

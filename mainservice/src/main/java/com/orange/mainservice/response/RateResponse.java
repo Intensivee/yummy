@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class RateResponse {
+public final class RateResponse {
 
-    private Long rateId;
-    private Integer value;
-    private Long userId;
-    private Long recipeId;
+    private final Long rateId;
+    private final Integer value;
+    private final Long userId;
+    private final Long recipeId;
 }

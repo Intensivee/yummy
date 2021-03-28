@@ -6,11 +6,11 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class RecipeResponse {
+public final class RecipeResponse {
 
-    private Long recipeId;
-    private Recipe.TimeType timeType;
-    private String title;
-    private String img;
-    private Double avgRate;
+    private final Long recipeId;
+    private final Recipe.TimeType timeType;
+    private final String title;
+    private final String img;
+    private final Double avgRate;
 }

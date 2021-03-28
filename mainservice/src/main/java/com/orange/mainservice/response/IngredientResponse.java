@@ -6,10 +6,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class IngredientResponse {
+public final class IngredientResponse {
 
-    private Long ingredientId;
-    private Double amount;
-    private Ingredient.AmountType amountType;
-    private String componentName;
+    private final Long ingredientId;
+    private final Double amount;
+    private final Ingredient.AmountType amountType;
+    private final String componentName;
 }

@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class DirectionResponse {
+public final class DirectionResponse {
 
-    private Long directionId;
-    private Integer order;
-    private String description;
+    private final Long directionId;
+    private final Integer order;
+    private final String description;
 }

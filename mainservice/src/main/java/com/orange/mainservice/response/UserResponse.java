@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserResponse {
+public final class UserResponse {
 
-    private Long userId;
-    private String email;
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String img;
+    private final Long userId;
+    private final String email;
+    private final String username;
+    private final String firstName;
+    private final String lastName;
+    private final String img;
 }

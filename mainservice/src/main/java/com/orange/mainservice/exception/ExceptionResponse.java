@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class ExceptionResponse {
+public final class ExceptionResponse {
 
     private final HttpStatus status;
     private final Date timestamp;

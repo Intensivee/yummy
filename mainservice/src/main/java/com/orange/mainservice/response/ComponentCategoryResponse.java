@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ComponentCategoryResponse {
+public final class ComponentCategoryResponse {
 
-    private Long categoryId;
-    private String name;
+    private final Long categoryId;
+    private final String name;
 }

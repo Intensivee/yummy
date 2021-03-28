@@ -7,11 +7,11 @@ import java.util.Date;
 
 @Getter
 @AllArgsConstructor
-public class CommentResponse {
+public final class CommentResponse {
 
-    private Long commentId;
-    private String body;
-    private Date dateCreated;
-    private String username;
-    private String userImg;
+    private final Long commentId;
+    private final String body;
+    private final Date dateCreated;
+    private final String username;
+    private final String userImg;
 }

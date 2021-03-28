@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class RecipeCategoryResponse {
+public final class RecipeCategoryResponse {
 
-    private Long categoryId;
-    private String name;
-    private String img;
+    private final Long categoryId;
+    private final String name;
+    private final String img;
 }
