@@ -8,7 +8,8 @@ import java.util.Set;
         name = "components",
         uniqueConstraints = {
                 @UniqueConstraint(name = "component_name_unique", columnNames = "name")
-        }
+        },
+        indexes = @Index(name="components_name_index", columnList = "name")
 )
 public class Component {
 

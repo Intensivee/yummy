@@ -105,6 +105,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     public UserRole getUserRole() {
         return userRole;
     }

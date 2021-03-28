@@ -24,7 +24,7 @@ public class Comment {
     @Column(name = "date_created", nullable = false)
     private Date dateCreated;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -33,6 +33,14 @@ public class Comment {
     private Recipe recipe;
 
     public Comment() {
+    }
+
+    public Comment(Long id, String body, Date dateCreated, User user, Recipe recipe) {
+        this.id = id;
+        this.body = body;
+        this.dateCreated = dateCreated;
+        this.user = user;
+        this.recipe = recipe;
     }
 
     public Long getId() {
