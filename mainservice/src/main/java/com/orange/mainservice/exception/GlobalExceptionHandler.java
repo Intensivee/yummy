@@ -20,6 +20,7 @@ public class GlobalExceptionHandler {
         return new ExceptionResponse(
                 httpStatus,
                 new Date(),
+                e.getClass().getTypeName(),
                 e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.toString()
         );
     }

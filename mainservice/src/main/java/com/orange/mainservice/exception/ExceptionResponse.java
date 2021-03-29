@@ -13,11 +13,13 @@ public final class ExceptionResponse {
 
     private final HttpStatus status;
     private final Date timestamp;
+    private final String type;
     private final String message;
 
-    public ExceptionResponse(HttpStatus status, Date timestamp, List<String> messages) {
+    public ExceptionResponse(HttpStatus status, Date timestamp, String type, List<String> messages) {
         this.status = status;
         this.timestamp = timestamp;
+        this.type = type;
         this.message = messages.toString();
     }
 }
