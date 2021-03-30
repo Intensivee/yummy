@@ -1,5 +1,7 @@
 package com.orange.mainservice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -13,6 +15,8 @@ import java.util.Date;
         },
         indexes = @Index( name = "rates_recipe_id_index", columnList = "recipe_id")
 )
+@Getter
+@AllArgsConstructor
 public class Rate {
 
     @Id
@@ -35,46 +39,6 @@ public class Rate {
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
-    public Rate() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+    protected Rate() {
     }
 }

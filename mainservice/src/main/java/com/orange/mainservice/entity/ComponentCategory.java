@@ -1,5 +1,8 @@
 package com.orange.mainservice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,6 +13,8 @@ import java.util.Set;
                 @UniqueConstraint(name = "component_category_name_unique", columnNames = "name")
         }
 )
+@Getter
+@AllArgsConstructor
 public class ComponentCategory {
 
     @Id
@@ -28,30 +33,6 @@ public class ComponentCategory {
     )
     private Set<Component> components;
 
-    public ComponentCategory() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Component> getComponents() {
-        return components;
-    }
-
-    public void setComponents(Set<Component> components) {
-        this.components = components;
+    protected ComponentCategory() {
     }
 }

@@ -1,5 +1,8 @@
 package com.orange.mainservice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,6 +14,8 @@ import java.util.Set;
         },
         indexes = @Index(name="components_name_index", columnList = "name")
 )
+@Getter
+@AllArgsConstructor
 public class Component {
 
     @Id
@@ -30,46 +35,6 @@ public class Component {
     @ManyToMany(mappedBy = "components", fetch = FetchType.LAZY)
     private Set<ComponentCategory> categories;
 
-    public Component() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getAccepted() {
-        return isAccepted;
-    }
-
-    public void setAccepted(Boolean accepted) {
-        isAccepted = accepted;
-    }
-
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public Set<ComponentCategory> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<ComponentCategory> categories) {
-        this.categories = categories;
+    protected Component() {
     }
 }

@@ -1,5 +1,8 @@
 package com.orange.mainservice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,6 +15,8 @@ import java.util.Set;
         },
         indexes = @Index( name = "users_username_index", columnList = "username", unique = true)
 )
+@Getter
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -54,94 +59,6 @@ public class User {
         USER_ROLE, ADMIN_ROLE
     }
 
-    public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
-
-    public Set<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(Set<Recipe> recipes) {
-        this.recipes = recipes;
-    }
-
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public Set<Rate> getRates() {
-        return rates;
-    }
-
-    public void setRates(Set<Rate> rates) {
-        this.rates = rates;
+    protected User() {
     }
 }

@@ -12,9 +12,9 @@ import java.util.Date;
         name = "comments",
         indexes = @Index( name = "comments_recipe_id_index", columnList = "recipe_id")
 )
-@AllArgsConstructor
 @Getter
-public class Comment {
+@AllArgsConstructor
+public final class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

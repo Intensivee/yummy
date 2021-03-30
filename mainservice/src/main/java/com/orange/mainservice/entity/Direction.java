@@ -1,5 +1,8 @@
 package com.orange.mainservice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity(name = "Direction")
@@ -10,6 +13,8 @@ import javax.persistence.*;
         },
         indexes = @Index( name = "directions_recipe_id_index", columnList = "recipe_id")
 )
+@Getter
+@AllArgsConstructor
 public class Direction {
 
     @Id
@@ -27,38 +32,6 @@ public class Direction {
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
-    public Direction() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public void setOrder(Integer order) {
-        this.order = order;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+    protected Direction() {
     }
 }

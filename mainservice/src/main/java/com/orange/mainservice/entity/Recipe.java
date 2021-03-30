@@ -1,5 +1,8 @@
 package com.orange.mainservice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -8,6 +11,8 @@ import java.util.Set;
         name = "recipes",
         indexes = @Index( name = "recipes_user_id_index", columnList = "user_id")
 )
+@Getter
+@AllArgsConstructor
 public class Recipe {
 
     @Id
@@ -48,86 +53,6 @@ public class Recipe {
         TIME_1, TIME_2, TIME_3
     }
 
-    public Recipe() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public TimeType getTimeType() {
-        return timeType;
-    }
-
-    public void setTimeType(TimeType timeType) {
-        this.timeType = timeType;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public Set<Rate> getRates() {
-        return rates;
-    }
-
-    public void setRates(Set<Rate> rates) {
-        this.rates = rates;
-    }
-
-    public Set<Direction> getDirections() {
-        return directions;
-    }
-
-    public void setDirections(Set<Direction> directions) {
-        this.directions = directions;
-    }
-
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public Set<RecipeCategory> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<RecipeCategory> categories) {
-        this.categories = categories;
+    protected Recipe() {
     }
 }
