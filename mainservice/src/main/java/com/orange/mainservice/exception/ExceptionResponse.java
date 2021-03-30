@@ -20,6 +20,6 @@ public final class ExceptionResponse {
         this.status = status;
         this.timestamp = timestamp;
         this.type = type;
-        this.message = messages.toString();
+        this.message = String.join("\n", messages);
     }
 }
