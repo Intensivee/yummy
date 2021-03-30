@@ -1,5 +1,6 @@
 package com.orange.mainservice.entity;
 
+import com.orange.mainservice.entity.enums.TimeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -48,10 +49,6 @@ public class Recipe {
 
     @ManyToMany(mappedBy = "recipes", fetch = FetchType.LAZY)
     private Set<RecipeCategory> categories;
-
-    public enum TimeType {
-        TIME_1, TIME_2, TIME_3
-    }
 
     protected Recipe() {
     }

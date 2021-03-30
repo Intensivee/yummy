@@ -1,5 +1,6 @@
 package com.orange.mainservice.entity;
 
+import com.orange.mainservice.entity.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -54,10 +55,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Rate> rates;
-
-    public enum UserRole {
-        USER_ROLE, ADMIN_ROLE
-    }
 
     protected User() {
     }

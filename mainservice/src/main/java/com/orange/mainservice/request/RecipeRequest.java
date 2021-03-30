@@ -1,6 +1,6 @@
 package com.orange.mainservice.request;
 
-import com.orange.mainservice.entity.Recipe;
+import com.orange.mainservice.entity.enums.TimeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,7 +16,7 @@ public final class RecipeRequest {
 
     private final Long recipeId;
     @NotNull
-    private final Recipe.TimeType timeType;
+    private final TimeType timeType;
     @NotBlank
     @Size(max = 40)
     private final String title;
