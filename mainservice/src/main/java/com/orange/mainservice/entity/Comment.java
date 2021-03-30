@@ -1,5 +1,7 @@
 package com.orange.mainservice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.util.Date;
         name = "comments",
         indexes = @Index( name = "comments_recipe_id_index", columnList = "recipe_id")
 )
+@AllArgsConstructor
+@Getter
 public class Comment {
 
     @Id
@@ -32,54 +36,6 @@ public class Comment {
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
-    public Comment() {
-    }
-
-    public Comment(Long id, String body, Date dateCreated, User user, Recipe recipe) {
-        this.id = id;
-        this.body = body;
-        this.dateCreated = dateCreated;
-        this.user = user;
-        this.recipe = recipe;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+    protected Comment() {
     }
 }

@@ -23,7 +23,7 @@ public class UserService {
         return responseMapper.userToResponse(getByUsername(username));
     }
 
-    private User getById(Long id){
+    public User getById(Long id){
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
     }

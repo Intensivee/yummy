@@ -19,7 +19,7 @@ public class RecipeService {
         return responseMapper.recipeToResponse(getById(id));
     }
 
-    private Recipe getById(Long id){
+    public Recipe getById(Long id){
         return recipeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", id));
     }
