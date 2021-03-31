@@ -1,6 +1,7 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.Comment;
+import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.mapper.response.CommentResponseMapper;
 import com.orange.mainservice.repository.CommentRepository;
@@ -22,17 +23,20 @@ public class CommentService {
         return commentMapper.commentToResponse(getById(id));
     }
 
-    public CommentResponse add(CommentRequest commentRequest) {
-        Comment comment = createCommentFromRequest(commentRequest);
-        return commentMapper.commentToResponse(commentRepository.save(comment));
-    }
-
-    private Comment getById(Long id){
+    public Comment getById(Long id){
         return commentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
     }
 
-    private Comment createCommentFromRequest(CommentRequest request) {
+    public CommentResponse add(CommentRequest request) {
+        if(request.getCommentId() != null){
+            throw new ResourceCreateException(request.getRecipeId());
+        }
+        Comment comment = createEntityFromRequest(request);
+        return commentMapper.commentToResponse(commentRepository.save(comment));
+    }
+
+    private Comment createEntityFromRequest(CommentRequest request) {
         return new Comment(
                 request.getCommentId(),
                 request.getBody(),

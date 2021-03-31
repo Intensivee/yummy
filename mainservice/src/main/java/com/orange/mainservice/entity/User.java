@@ -3,6 +3,7 @@ package com.orange.mainservice.entity;
 import com.orange.mainservice.entity.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -44,6 +45,7 @@ public class User {
     private String imgUrl;
 
     @Enumerated(EnumType.STRING)
+    @Type(type = "com.orange.mainservice.entity.enums.EnumTypePostgreSql")
     @Column(name = "role", nullable = false, columnDefinition = "user_role_type")
     private UserRole userRole;
 

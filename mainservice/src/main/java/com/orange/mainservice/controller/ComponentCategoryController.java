@@ -1,13 +1,15 @@
 package com.orange.mainservice.controller;
 
+import com.orange.mainservice.request.ComponentCategoryRequest;
 import com.orange.mainservice.response.ComponentCategoryResponse;
 import com.orange.mainservice.service.ComponentCategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("componentCategories")
@@ -19,5 +21,14 @@ public class ComponentCategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<ComponentCategoryResponse> getById(@PathVariable("id") Long id){
         return ResponseEntity.ok(categoryService.getResponseById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<ComponentCategoryResponse> create(@Valid @RequestBody ComponentCategoryRequest request){
+        ComponentCategoryResponse created = categoryService.add(request);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(created.getCategoryId()).toUri();
+        return ResponseEntity.created(location).body(created);
     }
 }

@@ -1,8 +1,8 @@
 package com.orange.mainservice.entity;
 
 import com.orange.mainservice.entity.enums.TimeType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,7 +13,6 @@ import java.util.Set;
         indexes = @Index( name = "recipes_user_id_index", columnList = "user_id")
 )
 @Getter
-@AllArgsConstructor
 public class Recipe {
 
     @Id
@@ -22,6 +21,7 @@ public class Recipe {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Type(type = "com.orange.mainservice.entity.enums.EnumTypePostgreSql")
     @Column(name = "time_type", nullable = false, columnDefinition = "time_type")
     private TimeType timeType;
 
@@ -47,9 +47,23 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
     private Set<Ingredient> ingredients;
 
-    @ManyToMany(mappedBy = "recipes", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "recipe_categories_recipes",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "recipe_category_id")
+    )
     private Set<RecipeCategory> categories;
 
     protected Recipe() {
+    }
+
+    public Recipe(Long id, TimeType timeType, String title, String imgUrl, User user, Set<RecipeCategory> categories) {
+        this.id = id;
+        this.timeType = timeType;
+        this.title = title;
+        this.imgUrl = imgUrl;
+        this.user = user;
+        this.categories = categories;
     }
 }

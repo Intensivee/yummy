@@ -32,7 +32,12 @@ public class Component {
     @OneToMany(mappedBy = "component", fetch = FetchType.LAZY)
     private Set<Ingredient> ingredients;
 
-    @ManyToMany(mappedBy = "components", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "component_categories_component",
+            joinColumns = @JoinColumn(name = "component_id"),
+            inverseJoinColumns = @JoinColumn(name = "component_category_id")
+    )
     private Set<ComponentCategory> categories;
 
     protected Component() {

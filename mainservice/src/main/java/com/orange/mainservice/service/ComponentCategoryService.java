@@ -1,9 +1,11 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.ComponentCategory;
+import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.mapper.response.ComponentCategoryResponseMapper;
 import com.orange.mainservice.repository.ComponentCategoryRepository;
+import com.orange.mainservice.request.ComponentCategoryRequest;
 import com.orange.mainservice.response.ComponentCategoryResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,24 @@ public class ComponentCategoryService {
         return responseMapper.categoryToResponse(getById(id));
     }
 
-    private ComponentCategory getById(Long id){
+    public ComponentCategory getById(Long id){
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("ComponentCategory", "id", id));
+    }
+
+    public ComponentCategoryResponse add(ComponentCategoryRequest request){
+        if(request.getCategoryId() != null){
+            throw new ResourceCreateException(request.getCategoryId());
+        }
+        ComponentCategory category = createEntityFromRequest(request);
+        return responseMapper.categoryToResponse(categoryRepository.save(category));
+    }
+
+    private ComponentCategory createEntityFromRequest(ComponentCategoryRequest request) {
+        return new ComponentCategory(
+                request.getCategoryId(),
+                request.getName(),
+                null
+        );
     }
 }

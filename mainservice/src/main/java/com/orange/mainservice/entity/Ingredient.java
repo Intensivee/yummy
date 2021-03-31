@@ -1,7 +1,9 @@
 package com.orange.mainservice.entity;
 
+import com.orange.mainservice.entity.enums.AmountType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -23,6 +25,7 @@ public class Ingredient {
     private Double amount;
 
     @Enumerated(EnumType.STRING)
+    @Type(type = "com.orange.mainservice.entity.enums.EnumTypePostgreSql")
     @Column(name = "amount_type", nullable = false, columnDefinition = "amount_type")
     private AmountType amountType;
 
@@ -33,10 +36,6 @@ public class Ingredient {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "component_id", nullable = false)
     private Component component;
-
-    public enum AmountType {
-        PIECE, SLICE, CUBE, CLOVE, PINCH, SPOON, TEASPOON, G, ML, L, LEAVE
-    }
 
     protected Ingredient() {
     }

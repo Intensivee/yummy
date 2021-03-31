@@ -25,12 +25,7 @@ public class ComponentCategory {
     @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(25)")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "component_categories_component",
-            joinColumns = @JoinColumn(name = "component_category_id"),
-            inverseJoinColumns = @JoinColumn(name = "component_id")
-    )
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
     private Set<Component> components;
 
     protected ComponentCategory() {

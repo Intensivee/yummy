@@ -24,9 +24,5 @@ public final class RecipeRequest {
     @NotNull
     private final Long userId; // TODO: userId from session
     @NotEmpty
-    private final Set<DirectionRequest> directions;
-    @NotEmpty
-    private final Set<IngredientRequest> ingredients;
-    @NotEmpty
-    private final Set<RecipeCategoryRequest> categories;
+    private final Set<Long> categoriesIds;
 }

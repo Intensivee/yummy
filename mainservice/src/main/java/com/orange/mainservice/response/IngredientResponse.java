@@ -1,6 +1,6 @@
 package com.orange.mainservice.response;
 
-import com.orange.mainservice.entity.Ingredient;
+import com.orange.mainservice.entity.enums.AmountType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,6 +10,6 @@ public final class IngredientResponse {
 
     private final Long ingredientId;
     private final Double amount;
-    private final Ingredient.AmountType amountType;
+    private final AmountType amountType;
     private final String componentName;
 }

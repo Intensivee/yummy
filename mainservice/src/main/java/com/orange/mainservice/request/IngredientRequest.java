@@ -1,6 +1,6 @@
 package com.orange.mainservice.request;
 
-import com.orange.mainservice.entity.Ingredient;
+import com.orange.mainservice.entity.enums.AmountType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,7 +16,7 @@ public final class IngredientRequest {
     @Positive
     private final Double amount;
     @NotNull
-    private final Ingredient.AmountType amountType;
+    private final AmountType amountType;
     @NotNull
     private final Long recipeId;
     @NotNull

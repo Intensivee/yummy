@@ -18,5 +18,5 @@ public final class ComponentRequest {
     private final String name;
     @NotNull
     private final Boolean isAccepted;
-    private final Set<Long> categoryIds;
+    private final Set<Long> categoriesIds;
 }

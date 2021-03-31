@@ -24,9 +24,8 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<CommentResponse> create(@Valid @RequestBody CommentRequest commentRequest){
-
-        CommentResponse created = commentService.add(commentRequest);
+    public ResponseEntity<CommentResponse> create(@Valid @RequestBody CommentRequest request){
+        CommentResponse created = commentService.add(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(created.getCommentId()).toUri();

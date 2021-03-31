@@ -20,6 +20,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(createBody(e, HttpStatus.NOT_FOUND));
     }
 
+    @ExceptionHandler(ResourceCreateException.class)
+    public ResponseEntity<ExceptionResponse> handleResourceCreate(ResourceCreateException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(createBody(e, HttpStatus.BAD_REQUEST));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   WebRequest request) {

@@ -11,6 +11,7 @@ public final class DirectionRequest {
 
     private final Long directionId;
     @NotNull
+    @Min(1)
     private final Integer order;
     @NotBlank
     @Size(max=300)

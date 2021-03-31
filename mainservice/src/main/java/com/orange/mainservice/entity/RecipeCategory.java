@@ -28,12 +28,7 @@ public class RecipeCategory {
     @Column(name = "img_url")
     private String imgUrl;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "recipe_categories_recipes",
-            joinColumns = @JoinColumn(name = "recipe_category_id"),
-            inverseJoinColumns = @JoinColumn(name = "recipe_id")
-    )
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
     private Set<Recipe> recipes;
 
     protected RecipeCategory(){
