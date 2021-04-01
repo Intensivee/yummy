@@ -31,4 +31,11 @@ public class CommentController {
                 .buildAndExpand(created.getCommentId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CommentResponse> edit(@PathVariable("id") Long id,
+                                                @Valid @RequestBody CommentRequest request){
+       CommentResponse edited = commentService.edit(id, request);
+        return ResponseEntity.ok(edited);
+    }
 }

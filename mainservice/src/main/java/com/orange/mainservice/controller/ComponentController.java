@@ -31,4 +31,11 @@ public class ComponentController {
                 .buildAndExpand(created.getComponentId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ComponentResponse> edit(@PathVariable("id") Long id,
+                                                          @Valid @RequestBody ComponentRequest request){
+        ComponentResponse edited = componentService.edit(id, request);
+        return ResponseEntity.ok(edited);
+    }
 }

@@ -31,4 +31,11 @@ public class ComponentCategoryController {
                 .buildAndExpand(created.getCategoryId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ComponentCategoryResponse> edit(@PathVariable("id") Long id,
+                                                @Valid @RequestBody ComponentCategoryRequest request){
+        ComponentCategoryResponse edited = categoryService.edit(id, request);
+        return ResponseEntity.ok(edited);
+    }
 }

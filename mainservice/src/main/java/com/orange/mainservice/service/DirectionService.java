@@ -30,6 +30,12 @@ public class DirectionService {
         return responseMapper.directionToDto(directionRepository.save(direction));
     }
 
+    public DirectionResponse edit(Long id, DirectionRequest request){
+        validateEditInput(id, request);
+        Direction direction = createEntityFromRequest(request);
+        return responseMapper.directionToDto(directionRepository.save(direction));
+    }
+
     private Direction getById(Long id){
         return directionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Direction", "id", id));
@@ -42,5 +48,18 @@ public class DirectionService {
                 request.getDescription(),
                 recipeService.getById(request.getRecipeId())
         );
+    }
+
+    private void validateEditInput(Long id, DirectionRequest request){
+        if(idNotPresentORNotMatching(id, request)){
+            throw new ResourceCreateException(id); // TODO : custom exception
+        }
+        if(!directionRepository.existsById(id)){
+            throw new ResourceNotFoundException("ComponentCategory", "id", id);
+        }
+    }
+
+    private boolean idNotPresentORNotMatching(Long pathId, DirectionRequest request){
+        return request.getDirectionId() == null || !request.getDirectionId().equals(pathId);
     }
 }

@@ -37,16 +37,34 @@ public class ComponentService {
         return responseMapper.componentToResponse(componentRepository.save(component));
     }
 
+    public ComponentResponse edit(Long id, ComponentRequest request){
+        validateEditInput(id, request);
+        Component component = createEntityFromRequest(request);
+        return responseMapper.componentToResponse(componentRepository.save(component));
+    }
+
     private Component createEntityFromRequest(ComponentRequest request) {
         return new Component(
                 request.getComponentId(),
                 request.getName(),
                 request.getIsAccepted(),
-                null,
                 request.getCategoriesIds() != null ? request.getCategoriesIds()
                         .stream()
                         .map(categoryService::getById)
                         .collect(Collectors.toSet()) : null
         );
+    }
+
+    private void validateEditInput(Long id, ComponentRequest request){
+        if(idNotPresentORNotMatching(id, request)){
+            throw new ResourceCreateException(id); // TODO : custom exception
+        }
+        if(!componentRepository.existsById(id)){
+            throw new ResourceNotFoundException("ComponentCategory", "id", id);
+        }
+    }
+
+    private boolean idNotPresentORNotMatching(Long pathId, ComponentRequest request){
+        return request.getComponentId() == null || !request.getComponentId().equals(pathId);
     }
 }

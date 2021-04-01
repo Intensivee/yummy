@@ -31,4 +31,11 @@ public class RecipeCategoryController {
                 .buildAndExpand(created.getCategoryId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RecipeCategoryResponse> edit(@PathVariable("id") Long id,
+                                             @Valid @RequestBody RecipeCategoryRequest request){
+        RecipeCategoryResponse edited = categoryService.edit(id, request);
+        return ResponseEntity.ok(edited);
+    }
 }

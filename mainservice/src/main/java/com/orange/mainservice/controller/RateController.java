@@ -31,4 +31,11 @@ public class RateController {
                 .buildAndExpand(created.getRateId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RateResponse> edit(@PathVariable("id") Long id,
+                                                   @Valid @RequestBody RateRequest request){
+        RateResponse edited = rateService.edit(id, request);
+        return ResponseEntity.ok(edited);
+    }
 }

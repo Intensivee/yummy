@@ -34,12 +34,30 @@ public class RecipeCategoryService {
         return responseMapper.categoryToResponse(categoryRepository.save(category));
     }
 
+    public RecipeCategoryResponse edit(Long id, RecipeCategoryRequest request){
+        validateEditInput(id, request);
+        RecipeCategory category = createEntityFromRequest(request);
+        return responseMapper.categoryToResponse(categoryRepository.save(category));
+    }
+
     private RecipeCategory createEntityFromRequest(RecipeCategoryRequest request){
         return new RecipeCategory(
                 request.getCategoryId(),
                 request.getName(),
-                request.getImg(),
-                null
+                request.getImg()
         );
+    }
+
+    private void validateEditInput(Long id, RecipeCategoryRequest request){
+        if(idNotPresentORNotMatching(id, request)){
+            throw new ResourceCreateException(id); // TODO : custom exception
+        }
+        if(!categoryRepository.existsById(id)){
+            throw new ResourceNotFoundException("ComponentCategory", "id", id);
+        }
+    }
+
+    private boolean idNotPresentORNotMatching(Long pathId, RecipeCategoryRequest request){
+        return request.getCategoryId() == null || !request.getCategoryId().equals(pathId);
     }
 }

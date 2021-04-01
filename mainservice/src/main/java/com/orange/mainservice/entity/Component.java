@@ -1,6 +1,5 @@
 package com.orange.mainservice.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -15,7 +14,6 @@ import java.util.Set;
         indexes = @Index(name="components_name_index", columnList = "name")
 )
 @Getter
-@AllArgsConstructor
 public class Component {
 
     @Id
@@ -41,5 +39,12 @@ public class Component {
     private Set<ComponentCategory> categories;
 
     protected Component() {
+    }
+
+    public Component(Long id, String name, Boolean isAccepted, Set<ComponentCategory> categories) {
+        this.id = id;
+        this.name = name;
+        this.isAccepted = isAccepted;
+        this.categories = categories;
     }
 }

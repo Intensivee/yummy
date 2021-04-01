@@ -1,6 +1,5 @@
 package com.orange.mainservice.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -14,7 +13,6 @@ import java.util.Set;
         }
 )
 @Getter
-@AllArgsConstructor
 public class ComponentCategory {
 
     @Id
@@ -29,5 +27,10 @@ public class ComponentCategory {
     private Set<Component> components;
 
     protected ComponentCategory() {
+    }
+
+    public ComponentCategory(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 }

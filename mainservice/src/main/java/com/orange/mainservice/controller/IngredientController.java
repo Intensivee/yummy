@@ -31,4 +31,11 @@ public class IngredientController {
                 .buildAndExpand(created.getIngredientId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<IngredientResponse> edit(@PathVariable("id") Long id,
+                                                  @Valid @RequestBody IngredientRequest request){
+        IngredientResponse edited = ingredientService.edit(id, request);
+        return ResponseEntity.ok(edited);
+    }
 }

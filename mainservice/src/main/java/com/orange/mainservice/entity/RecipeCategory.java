@@ -1,6 +1,5 @@
 package com.orange.mainservice.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -14,7 +13,6 @@ import java.util.Set;
         }
 )
 @Getter
-@AllArgsConstructor
 public class RecipeCategory {
 
     @Id
@@ -32,5 +30,11 @@ public class RecipeCategory {
     private Set<Recipe> recipes;
 
     protected RecipeCategory(){
+    }
+
+    public RecipeCategory(Long id, String name, String imgUrl) {
+        this.id = id;
+        this.name = name;
+        this.imgUrl = imgUrl;
     }
 }

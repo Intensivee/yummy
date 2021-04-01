@@ -31,6 +31,12 @@ public class IngredientService {
         return responseMapper.ingredientToResponse(ingredientRepository.save(ingredient));
     }
 
+    public IngredientResponse edit(Long id, IngredientRequest request){
+        validateEditInput(id, request);
+        Ingredient ingredient = createEntityFromRequest(request);
+        return responseMapper.ingredientToResponse(ingredientRepository.save(ingredient));
+    }
+
     private Ingredient getById(Long id){
         return ingredientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ingredient", "id", id));
@@ -44,5 +50,18 @@ public class IngredientService {
                 recipeService.getById(request.getRecipeId()),
                 componentService.getById(request.getComponentId())
         );
+    }
+
+    private void validateEditInput(Long id, IngredientRequest request){
+        if(idNotPresentORNotMatching(id, request)){
+            throw new ResourceCreateException(id); // TODO : custom exception
+        }
+        if(!ingredientRepository.existsById(id)){
+            throw new ResourceNotFoundException("ComponentCategory", "id", id);
+        }
+    }
+
+    private boolean idNotPresentORNotMatching(Long pathId, IngredientRequest request){
+        return request.getIngredientId() == null || !request.getIngredientId().equals(pathId);
     }
 }

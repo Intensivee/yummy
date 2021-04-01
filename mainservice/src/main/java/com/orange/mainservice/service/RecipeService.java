@@ -30,10 +30,13 @@ public class RecipeService {
             throw new ResourceCreateException(request.getRecipeId());
         }
         Recipe recipe = createEntityFromRequest(request);
-        recipe = recipeRepository.save(recipe);
-        // TODO: create other relations
+        return responseMapper.recipeToResponse(recipeRepository.save(recipe));
+    }
 
-        return responseMapper.recipeToResponse(recipe);
+    public RecipeResponse edit(Long id, RecipeRequest request){
+        validateEditInput(id, request);
+        Recipe recipe = createEntityFromRequest(request);
+        return responseMapper.recipeToResponse(recipeRepository.save(recipe));
     }
 
     public Recipe getById(Long id){
@@ -52,5 +55,18 @@ public class RecipeService {
                         .map(categoryService::getById)
                         .collect(Collectors.toSet())
         );
+    }
+
+    private void validateEditInput(Long id, RecipeRequest request){
+        if(idNotPresentORNotMatching(id, request)){
+            throw new ResourceCreateException(id); // TODO : custom exception
+        }
+        if(!recipeRepository.existsById(id)){
+            throw new ResourceNotFoundException("ComponentCategory", "id", id);
+        }
+    }
+
+    private boolean idNotPresentORNotMatching(Long pathId, RecipeRequest request){
+        return request.getRecipeId() == null || !request.getRecipeId().equals(pathId);
     }
 }

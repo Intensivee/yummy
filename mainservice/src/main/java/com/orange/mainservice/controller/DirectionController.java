@@ -31,4 +31,11 @@ public class DirectionController {
                 .buildAndExpand(created.getDirectionId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DirectionResponse> edit(@PathVariable("id") Long id,
+                                                  @Valid @RequestBody DirectionRequest request){
+        DirectionResponse edited = directionService.edit(id, request);
+        return ResponseEntity.ok(edited);
+    }
 }

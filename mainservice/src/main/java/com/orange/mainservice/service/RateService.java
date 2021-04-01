@@ -32,7 +32,13 @@ public class RateService {
         if(request.getRateId() != null){
             throw new ResourceCreateException(request.getRateId());
         }
-        Rate rate = createEntityFromRequest(request);
+        Rate rate = createNewEntityFromRequest(request);
+        return responseMapper.rateToResponse(rateRepository.save(rate));
+    }
+
+    public RateResponse edit(Long id, RateRequest request){
+        validateEditInput(id, request);
+        Rate rate = createEditedEntityFromRequest(request);
         return responseMapper.rateToResponse(rateRepository.save(rate));
     }
 
@@ -41,7 +47,7 @@ public class RateService {
                 .orElseThrow(() -> new ResourceNotFoundException("Rate", "id", id));
     }
 
-    private Rate createEntityFromRequest(RateRequest request){
+    private Rate createNewEntityFromRequest(RateRequest request){
         return new Rate(
                 request.getRateId(),
                 request.getValue(),
@@ -49,5 +55,29 @@ public class RateService {
                 userService.getById(request.getUserId()),
                 recipeService.getById(request.getRecipeId())
         );
+    }
+
+    private Rate createEditedEntityFromRequest(RateRequest request){
+        Rate rate = getById(request.getRateId());
+        return new Rate(
+                request.getRateId(),
+                request.getValue(),
+                rate.getDateCreated(),
+                userService.getById(request.getUserId()),
+                recipeService.getById(request.getRecipeId())
+        );
+    }
+
+    private void validateEditInput(Long id, RateRequest request){
+        if(idNotPresentORNotMatching(id, request)){
+            throw new ResourceCreateException(id); // TODO : custom exception
+        }
+        if(!rateRepository.existsById(id)){
+            throw new ResourceNotFoundException("ComponentCategory", "id", id);
+        }
+    }
+
+    private boolean idNotPresentORNotMatching(Long pathId, RateRequest request){
+        return request.getRateId() == null || !request.getRateId().equals(pathId);
     }
 }
