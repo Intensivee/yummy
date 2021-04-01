@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({ResourceCreateException.class, PathNotMatchBodyException.class})
-    public ResponseEntity<ExceptionResponse> handleResourceCreate(ResourceCreateException e){
+    public ResponseEntity<ExceptionResponse> handleResourceCreate(Exception e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(createBody(e, HttpStatus.BAD_REQUEST));
     }
 
