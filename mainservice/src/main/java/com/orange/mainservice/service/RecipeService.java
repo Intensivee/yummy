@@ -40,6 +40,10 @@ public class RecipeService {
         return responseMapper.recipeToResponse(recipeRepository.save(recipe));
     }
 
+    public void delete(Long id) {
+        recipeRepository.delete(getById(id));
+    }
+
     public Recipe getById(Long id){
         return recipeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", id));

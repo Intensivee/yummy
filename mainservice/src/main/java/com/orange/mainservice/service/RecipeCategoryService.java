@@ -41,6 +41,10 @@ public class RecipeCategoryService {
         return responseMapper.categoryToResponse(categoryRepository.save(category));
     }
 
+    public void delete(Long id) {
+        categoryRepository.delete(getById(id));
+    }
+
     private RecipeCategory createEntityFromRequest(RecipeCategoryRequest request){
         return new RecipeCategory(
                 request.getCategoryId(),

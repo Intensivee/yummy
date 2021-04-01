@@ -38,4 +38,10 @@ public class RateController {
         RateResponse edited = rateService.edit(id, request);
         return ResponseEntity.ok(edited);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
+        rateService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

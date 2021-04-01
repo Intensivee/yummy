@@ -48,6 +48,10 @@ public class RateService {
                 .orElseThrow(() -> new ResourceNotFoundException("Rate", "id", id));
     }
 
+    public void delete(Long id) {
+        rateRepository.delete(getById(id));
+    }
+
     private Rate createNewEntityFromRequest(RateRequest request){
         return new Rate(
                 request.getRateId(),

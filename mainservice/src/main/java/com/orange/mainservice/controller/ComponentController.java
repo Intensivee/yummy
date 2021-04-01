@@ -38,4 +38,10 @@ public class ComponentController {
         ComponentResponse edited = componentService.edit(id, request);
         return ResponseEntity.ok(edited);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
+        componentService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

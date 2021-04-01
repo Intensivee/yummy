@@ -38,4 +38,10 @@ public class CommentController {
        CommentResponse edited = commentService.edit(id, request);
         return ResponseEntity.ok(edited);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
+        commentService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

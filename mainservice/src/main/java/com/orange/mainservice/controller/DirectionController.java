@@ -38,4 +38,10 @@ public class DirectionController {
         DirectionResponse edited = directionService.edit(id, request);
         return ResponseEntity.ok(edited);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
+        directionService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

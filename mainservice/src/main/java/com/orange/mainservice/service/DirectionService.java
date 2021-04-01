@@ -37,6 +37,10 @@ public class DirectionService {
         return responseMapper.directionToDto(directionRepository.save(direction));
     }
 
+    public void delete(Long id) {
+        directionRepository.delete(getById(id));
+    }
+
     private Direction getById(Long id){
         return directionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Direction", "id", id));

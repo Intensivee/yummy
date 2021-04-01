@@ -44,6 +44,10 @@ public class ComponentService {
         return responseMapper.componentToResponse(componentRepository.save(component));
     }
 
+    public void delete(Long id) {
+        componentRepository.delete(getById(id));
+    }
+
     private Component createEntityFromRequest(ComponentRequest request) {
         return new Component(
                 request.getComponentId(),

@@ -38,6 +38,10 @@ public class IngredientService {
         return responseMapper.ingredientToResponse(ingredientRepository.save(ingredient));
     }
 
+    public void delete(Long id) {
+        ingredientRepository.delete(getById(id));
+    }
+
     private Ingredient getById(Long id){
         return ingredientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ingredient", "id", id));

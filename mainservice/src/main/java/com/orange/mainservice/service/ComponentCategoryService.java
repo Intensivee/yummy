@@ -42,6 +42,10 @@ public class ComponentCategoryService {
         return responseMapper.categoryToResponse(categoryRepository.save(category));
     }
 
+    public void delete(Long id) {
+        categoryRepository.delete(getById(id));
+    }
+
     private ComponentCategory createEntityFromRequest(ComponentCategoryRequest request) {
         return new ComponentCategory(
                 request.getCategoryId(),

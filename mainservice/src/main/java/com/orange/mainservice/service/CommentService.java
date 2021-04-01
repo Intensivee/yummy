@@ -44,6 +44,10 @@ public class CommentService {
         return commentMapper.commentToResponse(commentRepository.save(comment));
     }
 
+    public void delete(Long id) {
+        commentRepository.delete(getById(id));
+    }
+
     private Comment createNewEntityFromRequest(CommentRequest request) {
         return new Comment(
                 request.getCommentId(),
