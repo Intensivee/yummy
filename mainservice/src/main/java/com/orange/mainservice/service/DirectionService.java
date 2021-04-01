@@ -1,6 +1,7 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.Direction;
+import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.mapper.response.DirectionResponseMapper;
@@ -52,7 +53,7 @@ public class DirectionService {
 
     private void validateEditInput(Long id, DirectionRequest request){
         if(idNotPresentORNotMatching(id, request)){
-            throw new ResourceCreateException(id); // TODO : custom exception
+            throw new PathNotMatchBodyException(id, request.getDirectionId());
         }
         if(!directionRepository.existsById(id)){
             throw new ResourceNotFoundException("ComponentCategory", "id", id);

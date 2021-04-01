@@ -1,6 +1,7 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.Rate;
+import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.mapper.response.RateResponseMapper;
@@ -70,7 +71,7 @@ public class RateService {
 
     private void validateEditInput(Long id, RateRequest request){
         if(idNotPresentORNotMatching(id, request)){
-            throw new ResourceCreateException(id); // TODO : custom exception
+            throw new PathNotMatchBodyException(id, request.getRateId());
         }
         if(!rateRepository.existsById(id)){
             throw new ResourceNotFoundException("ComponentCategory", "id", id);

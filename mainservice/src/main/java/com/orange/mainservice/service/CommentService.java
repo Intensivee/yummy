@@ -1,6 +1,7 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.Comment;
+import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.mapper.response.CommentResponseMapper;
@@ -66,7 +67,7 @@ public class CommentService {
 
     private void validateEditInput(Long id, CommentRequest request){
         if(idNotPresentORNotMatching(id, request)){
-            throw new ResourceCreateException(id); // TODO : custom exception
+            throw new PathNotMatchBodyException(id, request.getCommentId());
         }
         if(!commentRepository.existsById(id)){
             throw new ResourceNotFoundException("Comment", "id", id);

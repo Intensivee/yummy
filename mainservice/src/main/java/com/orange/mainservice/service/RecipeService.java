@@ -1,6 +1,7 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.Recipe;
+import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.mapper.response.RecipeResponseMapper;
@@ -59,7 +60,7 @@ public class RecipeService {
 
     private void validateEditInput(Long id, RecipeRequest request){
         if(idNotPresentORNotMatching(id, request)){
-            throw new ResourceCreateException(id); // TODO : custom exception
+            throw new PathNotMatchBodyException(id, request.getRecipeId());
         }
         if(!recipeRepository.existsById(id)){
             throw new ResourceNotFoundException("ComponentCategory", "id", id);

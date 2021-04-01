@@ -1,6 +1,7 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.Component;
+import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.mapper.response.ComponentResponseMapper;
@@ -57,7 +58,7 @@ public class ComponentService {
 
     private void validateEditInput(Long id, ComponentRequest request){
         if(idNotPresentORNotMatching(id, request)){
-            throw new ResourceCreateException(id); // TODO : custom exception
+            throw new PathNotMatchBodyException(id, request.getComponentId());
         }
         if(!componentRepository.existsById(id)){
             throw new ResourceNotFoundException("ComponentCategory", "id", id);
