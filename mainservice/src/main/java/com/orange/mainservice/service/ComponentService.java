@@ -31,33 +31,21 @@ public class ComponentService {
     }
 
     public ComponentResponse add(ComponentRequest request){
-        if(request.getComponentId() != null){
-            throw new ResourceCreateException(request.getComponentId());
-        }
-        Component component = createEntityFromRequest(request);
-        return responseMapper.componentToResponse(componentRepository.save(component));
+        validateCreateRequest(request);
+        Component componentToAdd = createEntityFromRequest(request);
+        Component addedComponent = componentRepository.save(componentToAdd);
+        return responseMapper.componentToResponse(addedComponent);
     }
 
     public ComponentResponse edit(Long id, ComponentRequest request){
         validateEditInput(id, request);
-        Component component = createEntityFromRequest(request);
-        return responseMapper.componentToResponse(componentRepository.save(component));
+        Component componentToEdit = createEntityFromRequest(request);
+        Component editedComponent = componentRepository.save(componentToEdit);
+        return responseMapper.componentToResponse(editedComponent);
     }
 
     public void delete(Long id) {
         componentRepository.delete(getById(id));
-    }
-
-    private Component createEntityFromRequest(ComponentRequest request) {
-        return new Component(
-                request.getComponentId(),
-                request.getName(),
-                request.getIsAccepted(),
-                request.getCategoriesIds() != null ? request.getCategoriesIds()
-                        .stream()
-                        .map(categoryService::getById)
-                        .collect(Collectors.toSet()) : null
-        );
     }
 
     private void validateEditInput(Long id, ComponentRequest request){
@@ -70,6 +58,28 @@ public class ComponentService {
     }
 
     private boolean idNotPresentORNotMatching(Long pathId, ComponentRequest request){
-        return request.getComponentId() == null || !request.getComponentId().equals(pathId);
+        return !isIdInRequest(request) || !request.getComponentId().equals(pathId);
+    }
+
+    private void validateCreateRequest(ComponentRequest request){
+        if(isIdInRequest(request)){
+            throw new ResourceCreateException(request.getComponentId());
+        }
+    }
+
+    private boolean isIdInRequest(ComponentRequest request){
+        return request.getComponentId() != null;
+    }
+
+    private Component createEntityFromRequest(ComponentRequest request) {
+        return new Component(
+                request.getComponentId(),
+                request.getName(),
+                request.getIsAccepted(),
+                request.getCategoriesIds() != null ? request.getCategoriesIds()
+                        .stream()
+                        .map(categoryService::getById)
+                        .collect(Collectors.toSet()) : null
+        );
     }
 }

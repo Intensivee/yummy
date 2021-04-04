@@ -30,22 +30,44 @@ public class CommentService {
     }
 
     public CommentResponse add(CommentRequest request) {
-        if(request.getCommentId() != null){
-            throw new ResourceCreateException(request.getRecipeId());
-        }
-        Comment comment = createNewEntityFromRequest(request);
-        return commentMapper.commentToResponse(commentRepository.save(comment));
+        validateCreateRequest(request);
+        Comment commentToAdd = createNewEntityFromRequest(request);
+        Comment addedComment = commentRepository.save(commentToAdd);
+        return commentMapper.commentToResponse(addedComment);
     }
 
     public CommentResponse edit(Long id, CommentRequest request) {
-        validateEditInput(id, request);
-
-        Comment comment = createEditedEntityFromRequest(request);
-        return commentMapper.commentToResponse(commentRepository.save(comment));
+        validateEditRequest(id, request);
+        Comment commentToEdit= createEditedEntityFromRequest(request);
+        Comment editedComment = commentRepository.save(commentToEdit);
+        return commentMapper.commentToResponse(editedComment);
     }
 
     public void delete(Long id) {
         commentRepository.delete(getById(id));
+    }
+
+    private void validateEditRequest(Long id, CommentRequest request){
+        if(isIdNotPresentORNotMatching(id, request)){
+            throw new PathNotMatchBodyException(id, request.getCommentId());
+        }
+        if(!commentRepository.existsById(id)){
+            throw new ResourceNotFoundException("Comment", "id", id);
+        }
+    }
+
+    private boolean isIdNotPresentORNotMatching(Long pathId, CommentRequest request){
+        return !isIdInRequest(request) || !request.getCommentId().equals(pathId);
+    }
+
+    private void validateCreateRequest(CommentRequest request){
+        if(isIdInRequest(request)){
+            throw new ResourceCreateException(request.getCommentId());
+        }
+    }
+
+    private boolean isIdInRequest(CommentRequest request){
+        return request.getCommentId() != null;
     }
 
     private Comment createNewEntityFromRequest(CommentRequest request) {
@@ -67,18 +89,5 @@ public class CommentService {
                 userService.getById(request.getUserId()),
                 recipeService.getById(request.getRecipeId())
         );
-    }
-
-    private void validateEditInput(Long id, CommentRequest request){
-        if(idNotPresentORNotMatching(id, request)){
-            throw new PathNotMatchBodyException(id, request.getCommentId());
-        }
-        if(!commentRepository.existsById(id)){
-            throw new ResourceNotFoundException("Comment", "id", id);
-        }
-    }
-
-    private boolean idNotPresentORNotMatching(Long pathId, CommentRequest request){
-        return request.getCommentId() == null || !request.getCommentId().equals(pathId);
     }
 }

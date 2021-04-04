@@ -24,32 +24,55 @@ public class RateService {
         return responseMapper.rateToResponse(getById(id));
     }
 
+    public Rate getById(Long id){
+        return rateRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Rate", "id", id));
+    }
+
     public Double getRecipeAvgRate(Long recipeId) {
         return rateRepository.getRecipeAverageRate(recipeId)
                 .orElse(0D);
     }
 
     public RateResponse add(RateRequest request){
-        if(request.getRateId() != null){
-            throw new ResourceCreateException(request.getRateId());
-        }
-        Rate rate = createNewEntityFromRequest(request);
-        return responseMapper.rateToResponse(rateRepository.save(rate));
+        validateCreateRequest(request);
+        Rate rateToAdd = createNewEntityFromRequest(request);
+        Rate addedRate = rateRepository.save(rateToAdd);
+        return responseMapper.rateToResponse(addedRate);
     }
 
     public RateResponse edit(Long id, RateRequest request){
         validateEditInput(id, request);
-        Rate rate = createEditedEntityFromRequest(request);
-        return responseMapper.rateToResponse(rateRepository.save(rate));
-    }
-
-    private Rate getById(Long id){
-        return rateRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Rate", "id", id));
+        Rate rateToEdit = createEditedEntityFromRequest(request);
+        Rate editedRate = rateRepository.save(rateToEdit);
+        return responseMapper.rateToResponse(editedRate);
     }
 
     public void delete(Long id) {
         rateRepository.delete(getById(id));
+    }
+
+    private void validateEditInput(Long id, RateRequest request){
+        if(idNotPresentORNotMatching(id, request)){
+            throw new PathNotMatchBodyException(id, request.getRateId());
+        }
+        if(!rateRepository.existsById(id)){
+            throw new ResourceNotFoundException("ComponentCategory", "id", id);
+        }
+    }
+
+    private boolean idNotPresentORNotMatching(Long pathId, RateRequest request){
+        return !isIdInRequest(request) || !request.getRateId().equals(pathId);
+    }
+
+    private void validateCreateRequest(RateRequest request){
+        if(isIdInRequest(request)){
+            throw new ResourceCreateException(request.getRateId());
+        }
+    }
+
+    private boolean isIdInRequest(RateRequest request){
+        return request.getRateId() != null;
     }
 
     private Rate createNewEntityFromRequest(RateRequest request){
@@ -71,18 +94,5 @@ public class RateService {
                 userService.getById(request.getUserId()),
                 recipeService.getById(request.getRecipeId())
         );
-    }
-
-    private void validateEditInput(Long id, RateRequest request){
-        if(idNotPresentORNotMatching(id, request)){
-            throw new PathNotMatchBodyException(id, request.getRateId());
-        }
-        if(!rateRepository.existsById(id)){
-            throw new ResourceNotFoundException("ComponentCategory", "id", id);
-        }
-    }
-
-    private boolean idNotPresentORNotMatching(Long pathId, RateRequest request){
-        return request.getRateId() == null || !request.getRateId().equals(pathId);
     }
 }

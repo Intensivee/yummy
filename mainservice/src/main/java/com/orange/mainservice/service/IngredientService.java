@@ -24,37 +24,27 @@ public class IngredientService {
         return responseMapper.ingredientToResponse(getById(id));
     }
 
-    public IngredientResponse add(IngredientRequest request){
-        if(request.getIngredientId() != null){
-            throw new ResourceCreateException(request.getIngredientId());
-        }
-        Ingredient ingredient = createEntityFromRequest(request);
-        return responseMapper.ingredientToResponse(ingredientRepository.save(ingredient));
-    }
-
-    public IngredientResponse edit(Long id, IngredientRequest request){
-        validateEditInput(id, request);
-        Ingredient ingredient = createEntityFromRequest(request);
-        return responseMapper.ingredientToResponse(ingredientRepository.save(ingredient));
-    }
-
-    public void delete(Long id) {
-        ingredientRepository.delete(getById(id));
-    }
-
-    private Ingredient getById(Long id){
+    public Ingredient getById(Long id){
         return ingredientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ingredient", "id", id));
     }
 
-    private Ingredient createEntityFromRequest(IngredientRequest request){
-        return new Ingredient(
-                request.getIngredientId(),
-                request.getAmount(),
-                request.getAmountType(),
-                recipeService.getById(request.getRecipeId()),
-                componentService.getById(request.getComponentId())
-        );
+    public IngredientResponse add(IngredientRequest request){
+        validateCreateRequest(request);
+        Ingredient ingredientToAdd = createEntityFromRequest(request);
+        Ingredient addedIngredient = ingredientRepository.save(ingredientToAdd);
+        return responseMapper.ingredientToResponse(addedIngredient);
+    }
+
+    public IngredientResponse edit(Long id, IngredientRequest request){
+        validateEditInput(id, request);
+        Ingredient ingredientToEdit = createEntityFromRequest(request);
+        Ingredient editedIngredient = ingredientRepository.save(ingredientToEdit);
+        return responseMapper.ingredientToResponse(editedIngredient);
+    }
+
+    public void delete(Long id) {
+        ingredientRepository.delete(getById(id));
     }
 
     private void validateEditInput(Long id, IngredientRequest request){
@@ -67,6 +57,26 @@ public class IngredientService {
     }
 
     private boolean idNotPresentORNotMatching(Long pathId, IngredientRequest request){
-        return request.getIngredientId() == null || !request.getIngredientId().equals(pathId);
+        return !isIdInRequest(request) || !request.getIngredientId().equals(pathId);
+    }
+
+    private void validateCreateRequest(IngredientRequest request){
+        if(isIdInRequest(request)){
+            throw new ResourceCreateException(request.getIngredientId());
+        }
+    }
+
+    private boolean isIdInRequest(IngredientRequest request){
+        return request.getIngredientId() != null;
+    }
+
+    private Ingredient createEntityFromRequest(IngredientRequest request){
+        return new Ingredient(
+                request.getIngredientId(),
+                request.getAmount(),
+                request.getAmountType(),
+                recipeService.getById(request.getRecipeId()),
+                componentService.getById(request.getComponentId())
+        );
     }
 }

@@ -28,22 +28,35 @@ public class ComponentCategoryService {
     }
 
     public ComponentCategoryResponse add(ComponentCategoryRequest request){
-        if(request.getCategoryId() != null){
-            throw new ResourceCreateException(request.getCategoryId());
-        }
-        ComponentCategory category = createEntityFromRequest(request);
-        return responseMapper.categoryToResponse(categoryRepository.save(category));
+        validateCreateRequest(request);
+        ComponentCategory categoryToAdd = createEntityFromRequest(request);
+        ComponentCategory addedCategory = categoryRepository.save(categoryToAdd);
+        return responseMapper.categoryToResponse(addedCategory);
     }
 
     public ComponentCategoryResponse edit(Long id, ComponentCategoryRequest request) {
-        validateEditInput(id, request);
-
-        ComponentCategory category = createEntityFromRequest(request);
-        return responseMapper.categoryToResponse(categoryRepository.save(category));
+        validateEditRequest(id, request);
+        ComponentCategory categoryToEdit = createEntityFromRequest(request);
+        ComponentCategory editedCategory = categoryRepository.save(categoryToEdit);
+        return responseMapper.categoryToResponse(editedCategory);
     }
 
     public void delete(Long id) {
         categoryRepository.delete(getById(id));
+    }
+
+    private boolean idNotPresentORNotMatching(Long pathId, ComponentCategoryRequest request){
+        return !isIdInRequest(request) || !request.getCategoryId().equals(pathId);
+    }
+
+    private void validateCreateRequest(ComponentCategoryRequest request){
+        if(isIdInRequest(request)){
+            throw new ResourceCreateException(request.getCategoryId());
+        }
+    }
+
+    private boolean isIdInRequest(ComponentCategoryRequest request){
+        return request.getCategoryId() != null;
     }
 
     private ComponentCategory createEntityFromRequest(ComponentCategoryRequest request) {
@@ -53,16 +66,12 @@ public class ComponentCategoryService {
         );
     }
 
-    private void validateEditInput(Long id, ComponentCategoryRequest request){
+    private void validateEditRequest(Long id, ComponentCategoryRequest request){
         if(idNotPresentORNotMatching(id, request)){
             throw new PathNotMatchBodyException(id, request.getCategoryId());
         }
         if(!categoryRepository.existsById(id)){
             throw new ResourceNotFoundException("ComponentCategory", "id", id);
         }
-    }
-
-    private boolean idNotPresentORNotMatching(Long pathId, ComponentCategoryRequest request){
-        return request.getCategoryId() == null || !request.getCategoryId().equals(pathId);
     }
 }

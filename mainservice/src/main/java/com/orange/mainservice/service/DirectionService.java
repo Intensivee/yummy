@@ -23,36 +23,27 @@ public class DirectionService {
         return responseMapper.directionToDto(getById(id));
     }
 
-    public DirectionResponse add(DirectionRequest request){
-        if(request.getDirectionId() != null){
-            throw new ResourceCreateException(request.getDirectionId());
-        }
-        Direction direction = createEntityFromRequest(request);
-        return responseMapper.directionToDto(directionRepository.save(direction));
-    }
-
-    public DirectionResponse edit(Long id, DirectionRequest request){
-        validateEditInput(id, request);
-        Direction direction = createEntityFromRequest(request);
-        return responseMapper.directionToDto(directionRepository.save(direction));
-    }
-
-    public void delete(Long id) {
-        directionRepository.delete(getById(id));
-    }
-
-    private Direction getById(Long id){
+    public Direction getById(Long id){
         return directionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Direction", "id", id));
     }
 
-    private Direction createEntityFromRequest(DirectionRequest request) {
-        return new Direction(
-                request.getDirectionId(),
-                request.getOrder(),
-                request.getDescription(),
-                recipeService.getById(request.getRecipeId())
-        );
+    public DirectionResponse add(DirectionRequest request){
+        validateCreateRequest(request);
+        Direction directionToAdd = createEntityFromRequest(request);
+        Direction addedDirection = directionRepository.save(directionToAdd);
+        return responseMapper.directionToDto(addedDirection);
+    }
+
+    public DirectionResponse edit(Long id, DirectionRequest request){
+        validateEditInput(id, request);
+        Direction directionToEdit = createEntityFromRequest(request);
+        Direction editedDirection = directionRepository.save(directionToEdit);
+        return responseMapper.directionToDto(editedDirection);
+    }
+
+    public void delete(Long id) {
+        directionRepository.delete(getById(id));
     }
 
     private void validateEditInput(Long id, DirectionRequest request){
@@ -65,6 +56,25 @@ public class DirectionService {
     }
 
     private boolean idNotPresentORNotMatching(Long pathId, DirectionRequest request){
-        return request.getDirectionId() == null || !request.getDirectionId().equals(pathId);
+        return !isIdInRequest(request) || !request.getDirectionId().equals(pathId);
+    }
+
+    private void validateCreateRequest(DirectionRequest request){
+        if(isIdInRequest(request)){
+            throw new ResourceCreateException(request.getDirectionId());
+        }
+    }
+
+    private boolean isIdInRequest(DirectionRequest request){
+        return request.getDirectionId() != null;
+    }
+
+    private Direction createEntityFromRequest(DirectionRequest request) {
+        return new Direction(
+                request.getDirectionId(),
+                request.getOrder(),
+                request.getDescription(),
+                recipeService.getById(request.getRecipeId())
+        );
     }
 }

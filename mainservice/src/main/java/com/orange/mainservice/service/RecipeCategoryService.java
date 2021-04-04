@@ -28,29 +28,21 @@ public class RecipeCategoryService {
     }
 
     public RecipeCategoryResponse add(RecipeCategoryRequest request){
-        if(request.getCategoryId() != null){
-            throw new ResourceCreateException(request.getCategoryId());
-        }
-        RecipeCategory category = createEntityFromRequest(request);
-        return responseMapper.categoryToResponse(categoryRepository.save(category));
+        validateCreateRequest(request);
+        RecipeCategory categoryToAdd = createEntityFromRequest(request);
+        RecipeCategory addedCategory = categoryRepository.save(categoryToAdd);
+        return responseMapper.categoryToResponse(addedCategory);
     }
 
     public RecipeCategoryResponse edit(Long id, RecipeCategoryRequest request){
         validateEditInput(id, request);
-        RecipeCategory category = createEntityFromRequest(request);
-        return responseMapper.categoryToResponse(categoryRepository.save(category));
+        RecipeCategory categoryToEdit = createEntityFromRequest(request);
+        RecipeCategory editedCategory = categoryRepository.save(categoryToEdit);
+        return responseMapper.categoryToResponse(editedCategory);
     }
 
     public void delete(Long id) {
         categoryRepository.delete(getById(id));
-    }
-
-    private RecipeCategory createEntityFromRequest(RecipeCategoryRequest request){
-        return new RecipeCategory(
-                request.getCategoryId(),
-                request.getName(),
-                request.getImg()
-        );
     }
 
     private void validateEditInput(Long id, RecipeCategoryRequest request){
@@ -63,6 +55,24 @@ public class RecipeCategoryService {
     }
 
     private boolean idNotPresentORNotMatching(Long pathId, RecipeCategoryRequest request){
-        return request.getCategoryId() == null || !request.getCategoryId().equals(pathId);
+        return !isIdInRequest(request) || !request.getCategoryId().equals(pathId);
+    }
+
+    private void validateCreateRequest(RecipeCategoryRequest request){
+        if(isIdInRequest(request)){
+            throw new ResourceCreateException(request.getCategoryId());
+        }
+    }
+
+    private boolean isIdInRequest(RecipeCategoryRequest request){
+        return request.getCategoryId() != null;
+    }
+
+    private RecipeCategory createEntityFromRequest(RecipeCategoryRequest request){
+        return new RecipeCategory(
+                request.getCategoryId(),
+                request.getName(),
+                request.getImg()
+        );
     }
 }

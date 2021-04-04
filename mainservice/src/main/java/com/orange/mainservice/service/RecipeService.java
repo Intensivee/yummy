@@ -26,27 +26,50 @@ public class RecipeService {
         return responseMapper.recipeToResponse(getById(id));
     }
 
+    public Recipe getById(Long id){
+        return recipeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", id));
+    }
+
     public RecipeResponse add(RecipeRequest request){
-        if(request.getRecipeId() != null){
-            throw new ResourceCreateException(request.getRecipeId());
-        }
-        Recipe recipe = createEntityFromRequest(request);
-        return responseMapper.recipeToResponse(recipeRepository.save(recipe));
+        validateCreateRequest(request);
+        Recipe recipeToAdd = createEntityFromRequest(request);
+        Recipe addedRecipe = recipeRepository.save(recipeToAdd);
+        return responseMapper.recipeToResponse(addedRecipe);
     }
 
     public RecipeResponse edit(Long id, RecipeRequest request){
         validateEditInput(id, request);
-        Recipe recipe = createEntityFromRequest(request);
-        return responseMapper.recipeToResponse(recipeRepository.save(recipe));
+        Recipe recipeToEdit = createEntityFromRequest(request);
+        Recipe editedRecipe = recipeRepository.save(recipeToEdit);
+        return responseMapper.recipeToResponse(editedRecipe);
     }
 
     public void delete(Long id) {
         recipeRepository.delete(getById(id));
     }
 
-    public Recipe getById(Long id){
-        return recipeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", id));
+    private void validateEditInput(Long id, RecipeRequest request){
+        if(idNotPresentORNotMatching(id, request)){
+            throw new PathNotMatchBodyException(id, request.getRecipeId());
+        }
+        if(!recipeRepository.existsById(id)){
+            throw new ResourceNotFoundException("ComponentCategory", "id", id);
+        }
+    }
+
+    private boolean idNotPresentORNotMatching(Long pathId, RecipeRequest request){
+        return !isIdInRequest(request) || !request.getRecipeId().equals(pathId);
+    }
+
+    private void validateCreateRequest(RecipeRequest request){
+        if(isIdInRequest(request)){
+            throw new ResourceCreateException(request.getRecipeId());
+        }
+    }
+
+    private boolean isIdInRequest(RecipeRequest request){
+        return request.getRecipeId() != null;
     }
 
     private Recipe createEntityFromRequest(RecipeRequest request){
@@ -60,18 +83,5 @@ public class RecipeService {
                         .map(categoryService::getById)
                         .collect(Collectors.toSet())
         );
-    }
-
-    private void validateEditInput(Long id, RecipeRequest request){
-        if(idNotPresentORNotMatching(id, request)){
-            throw new PathNotMatchBodyException(id, request.getRecipeId());
-        }
-        if(!recipeRepository.existsById(id)){
-            throw new ResourceNotFoundException("ComponentCategory", "id", id);
-        }
-    }
-
-    private boolean idNotPresentORNotMatching(Long pathId, RecipeRequest request){
-        return request.getRecipeId() == null || !request.getRecipeId().equals(pathId);
     }
 }
