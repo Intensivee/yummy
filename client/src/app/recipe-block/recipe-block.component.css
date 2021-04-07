@@ -22,7 +22,7 @@
   transition: .1s;
 }
 
-.recipe:hover .recipe-description {
+.recipe-container:hover .recipe-description {
   background-color: #eaeaea;
 }
 
