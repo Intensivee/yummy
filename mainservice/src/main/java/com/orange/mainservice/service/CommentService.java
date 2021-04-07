@@ -49,7 +49,7 @@ public class CommentService {
 
     private void validateEditRequest(Long id, CommentRequest request){
         if(isIdNotPresentORNotMatching(id, request)){
-            throw new PathNotMatchBodyException(id, request.getCommentId());
+            throw new PathNotMatchBodyException(id, request.getId());
         }
         if(!commentRepository.existsById(id)){
             throw new ResourceNotFoundException("Comment", "id", id);
@@ -57,22 +57,22 @@ public class CommentService {
     }
 
     private boolean isIdNotPresentORNotMatching(Long pathId, CommentRequest request){
-        return !isIdInRequest(request) || !request.getCommentId().equals(pathId);
+        return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
     private void validateCreateRequest(CommentRequest request){
         if(isIdInRequest(request)){
-            throw new ResourceCreateException(request.getCommentId());
+            throw new ResourceCreateException(request.getId());
         }
     }
 
     private boolean isIdInRequest(CommentRequest request){
-        return request.getCommentId() != null;
+        return request.getId() != null;
     }
 
     private Comment createNewEntityFromRequest(CommentRequest request) {
         return new Comment(
-                request.getCommentId(),
+                request.getId(),
                 request.getBody(),
                 null,
                 userService.getById(request.getUserId()),
@@ -81,9 +81,9 @@ public class CommentService {
     }
 
     private Comment createEditedEntityFromRequest(CommentRequest request){
-        Comment comment = getById(request.getCommentId());
+        Comment comment = getById(request.getId());
         return new Comment(
-                request.getCommentId(),
+                request.getId(),
                 request.getBody(),
                 comment.getDateCreated(),
                 userService.getById(request.getUserId()),

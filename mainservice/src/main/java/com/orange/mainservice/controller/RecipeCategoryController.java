@@ -28,7 +28,7 @@ public class RecipeCategoryController {
         RecipeCategoryResponse created = categoryService.add(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(created.getCategoryId()).toUri();
+                .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
 

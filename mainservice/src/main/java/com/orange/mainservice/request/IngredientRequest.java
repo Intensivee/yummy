@@ -11,7 +11,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public final class IngredientRequest {
 
-    private final Long ingredientId;
+    private final Long id;
     @NotNull
     @Positive
     private final Double amount;

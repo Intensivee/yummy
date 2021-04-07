@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public final class IngredientResponse {
 
-    private final Long ingredientId;
+    private final Long id;
     private final Double amount;
     private final AmountType amountType;
     private final String componentName;

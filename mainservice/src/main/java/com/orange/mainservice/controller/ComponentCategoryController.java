@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Set;
 
 @RestController
 @RequestMapping("componentCategories")
@@ -17,6 +18,11 @@ import java.net.URI;
 public class ComponentCategoryController {
 
     private final ComponentCategoryService categoryService;
+
+    @GetMapping
+    public ResponseEntity<Set<ComponentCategoryResponse>> getAll() {
+        return ResponseEntity.ok(categoryService.getAll());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ComponentCategoryResponse> getById(@PathVariable("id") Long id){
@@ -28,7 +34,7 @@ public class ComponentCategoryController {
         ComponentCategoryResponse created = categoryService.add(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(created.getCategoryId()).toUri();
+                .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
 

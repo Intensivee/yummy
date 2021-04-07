@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public final class CommentRequest {
 
-    private final Long commentId;
+    private final Long id;
     @NotBlank
     @Size(max=300)
     private final String body;

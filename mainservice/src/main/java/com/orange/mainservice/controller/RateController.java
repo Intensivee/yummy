@@ -28,7 +28,7 @@ public class RateController {
         RateResponse created = rateService.add(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(created.getRateId()).toUri();
+                .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
 

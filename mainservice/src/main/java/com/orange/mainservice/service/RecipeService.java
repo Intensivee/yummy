@@ -51,7 +51,7 @@ public class RecipeService {
 
     private void validateEditInput(Long id, RecipeRequest request){
         if(idNotPresentORNotMatching(id, request)){
-            throw new PathNotMatchBodyException(id, request.getRecipeId());
+            throw new PathNotMatchBodyException(id, request.getId());
         }
         if(!recipeRepository.existsById(id)){
             throw new ResourceNotFoundException("ComponentCategory", "id", id);
@@ -59,22 +59,22 @@ public class RecipeService {
     }
 
     private boolean idNotPresentORNotMatching(Long pathId, RecipeRequest request){
-        return !isIdInRequest(request) || !request.getRecipeId().equals(pathId);
+        return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
     private void validateCreateRequest(RecipeRequest request){
         if(isIdInRequest(request)){
-            throw new ResourceCreateException(request.getRecipeId());
+            throw new ResourceCreateException(request.getId());
         }
     }
 
     private boolean isIdInRequest(RecipeRequest request){
-        return request.getRecipeId() != null;
+        return request.getId() != null;
     }
 
     private Recipe createEntityFromRequest(RecipeRequest request){
         return new Recipe(
-                request.getRecipeId(),
+                request.getId(),
                 request.getTimeType(),
                 request.getTitle(),
                 request.getImg(),

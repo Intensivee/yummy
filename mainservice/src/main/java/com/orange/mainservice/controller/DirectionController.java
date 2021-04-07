@@ -28,7 +28,7 @@ public class DirectionController {
         DirectionResponse created = directionService.add(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(created.getDirectionId()).toUri();
+                .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
 

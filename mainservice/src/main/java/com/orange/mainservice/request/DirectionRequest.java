@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public final class DirectionRequest {
 
-    private final Long directionId;
+    private final Long id;
     @NotNull
     @Min(1)
     private final Integer order;

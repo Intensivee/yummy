@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public final class RecipeCategoryRequest {
 
-    private final Long categoryId;
+    private final Long id;
     @NotBlank
     @Size(max = 25)
     private final String name;

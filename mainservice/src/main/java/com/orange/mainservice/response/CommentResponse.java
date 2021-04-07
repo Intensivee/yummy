@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 public final class CommentResponse {
 
-    private final Long commentId;
+    private final Long id;
     private final String body;
     private final Date dateCreated;
     private final String username;

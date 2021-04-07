@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public final class RateRequest {
 
-    private final Long rateId;
+    private final Long id;
     @Min(0)
     @Max(5)
     @NotNull

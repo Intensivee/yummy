@@ -11,12 +11,21 @@ import com.orange.mainservice.response.ComponentCategoryResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class ComponentCategoryService {
 
     private final ComponentCategoryRepository categoryRepository;
     private final ComponentCategoryResponseMapper responseMapper;
+
+    public Set<ComponentCategoryResponse> getAll() {
+        return categoryRepository.findAll().stream()
+                .map(responseMapper::categoryToResponse)
+                .collect(Collectors.toSet());
+    }
 
     public ComponentCategoryResponse getResponseById(Long id){
         return responseMapper.categoryToResponse(getById(id));
@@ -46,29 +55,29 @@ public class ComponentCategoryService {
     }
 
     private boolean idNotPresentORNotMatching(Long pathId, ComponentCategoryRequest request){
-        return !isIdInRequest(request) || !request.getCategoryId().equals(pathId);
+        return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
     private void validateCreateRequest(ComponentCategoryRequest request){
         if(isIdInRequest(request)){
-            throw new ResourceCreateException(request.getCategoryId());
+            throw new ResourceCreateException(request.getId());
         }
     }
 
     private boolean isIdInRequest(ComponentCategoryRequest request){
-        return request.getCategoryId() != null;
+        return request.getId() != null;
     }
 
     private ComponentCategory createEntityFromRequest(ComponentCategoryRequest request) {
         return new ComponentCategory(
-                request.getCategoryId(),
+                request.getId(),
                 request.getName()
         );
     }
 
     private void validateEditRequest(Long id, ComponentCategoryRequest request){
         if(idNotPresentORNotMatching(id, request)){
-            throw new PathNotMatchBodyException(id, request.getCategoryId());
+            throw new PathNotMatchBodyException(id, request.getId());
         }
         if(!categoryRepository.existsById(id)){
             throw new ResourceNotFoundException("ComponentCategory", "id", id);

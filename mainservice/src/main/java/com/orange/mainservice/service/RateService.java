@@ -54,7 +54,7 @@ public class RateService {
 
     private void validateEditInput(Long id, RateRequest request){
         if(idNotPresentORNotMatching(id, request)){
-            throw new PathNotMatchBodyException(id, request.getRateId());
+            throw new PathNotMatchBodyException(id, request.getId());
         }
         if(!rateRepository.existsById(id)){
             throw new ResourceNotFoundException("ComponentCategory", "id", id);
@@ -62,22 +62,22 @@ public class RateService {
     }
 
     private boolean idNotPresentORNotMatching(Long pathId, RateRequest request){
-        return !isIdInRequest(request) || !request.getRateId().equals(pathId);
+        return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
     private void validateCreateRequest(RateRequest request){
         if(isIdInRequest(request)){
-            throw new ResourceCreateException(request.getRateId());
+            throw new ResourceCreateException(request.getId());
         }
     }
 
     private boolean isIdInRequest(RateRequest request){
-        return request.getRateId() != null;
+        return request.getId() != null;
     }
 
     private Rate createNewEntityFromRequest(RateRequest request){
         return new Rate(
-                request.getRateId(),
+                request.getId(),
                 request.getValue(),
                 null,
                 userService.getById(request.getUserId()),
@@ -86,9 +86,9 @@ public class RateService {
     }
 
     private Rate createEditedEntityFromRequest(RateRequest request){
-        Rate rate = getById(request.getRateId());
+        Rate rate = getById(request.getId());
         return new Rate(
-                request.getRateId(),
+                request.getId(),
                 request.getValue(),
                 rate.getDateCreated(),
                 userService.getById(request.getUserId()),

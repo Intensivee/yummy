@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 public final class RecipeRequest {
 
-    private final Long recipeId;
+    private final Long id;
     @NotNull
     private final TimeType timeType;
     @NotBlank

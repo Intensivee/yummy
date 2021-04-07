@@ -23,27 +23,14 @@
   <button mat-menu-item >Christmas dishes</button>
 </mat-menu>
 
+
+
+
 <mat-menu #ingredients="matMenu">
-  <button mat-menu-item [matMenuTriggerFor]="fruits" >Fruits</button>
-  <button mat-menu-item [matMenuTriggerFor]="vegetables" >Vegetables</button>
-  <button mat-menu-item [matMenuTriggerFor]="meat" >Meat</button>
-</mat-menu>
-
-<mat-menu #fruits="matMenu">
-  <button mat-menu-item >Apple</button>
-  <button mat-menu-item >Banana</button>
-  <button mat-menu-item >Plump</button>
-</mat-menu>
-
-<mat-menu #vegetables="matMenu">
-  <button mat-menu-item >Potato</button>
-  <button mat-menu-item >Beetroot</button>
-  <button mat-menu-item >courgette</button>
-</mat-menu>
-
-<mat-menu #meat="matMenu">
-  <button mat-menu-item >Chicken</button>
-  <button mat-menu-item >Beef</button>
-  <button mat-menu-item >Sausage</button>
-  <button mat-menu-item >Bacon</button>
-</mat-menu>
+  <ng-container *ngFor="let componentCat of componentCategories">
+    <button mat-menu-item [matMenuTriggerFor]="sub_menu" >{{componentCat.name}}</button>
+    <mat-menu #sub_menu="matMenu">
+        <button mat-menu-item *ngFor="let component of componentCat.components">{{component.name}}</button>
+    </mat-menu>
+  </ng-container>
+</mat-menu> 

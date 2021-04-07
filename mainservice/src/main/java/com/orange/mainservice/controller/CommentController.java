@@ -28,7 +28,7 @@ public class CommentController {
         CommentResponse created = commentService.add(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(created.getCommentId()).toUri();
+                .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
 

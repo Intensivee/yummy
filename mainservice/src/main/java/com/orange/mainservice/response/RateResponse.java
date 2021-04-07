@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public final class RateResponse {
 
-    private final Long rateId;
+    private final Long id;
     private final Integer value;
     private final Long userId;
     private final Long recipeId;

@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 public final class ComponentRequest {
 
-    private final Long componentId;
+    private final Long id;
     @NotBlank
     @Size(max=30)
     private final String name;

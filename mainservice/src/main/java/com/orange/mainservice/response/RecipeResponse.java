@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public final class RecipeResponse {
 
-    private final Long recipeId;
+    private final Long id;
     private final TimeType timeType;
     private final String title;
     private final String img;

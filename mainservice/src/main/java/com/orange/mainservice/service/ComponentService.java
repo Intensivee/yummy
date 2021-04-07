@@ -11,6 +11,7 @@ import com.orange.mainservice.response.ComponentResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +21,12 @@ public class ComponentService {
     private final ComponentRepository componentRepository;
     private final ComponentResponseMapper responseMapper;
     private final ComponentCategoryService categoryService;
+
+    public Set<ComponentResponse> getByCategoryId(Long id){
+        return componentRepository.findAllByCategoriesId(id).stream()
+                .map(responseMapper::componentToResponse)
+                .collect(Collectors.toSet());
+    }
 
     public ComponentResponse getResponseById(Long id){
         return responseMapper.componentToResponse(getById(id));
@@ -50,7 +57,7 @@ public class ComponentService {
 
     private void validateEditInput(Long id, ComponentRequest request){
         if(idNotPresentORNotMatching(id, request)){
-            throw new PathNotMatchBodyException(id, request.getComponentId());
+            throw new PathNotMatchBodyException(id, request.getId());
         }
         if(!componentRepository.existsById(id)){
             throw new ResourceNotFoundException("ComponentCategory", "id", id);
@@ -58,22 +65,22 @@ public class ComponentService {
     }
 
     private boolean idNotPresentORNotMatching(Long pathId, ComponentRequest request){
-        return !isIdInRequest(request) || !request.getComponentId().equals(pathId);
+        return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
     private void validateCreateRequest(ComponentRequest request){
         if(isIdInRequest(request)){
-            throw new ResourceCreateException(request.getComponentId());
+            throw new ResourceCreateException(request.getId());
         }
     }
 
     private boolean isIdInRequest(ComponentRequest request){
-        return request.getComponentId() != null;
+        return request.getId() != null;
     }
 
     private Component createEntityFromRequest(ComponentRequest request) {
         return new Component(
-                request.getComponentId(),
+                request.getId(),
                 request.getName(),
                 request.getIsAccepted(),
                 request.getCategoriesIds() != null ? request.getCategoriesIds()

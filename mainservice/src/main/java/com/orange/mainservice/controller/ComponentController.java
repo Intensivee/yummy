@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Set;
 
 @RestController
 @RequestMapping("components")
@@ -28,7 +29,7 @@ public class ComponentController {
         ComponentResponse created = componentService.add(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(created.getComponentId()).toUri();
+                .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(location).body(created);
     }
 
@@ -43,5 +44,11 @@ public class ComponentController {
     public ResponseEntity<Object> delete(@PathVariable("id") Long id){
         componentService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+
+    @GetMapping("/search/findByCategoryId/{id}")
+    public ResponseEntity<Set<ComponentResponse>> getByCategoryId(@PathVariable("id") Long id){
+        return ResponseEntity.ok(componentService.getByCategoryId(id));
     }
 }

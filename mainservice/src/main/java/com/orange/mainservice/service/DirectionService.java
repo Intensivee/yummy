@@ -48,7 +48,7 @@ public class DirectionService {
 
     private void validateEditInput(Long id, DirectionRequest request){
         if(idNotPresentORNotMatching(id, request)){
-            throw new PathNotMatchBodyException(id, request.getDirectionId());
+            throw new PathNotMatchBodyException(id, request.getId());
         }
         if(!directionRepository.existsById(id)){
             throw new ResourceNotFoundException("ComponentCategory", "id", id);
@@ -56,22 +56,22 @@ public class DirectionService {
     }
 
     private boolean idNotPresentORNotMatching(Long pathId, DirectionRequest request){
-        return !isIdInRequest(request) || !request.getDirectionId().equals(pathId);
+        return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
     private void validateCreateRequest(DirectionRequest request){
         if(isIdInRequest(request)){
-            throw new ResourceCreateException(request.getDirectionId());
+            throw new ResourceCreateException(request.getId());
         }
     }
 
     private boolean isIdInRequest(DirectionRequest request){
-        return request.getDirectionId() != null;
+        return request.getId() != null;
     }
 
     private Direction createEntityFromRequest(DirectionRequest request) {
         return new Direction(
-                request.getDirectionId(),
+                request.getId(),
                 request.getOrder(),
                 request.getDescription(),
                 recipeService.getById(request.getRecipeId())
