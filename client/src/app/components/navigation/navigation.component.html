@@ -1,11 +1,11 @@
 <nav>
-  <a class="hamburger link" mat-button [matMenuTriggerFor]="ingredients" ><em class="fas fa-bars"></em></a>
+  <a class="hamburger link" mat-button [matMenuTriggerFor]="components_menu" ><em class="fas fa-bars"></em></a>
   <div class="left-nav-wrapper">
     <img class="logo-img" src="./assets/img/logo.png" alt="site logo">
     <ul class="nav-list">
       <li><a class="link">Tips and tricks</a></li>
-      <li><a class="link" mat-button [matMenuTriggerFor]="ingredients" >Ingredients</a></li>
-      <li><a class="link" mat-button [matMenuTriggerFor]="recipes" >Recipes</a></li>
+      <li><a class="link" mat-button [matMenuTriggerFor]="components_menu" >Ingredients</a></li>
+      <li><a class="link" mat-button [matMenuTriggerFor]="recipes_menu" >Recipes</a></li>
     </ul>
   </div>
 
@@ -15,18 +15,15 @@
   </ul>
 </nav>
 
-<!--MAT MENU COMPONENTS-->
-<mat-menu #recipes="matMenu">
-  <button mat-menu-item >Dessert</button>
-  <button mat-menu-item >Breakfast</button>
-  <button mat-menu-item >Diner</button>
-  <button mat-menu-item >Christmas dishes</button>
+<!------MAT MENU COMPONENTS----->
+
+<mat-menu #recipes_menu="matMenu">
+  <ng-container *ngFor="let recipeCat of recipeCategories">
+    <button mat-menu-item >{{recipeCat.name}}}</button>
+  </ng-container>
 </mat-menu>
 
-
-
-
-<mat-menu #ingredients="matMenu">
+<mat-menu #components_menu="matMenu">
   <ng-container *ngFor="let componentCat of componentCategories">
     <button mat-menu-item [matMenuTriggerFor]="sub_menu" >{{componentCat.name}}</button>
     <mat-menu #sub_menu="matMenu">

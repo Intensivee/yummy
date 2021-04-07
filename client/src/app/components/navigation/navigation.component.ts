@@ -1,6 +1,8 @@
+import { RecipeCategoryService } from '../../service/recipe-category.service';
 import { Component, OnInit } from '@angular/core';
 import { ComponentCategoryService } from '../../service/component-category.service';
 import { ComponentCategory } from '../../model/component-category';
+import { RecipeCategory } from 'src/app/model/recipe-category';
 
 @Component({
   selector: 'app-navigation',
@@ -9,20 +11,28 @@ import { ComponentCategory } from '../../model/component-category';
 })
 export class NavigationComponent implements OnInit {
   componentCategories: ComponentCategory[];
+  recipeCategories: RecipeCategory[];
 
-  constructor(private componentCatService: ComponentCategoryService) { }
+  constructor(private componentCatService: ComponentCategoryService,
+              private recipeCatService: RecipeCategoryService) { }
 
   ngOnInit(): void {
     this.loadData();
   }
 
   loadData(): void {
+    this.loadRecipeCategories();
     this.loadComponentCategories();
   }
 
   loadComponentCategories(): void {
     this.componentCatService.getAllWithComponentLists()
       .subscribe(categories => this.componentCategories = categories);
+  }
+
+  loadRecipeCategories(): void {
+    this.recipeCatService.getAll()
+      .subscribe(categories => this.recipeCategories = categories);
   }
 
 }

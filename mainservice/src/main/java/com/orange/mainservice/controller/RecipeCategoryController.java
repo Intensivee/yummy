@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Set;
 
 @RestController
 @RequestMapping("recipeCategories")
@@ -17,6 +18,11 @@ import java.net.URI;
 public class RecipeCategoryController {
 
     private final RecipeCategoryService categoryService;
+
+    @GetMapping
+    public ResponseEntity<Set<RecipeCategoryResponse>> getAll() {
+        return ResponseEntity.ok(categoryService.getAll());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<RecipeCategoryResponse> getById(@PathVariable("id") Long id){

@@ -11,12 +11,21 @@ import com.orange.mainservice.response.RecipeCategoryResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class RecipeCategoryService {
 
     private final RecipeCategoryRepository categoryRepository;
     private final RecipeCategoryResponseMapper responseMapper;
+
+    public Set<RecipeCategoryResponse> getAll(){
+        return categoryRepository.findAll().stream()
+                .map(responseMapper::categoryToResponse)
+                .collect(Collectors.toSet());
+    }
 
     public RecipeCategoryResponse getResponseById(Long id){
         return responseMapper.categoryToResponse(getById(id));
