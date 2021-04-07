@@ -9,21 +9,18 @@
   </section>
 
   <section class="recipes-section">
-    <div class="pagination"><h1>[PAGINATION]</h1></div>
     <div class="recipes">
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
+        <app-recipe-block 
+          class="recipe" 
+          [recipe]="recipe" 
+          *ngFor="let recipe of recipes">
+      </app-recipe-block>
     </div>
+    <mat-paginator [length]="this.totalElements"
+                  [pageSize]="this.pageSize"
+                  [pageSizeOptions]="[6, 9, 12]"
+                  (page)="OnPageChange($event)">
+    </mat-paginator>
   </section>
 
 </main>

@@ -9,6 +9,8 @@ import com.orange.mainservice.repository.RecipeRepository;
 import com.orange.mainservice.request.RecipeRequest;
 import com.orange.mainservice.response.RecipeResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -21,6 +23,11 @@ public class RecipeService {
     private final RecipeResponseMapper responseMapper;
     private final UserService userService;
     private final RecipeCategoryService categoryService;
+
+    public Page<RecipeResponse> getAllPaged(Pageable pageable) {
+        return recipeRepository.findAll(pageable)
+                .map(responseMapper::recipeToResponse);
+    }
 
     public RecipeResponse getResponseById(Long id){
         return responseMapper.recipeToResponse(getById(id));

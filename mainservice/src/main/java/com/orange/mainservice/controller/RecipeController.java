@@ -4,6 +4,8 @@ import com.orange.mainservice.request.RecipeRequest;
 import com.orange.mainservice.response.RecipeResponse;
 import com.orange.mainservice.service.RecipeService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,6 +19,11 @@ import java.net.URI;
 public class RecipeController {
 
     private final RecipeService recipeService;
+
+    @GetMapping
+    public ResponseEntity<Page<RecipeResponse>> getAllPaged(Pageable pageable) {
+        return ResponseEntity.ok(recipeService.getAllPaged(pageable));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<RecipeResponse> getById(@PathVariable("id") Long id){
