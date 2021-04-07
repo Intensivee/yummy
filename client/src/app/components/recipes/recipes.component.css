@@ -37,14 +37,7 @@ main {
 
 .recipe {
   width: 300px;
-}
-
-.recipe-img {
-  height: 180px;
-}
-
-.recipe-description {
-  height: 120px;
+  height: 300px;
 }
 
 /* ======== MEDIA QUERIES ==========*/
@@ -52,27 +45,5 @@ main {
 @media only screen and (max-width: 800px) {
   .recipes-section {
     width: 100%;
-  }
-}
-
-@media only screen and (max-width: 320px) {
-
-  .recipe {
-    margin: 1.5em 0;
-    width: 100%;
-  }
-
-  .recipe-img {
-    height: 65vw;
-  }
-
-  .recipe-description {
-    height: 105px;
-    background-color: #efefef;
-  }
-
-  .recipe-title {
-    margin-top: 3px;
-    margin-bottom: 15px;
   }
 }

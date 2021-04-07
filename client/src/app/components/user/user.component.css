@@ -6,7 +6,8 @@ main {
   overflow: hidden;
 }
 
-.user-section, .recipes-section {
+.user-section,
+.recipes-section {
   margin-top: 4em;
 }
 
@@ -58,7 +59,7 @@ main {
   opacity: 1;
 }
 
-.badge:hover > .far {
+.badge:hover>.far {
   transform: rotate(360deg);
 }
 
@@ -93,7 +94,7 @@ main {
   flex-basis: 100%;
   align-items: center;
   width: 60%;
-  max-width: 800px;
+  max-width: 850px;
 }
 
 .recipes-header {
@@ -101,15 +102,8 @@ main {
 }
 
 .recipe {
-  width: 210px;
-}
-
-.recipe-img {
-  height: 126px;
-}
-
-.recipe-description {
-  height: 90px;
+  width: 220px;
+  min-height: 200px;
 }
 
 /* ======== MEDIA QUERIES ==========*/

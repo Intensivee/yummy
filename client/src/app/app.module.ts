@@ -13,6 +13,7 @@ import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { RecipeBlockComponent } from './recipe-block/recipe-block.component';
 
 const MAT_MODULES = [
   MatMenuModule,
@@ -28,7 +29,8 @@ const MAT_MODULES = [
     MainComponent,
     RecipesComponent,
     RecipeComponent,
-    UserComponent
+    UserComponent,
+    RecipeBlockComponent
   ],
   imports: [
     MAT_MODULES,

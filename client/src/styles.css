@@ -54,37 +54,3 @@ main {
   margin: 1.5em .5em;
   cursor: pointer;
 }
-
-.recipe-img {
-  width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.recipe-description {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid black;
-  border-top: none;
-  font-weight: 700;
-  transition: .1s;
-}
-
-.recipe:hover .recipe-description {
-  background-color: #eaeaea;
-}
-
-.recipe-title {
-  margin: 10px 5px 15px 5px;
-  height: 2em;
-  text-align: center;
-}
-
-.rate {
-  margin: 0;
-}
-
-.recipe-time {
-  margin: 10px;
-}
