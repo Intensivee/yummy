@@ -34,6 +34,11 @@ public class RateService {
                 .orElse(0D);
     }
 
+    public Double getUserAvgRate(Long userId) {
+        return rateRepository.getUserAverageRate(userId)
+                .orElse(0D);
+    }
+
     public RateResponse add(RateRequest request){
         validateCreateRequest(request);
         Rate rateToAdd = createNewEntityFromRequest(request);
