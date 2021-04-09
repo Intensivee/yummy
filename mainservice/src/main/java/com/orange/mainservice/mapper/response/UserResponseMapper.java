@@ -14,7 +14,8 @@ public class UserResponseMapper {
                 user.getUsername(),
                 user.getFirstName(),
                 user.getLastName(),
-                user.getImgUrl()
+                user.getImgUrl(),
+                user.getDateCreated()
         );
     }
 }

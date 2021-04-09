@@ -3,9 +3,11 @@ package com.orange.mainservice.entity;
 import com.orange.mainservice.entity.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity(name = "User")
@@ -43,6 +45,10 @@ public class User {
 
     @Column(name = "img_url")
     private String imgUrl;
+
+    @CreationTimestamp
+    @Column(name = "date_created", nullable = false)
+    private Date dateCreated;
 
     @Enumerated(EnumType.STRING)
     @Type(type = "com.orange.mainservice.entity.enums.EnumTypePostgreSql")
