@@ -1,5 +1,5 @@
 <div class="recipe-container">
-    <img class="recipe-img" src="./assets/img/recipes/spaghetti.jpg" alt="img of recipe">
+    <img class="recipe-img" src="{{recipe.img}}" alt="img of recipe" onerror="this.src='/assets/img/on-error.jpg'">
 
     <div class="recipe-description">
       <p class="recipe-title">{{recipe.title}}</p>
