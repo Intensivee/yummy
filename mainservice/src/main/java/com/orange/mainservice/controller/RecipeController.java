@@ -20,15 +20,21 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<RecipeResponse> getById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(recipeService.getResponseById(id));
+    }
+
     @GetMapping
     public ResponseEntity<Page<RecipeResponse>> getAllPaged(Pageable pageable) {
         return ResponseEntity.ok(recipeService.getAllPaged(pageable));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<RecipeResponse> getById(@PathVariable("id") Long id){
-        return ResponseEntity.ok(recipeService.getResponseById(id));
+    @GetMapping("/search/findByUserId/{id}")
+    public ResponseEntity<Page<RecipeResponse>> getByUserIdPaged(@PathVariable("id") Long id, Pageable pageable){
+        return ResponseEntity.ok(recipeService.getByUserIdPaged(id, pageable));
     }
+
 
     @PostMapping
     public ResponseEntity<RecipeResponse> create(@Valid @RequestBody RecipeRequest request){
