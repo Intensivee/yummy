@@ -43,6 +43,9 @@ public class User {
     @Column(name = "last_name", columnDefinition = "VARCHAR(25)")
     private String lastName;
 
+    @Column(name = "bio", columnDefinition = "VARCHAR(230)")
+    private String bio;
+
     @Column(name = "img_url")
     private String imgUrl;
 

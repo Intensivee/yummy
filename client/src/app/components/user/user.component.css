@@ -32,7 +32,8 @@ main {
 
 .user-img {
   margin-top: 2em;
-  width: 40%;
+  width: 130px;
+  height: 130px;
   border-radius: 100%;
 }
 
@@ -59,16 +60,16 @@ main {
   opacity: 1;
 }
 
-.badge:hover>.far {
-  transform: rotate(360deg);
-}
-
 .badge .far {
   width: 1em;
   margin-left: .5em;
   font-size: 1.6em;
   color: #419A1C;
-  transition: 1s;
+  transition: .4s;
+}
+
+.badge:hover>.far {
+  color: #CF1717;
 }
 
 .badge-text {
@@ -147,7 +148,8 @@ main {
   }
 
   .user-img {
-    width: 10em;
+    width: 150px;
+    height: 150px;
   }
 
   .badges {

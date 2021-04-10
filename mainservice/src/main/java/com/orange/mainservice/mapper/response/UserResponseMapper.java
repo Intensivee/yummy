@@ -24,6 +24,7 @@ public class UserResponseMapper {
                 user.getUsername(),
                 user.getFirstName(),
                 user.getLastName(),
+                user.getBio(),
                 user.getImgUrl(),
                 user.getDateCreated(),
                 rateService.getUserAvgRate(user.getId())

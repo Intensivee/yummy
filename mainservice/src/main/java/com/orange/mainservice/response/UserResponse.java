@@ -14,6 +14,7 @@ public final class UserResponse {
     private final String username;
     private final String firstName;
     private final String lastName;
+    private final String bio;
     private final String img;
     private final Date dateCreated;
     private final Double avgRate;
