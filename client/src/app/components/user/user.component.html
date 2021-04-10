@@ -1,18 +1,16 @@
 <main>
 
   <section class="user-section">
-    <img class="user-img" src="assets/img/avatar1.jpg" alt="user avatar">
-    <h2 class="username">Włodek Markowicz</h2>
-    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat.</p>
+    <img class="user-img" src="{{user.img}}" onerror="this.src='./assets/img/on-error-square.jpg'" alt="user avatar">
+    <h2 class="username">{{user.firstName}} {{user.lastName}}</h2>
+    <p class="description">{{user.bio}}</p>
     <div class="badges">
 
       <div class="badge">
         <em class="far fa-star"></em>
         <div class="badge-text">
           <p class="badge-header">Average Ratings</p>
-          <p class="badge-value">4.21</p>
+          <p class="badge-value">{{user.avgRate | number: '1.2'}}</p>
         </div>
       </div>
 
@@ -20,7 +18,7 @@
         <em class="far fa-file"></em>
         <div class="badge-text">
           <p class="badge-header">Total Recipes</p>
-          <p class="badge-value">8</p>
+          <p class="badge-value">{{totalElements}}</p>
         </div>
       </div>
 
@@ -28,7 +26,7 @@
         <em class="far fa-calendar-alt"></em>
         <div class="badge-text">
           <p class="badge-header">Joined Date</p>
-          <p class="badge-value">28.02.2021</p>
+          <p class="badge-value">{{user.dateCreated | date}}</p>
         </div>
       </div>
     </div>
@@ -38,15 +36,17 @@
     <h2 class="recipes-header">User Recipes</h2>
 
     <div class="recipes">
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
-      <app-recipe-block class="recipe"></app-recipe-block>
+      <app-recipe-block 
+        class="recipe" 
+        [recipe]="recipe" 
+        *ngFor="let recipe of recipes">
+      </app-recipe-block>
     </div>
-
-    <h1> [ PAGINATION ]</h1>
+    <mat-paginator [length]="this.totalElements"
+                  [pageSize]="this.pageSize"
+                  hidePageSize=true
+                  (page)="OnPageChange($event)">
+    </mat-paginator>
   </section>
 
 </main>

@@ -17,6 +17,12 @@ export class RecipeService {
     const url = `${RESOURCE_URL}?page=${page}&size=${pageSize}`;
     return this.http.get<GetPagedResponse>(url);
   }
+
+  getByUserIdPaged(userId: number, page: number, pageSize: number): Observable<GetPagedResponse> {
+    const url = `${RESOURCE_URL}/search/findByUserId/${userId}?page=${page}&size=${pageSize}`;
+    return this.http.get<GetPagedResponse>(url);
+  }
+
 }
 
 interface GetPagedResponse {
