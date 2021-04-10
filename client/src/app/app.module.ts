@@ -1,3 +1,4 @@
+import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
@@ -36,6 +37,7 @@ const MAT_MODULES = [
   ],
   imports: [
     MAT_MODULES,
+    AppRoutingModule,
     BrowserModule,
     RouterModule,
     FontAwesomeModule,

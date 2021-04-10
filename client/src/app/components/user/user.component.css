@@ -17,6 +17,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10px;
   width: 300px;
   min-width: 300px;
   height: 650px;
@@ -31,7 +32,7 @@ main {
 }
 
 .user-img {
-  margin-top: 2em;
+  margin-top: 1em;
   width: 130px;
   height: 130px;
   border-radius: 100%;
