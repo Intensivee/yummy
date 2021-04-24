@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'user', component: UserComponent },
   { path: 'recipes', component: RecipesComponent },
-  { path: 'recipe', component: RecipeComponent },
+  { path: 'recipes/:category', component: RecipesComponent },
+  { path: 'recipe/:id', component: RecipeComponent },
   { path: '', redirectTo: '/main', pathMatch: 'full' },
   { path: '**', redirectTo: '/main', pathMatch: 'full' }
 ];

@@ -19,7 +19,7 @@
 
 <mat-menu #recipes_menu="matMenu">
   <ng-container *ngFor="let recipeCat of recipeCategories">
-    <button mat-menu-item >{{recipeCat.name}}}</button>
+    <button mat-menu-item routerLink="/recipes/{{recipeCat.name}}">{{recipeCat.name}}</button>
   </ng-container>
 </mat-menu>
 

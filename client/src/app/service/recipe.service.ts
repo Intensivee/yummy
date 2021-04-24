@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../constants';
 import { Recipe } from '../model/recipe';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 const RESOURCE_URL = `${API_URL}/recipes`;
 
@@ -18,11 +18,16 @@ export class RecipeService {
     return this.http.get<GetPagedResponse>(url);
   }
 
+  getPagedByCategoryName(category: string, page: number, pageSize: number)
+    : Observable<GetPagedResponse> {
+    const url = `${RESOURCE_URL}/search/findByCategoryName/${category}?page=${page}&size=${pageSize}`;
+    return this.http.get<GetPagedResponse>(url);
+  }
+
   getByUserIdPaged(userId: number, page: number, pageSize: number): Observable<GetPagedResponse> {
     const url = `${RESOURCE_URL}/search/findByUserId/${userId}?page=${page}&size=${pageSize}`;
     return this.http.get<GetPagedResponse>(url);
   }
-
 }
 
 interface GetPagedResponse {

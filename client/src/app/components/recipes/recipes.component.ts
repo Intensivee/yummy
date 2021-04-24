@@ -1,7 +1,10 @@
+import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../../service/recipe.service';
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/model/recipe';
 import { PageEvent } from '@angular/material/paginator';
+
+const PARAM_NAME = 'category';
 
 @Component({
   selector: 'app-recipes',
@@ -10,18 +13,46 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class RecipesComponent implements OnInit {
 
+  category = 'All';
   recipes: Recipe[];
   pageSize = 6;
   pageNumber = 0;
   totalElements: number;
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(private recipeService: RecipeService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.loadRecipesPaginated();
+    this.route.paramMap.subscribe(() => this.initializeData());
   }
 
-  loadRecipesPaginated(): void {
+  initializeData(): void {
+    if (this.route.snapshot.paramMap.has(PARAM_NAME)) {
+      this.handleRouteWithParam();
+    } else {
+      this.loadAllRecipesPaginated();
+    }
+  }
+
+  handleRouteWithParam(): void {
+    const newCategory = this.route.snapshot.paramMap.get(PARAM_NAME);
+    this.resetPageNumberIfNewCategory(newCategory);
+    this.category = newCategory;
+    this.loadRecipesPaginatedByCategory();
+  }
+
+  resetPageNumberIfNewCategory(newCategory: string): void {
+    if (this.category !== newCategory){
+      this.pageNumber = 0;
+    }
+  }
+
+  loadRecipesPaginatedByCategory(): void {
+    this.recipeService.getPagedByCategoryName(this.category, this.pageNumber, this.pageSize)
+      .subscribe(this.processResponse());
+  }
+
+  loadAllRecipesPaginated(): void {
     this.recipeService.getPaged(this.pageNumber, this.pageSize)
       .subscribe(this.processResponse());
   }
@@ -38,6 +69,6 @@ export class RecipesComponent implements OnInit {
   OnPageChange(event: PageEvent): void {
     this.pageSize = event.pageSize;
     this.pageNumber = event.pageIndex;
-    this.loadRecipesPaginated();
+    this.loadAllRecipesPaginated();
   }
 }
