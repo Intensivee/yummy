@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/model/recipe';
 import { PageEvent } from '@angular/material/paginator';
 
-const PARAM_NAME = 'category';
+const RECIPE_CATEGORY_PARAM = 'category';
+const RECIPE_COMPONENT_PARAM = 'component';
 
 @Component({
   selector: 'app-recipes',
@@ -15,7 +16,7 @@ export class RecipesComponent implements OnInit {
 
   category = 'All';
   recipes: Recipe[];
-  pageSize = 6;
+  pageSize = 3;
   pageNumber = 0;
   totalElements: number;
 
@@ -27,28 +28,42 @@ export class RecipesComponent implements OnInit {
   }
 
   initializeData(): void {
-    if (this.route.snapshot.paramMap.has(PARAM_NAME)) {
-      this.handleRouteWithParam();
+    if (this.route.snapshot.paramMap.has(RECIPE_CATEGORY_PARAM)) {
+      this.handleRouteWithCategoryParam();
+    } else if (this.route.snapshot.paramMap.has(RECIPE_COMPONENT_PARAM)) {
+      this.handleRouteWithComponentParam();
     } else {
       this.loadAllRecipesPaginated();
     }
   }
 
-  handleRouteWithParam(): void {
-    const newCategory = this.route.snapshot.paramMap.get(PARAM_NAME);
-    this.resetPageNumberIfNewCategory(newCategory);
+  handleRouteWithCategoryParam(): void {
+    const newCategory = this.route.snapshot.paramMap.get(RECIPE_CATEGORY_PARAM);
+    this.resetPageNumberIfNewParam(newCategory);
     this.category = newCategory;
     this.loadRecipesPaginatedByCategory();
   }
 
-  resetPageNumberIfNewCategory(newCategory: string): void {
-    if (this.category !== newCategory){
+  handleRouteWithComponentParam(): void {
+    const newComponent = this.route.snapshot.paramMap.get(RECIPE_COMPONENT_PARAM);
+    this.resetPageNumberIfNewParam(newComponent);
+    this.category = newComponent;
+    this.loadRecipesPaginatedByComponent();
+  }
+
+  resetPageNumberIfNewParam(newCategory: string): void {
+    if (this.category !== newCategory) {
       this.pageNumber = 0;
     }
   }
 
   loadRecipesPaginatedByCategory(): void {
     this.recipeService.getPagedByCategoryName(this.category, this.pageNumber, this.pageSize)
+      .subscribe(this.processResponse());
+  }
+
+  loadRecipesPaginatedByComponent(): void {
+    this.recipeService.getPagedByComponentName(this.category, this.pageNumber, this.pageSize)
       .subscribe(this.processResponse());
   }
 

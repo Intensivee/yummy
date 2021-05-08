@@ -19,7 +19,7 @@
 
 <mat-menu #recipes_menu="matMenu">
   <ng-container *ngFor="let recipeCat of recipeCategories">
-    <button mat-menu-item routerLink="/recipes/{{recipeCat.name}}">{{recipeCat.name}}</button>
+    <button mat-menu-item routerLink="/recipes/byCategory/{{recipeCat.name}}">{{recipeCat.name}}</button>
   </ng-container>
 </mat-menu>
 
@@ -27,7 +27,9 @@
   <ng-container *ngFor="let componentCat of componentCategories">
     <button mat-menu-item [matMenuTriggerFor]="sub_menu" >{{componentCat.name}}</button>
     <mat-menu #sub_menu="matMenu">
-        <button mat-menu-item *ngFor="let component of componentCat.components">{{component.name}}</button>
+      <ng-container *ngFor="let component of componentCat.components">
+        <button mat-menu-item routerLink="/recipes/byComponent/{{component.name}}">{{component.name}}</button>
+      </ng-container>
     </mat-menu>
   </ng-container>
 </mat-menu> 

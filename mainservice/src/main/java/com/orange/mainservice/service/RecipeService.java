@@ -39,6 +39,11 @@ public class RecipeService {
                 .map(responseMapper::recipeToResponse);
     }
 
+    public Page<RecipeResponse> getByComponentName(String component, Pageable pageable) {
+        return recipeRepository.findAllDistinctByIngredients_Component_name(component, pageable)
+                .map(responseMapper::recipeToResponse);
+    }
+
     public RecipeResponse getResponseById(Long id){
         return responseMapper.recipeToResponse(getById(id));
     }

@@ -36,8 +36,13 @@ public class RecipeController {
     }
 
     @GetMapping("/search/findByCategoryName/{category}")
-    public ResponseEntity<Page<RecipeResponse>> getByCategoryName(@PathVariable("category") String category, Pageable pageable){
+    public ResponseEntity<Page<RecipeResponse>> getByCategoryName(@PathVariable String category, Pageable pageable){
         return ResponseEntity.ok(recipeService.getByCategoryName(category, pageable));
+    }
+
+    @GetMapping("/search/findByComponentName/{component}")
+    public ResponseEntity<Page<RecipeResponse>> getByComponentName(@PathVariable String component, Pageable pageable){
+        return ResponseEntity.ok(recipeService.getByComponentName(component, pageable));
     }
 
     @PostMapping
