@@ -14,7 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { RecipeBlockComponent } from './recipe-block/recipe-block.component';
+import { RecipeBlockComponent } from './components/recipe-block/recipe-block.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 const MAT_MODULES = [

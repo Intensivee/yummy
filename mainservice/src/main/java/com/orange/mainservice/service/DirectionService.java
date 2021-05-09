@@ -11,6 +11,10 @@ import com.orange.mainservice.response.DirectionResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class DirectionService {
@@ -44,6 +48,12 @@ public class DirectionService {
 
     public void delete(Long id) {
         directionRepository.delete(getById(id));
+    }
+
+    public Set<DirectionResponse> getByRecipeId(Long id){
+        return directionRepository.findByRecipeIdOrdered(id).stream()
+                .map(responseMapper::directionToDto)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     private void validateEditInput(Long id, DirectionRequest request){

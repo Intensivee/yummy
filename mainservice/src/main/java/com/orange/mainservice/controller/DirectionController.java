@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Set;
 
 @RestController
 @RequestMapping("directions")
@@ -40,8 +41,14 @@ public class DirectionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
         directionService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search/findByRecipeId/{id}")
+    public ResponseEntity<Set<DirectionResponse>> getByRecipeId(@PathVariable Long id){
+        Set<DirectionResponse> directions= directionService.getByRecipeId(id);
+        return ResponseEntity.ok(directions);
     }
 }

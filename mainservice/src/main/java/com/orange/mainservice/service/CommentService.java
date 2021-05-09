@@ -11,6 +11,10 @@ import com.orange.mainservice.response.CommentResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class CommentService {
@@ -45,6 +49,12 @@ public class CommentService {
 
     public void delete(Long id) {
         commentRepository.delete(getById(id));
+    }
+
+    public Set<CommentResponse> getByRecipeId(Long id){
+        return commentRepository.findByRecipeIdOrdered(id).stream()
+                .map(commentMapper::commentToResponse)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     private void validateEditRequest(Long id, CommentRequest request){

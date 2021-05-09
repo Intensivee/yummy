@@ -13,6 +13,11 @@ export class RecipeService {
 
   constructor(private http: HttpClient) { }
 
+  getById(id: number): Observable<Recipe> {
+    const url = `${RESOURCE_URL}/${id}`;
+    return this.http.get<Recipe>(url);
+  }
+
   getPaged(page: number, pageSize: number): Observable<GetPagedResponse> {
     const url = `${RESOURCE_URL}?page=${page}&size=${pageSize}`;
     return this.http.get<GetPagedResponse>(url);

@@ -1,40 +1,19 @@
 <main>
 
-  <h1>Hawaiian Pizza</h1>
+  <h1>{{recipe.title}}</h1>
 
   <section class="central-section">
-      <img class="recipe-img" src="/assets/img/recipes/pizza.jpg" alt="Hawaiian pizza">
+      <img class="recipe-img" src="{{recipe.img}}" alt="img of recipe" onerror="this.src='/assets/img/on-error.jpg'">
 
       <div class="ingredients">
         <h3 class="ingredients-header">Ingredients: </h3>
-        <p> - 250g tomato paste 250g tomato paste 250g tomato paste </p>
-        <p> - 2 garlic granules</p>
-        <p> - oregano </p>
-        <p> - dried chilli </p>
-        <p> - pinch caster sugar </p>
-        <p> - 125g mozzarella </p>
-        <p> - 100g ham </p>
-        <p> - 4 pineapple slices </p>
-        <p> - 1 green chilli</p>
+        <ng-container *ngFor="let ingredient of ingredients">
+          <p> -
+            <span class="ingredient-component" routerLink="/recipes/byComponent/{{ingredient.componentName}}">{{ingredient.componentName}}</span>
+            --- {{ingredient.amount}} {{ingredient.amountType}}
+          </p>
+        </ng-container>
       </div>
-  </section>
-
-  <section class="tags-section">
-    <p class="tags-header">Tags: </p>
-    <button class="tag-btn">Tomato paste</button>
-    <button class="tag-btn">Ham</button>
-    <button class="tag-btn">Chilli</button>
-    <button class="tag-btn">Pineapple</button>
-    <button class="tag-btn">Mozzarella</button>
-    <button class="tag-btn">Garlic</button>
-    <button class="tag-btn">Wheat flour</button>
-    <button class="tag-btn">Tomato paste</button>
-    <button class="tag-btn">Ham</button>
-    <button class="tag-btn">Chilli</button>
-    <button class="tag-btn">Pineapple</button>
-    <button class="tag-btn">Mozzarella</button>
-    <button class="tag-btn">Garlic</button>
-    <button class="tag-btn">Wheat flour</button>
   </section>
 
   <section class="info-section">
@@ -46,7 +25,7 @@
       <em class="fas fa-star"></em>
       <em class="fas fa-star"></em>
       <em class="fas fa-star-half-alt"></em>
-      <span> 4.48/5.00</span>
+      <span> {{recipe.avgRate | number: '1.2' }}/5.00</span>
     </p>
 
     <p class="recipe-time"><span class="iconify" data-icon="bi:clock" data-inline="false"> </span> < 60 min.</p>
@@ -55,70 +34,29 @@
   <section class="directions-section">
     <h2>Directions:</h2>
 
-    <div class="step">
-      <p class="step-header">Step 1</p>
-      <p class="step-description">To make the pizza dough, tip both flours into a large bowl (or a stand mixer fitted with a dough hook). Add the yeast, sugar and salt and mix well.
-         Make a well in the middle and add the olive oil and 250ml oz tepid water. Mix well, adding a little more water if the mixture looks too dry – it should
-         be soft and slightly sticky. Knead until smooth and elastic.</p>
+    <div class="step" *ngFor="let direction of directions">
+      <p class="step-header">Step {{direction.order}}</p>
+      <p class="step-description">{{direction.description}}</p>
     </div>
 
-    <div class="step">
-      <p class="step-header">Step 2</p>
-      <p class="step-description">Shape the dough into a ball and place in a large oiled bowl, cover with cling film and leave at room temperature for 45 minutes–1 hour, or until
-        doubled in size.</p>
-    </div>
   </section>
 
   <section class="reviews-section">
     <h2>Reviews: </h2>
 
     <div class="reviews">
-
-      <div>
+      <ng-container *ngFor="let comment of comments">
         <div class="review-details">
-          <img class="profile-img" src="assets/img/avatar1.jpg" alt="Włodek Markowicz image">
-          <p class="username">Włodek Markowicz</p>
-          <p class="review-date">05-11-2020</p>
+          <img class="profile-img" src="{{comment.userImg}}" alt="user avatar" onerror="this.src='/assets/img/on-error.jpg'">
+          <p class="username">{{comment.username}}</p>
+          <p class="review-date">{{comment.dateCreated | date:"dd.MM.yyyy - HH:MM"}}</p>
         </div>
-
-        <p class="review">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-          dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </div>
-
-      <div>
-        <div class="review-details">
-          <img class="profile-img" src="assets/img/avatar1.jpg" alt="Włodek Markowicz image">
-          <p class="username">Karol Paciorek</p>
-          <p class="review-date">05-12-2020</p>
-        </div>
-
-        <p class="review">
-          Lorem ipsum dolor sit amet, eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </div>
-
-      <div>
-        <div class="review-details">
-          <img class="profile-img" src="assets/img/avatar1.jpg" alt="Włodek Markowicz image">
-          <p class="username">Karol Paciorek</p>
-          <p class="review-date">05-12-2020</p>
-        </div>
-
-        <p class="review">
-          Lorem ipsum dolor sit amet, eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </div>
+        <p class="review">{{comment.body}}</p>
+      </ng-container>
     </div>
 
     <div class="comment-container">
       <textarea placeholder="Add comment.." class="">
-
       </textarea>
       <button class="tag-btn">Send <em class="fas fa-paper-plane"></em></button>
     </div>

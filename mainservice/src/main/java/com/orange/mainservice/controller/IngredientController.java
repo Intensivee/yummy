@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Set;
 
 @RestController
 @RequestMapping("ingredients")
@@ -40,8 +41,14 @@ public class IngredientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
         ingredientService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search/findByRecipeId/{id}")
+    public ResponseEntity<Set<IngredientResponse>> getByRecipeId(@PathVariable Long id) {
+        Set<IngredientResponse> ingredients = ingredientService.getByRecipeId(id);
+        return ResponseEntity.ok(ingredients);
     }
 }

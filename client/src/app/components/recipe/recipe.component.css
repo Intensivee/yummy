@@ -34,20 +34,17 @@ section {
   margin: .25em;
 }
 
-/* ======== TAGS SECTION ==========*/
-
-.tags-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin: 1em 0;
-}
-
-.tags-header {
-  margin: auto 1em auto 0;
+.ingredient-component {
   font-weight: 700;
-  font-size: 1.2em;
+  cursor: pointer;
+  transition: .3s;
 }
+
+.ingredient-component:hover {
+  color: #e20c0c;
+}
+
+/* ======== TAGS SECTION ==========*/
 
 .tag-btn {
   padding: .5em .7em;

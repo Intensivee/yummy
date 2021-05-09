@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Set;
 
 @RestController
 @RequestMapping("comments")
@@ -40,8 +41,14 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
         commentService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("search/findByRecipeId/{id}")
+    public ResponseEntity<Set<CommentResponse>> getByRecipeId(@PathVariable Long id){
+        Set<CommentResponse> comments = commentService.getByRecipeId(id);
+        return ResponseEntity.ok(comments);
     }
 }

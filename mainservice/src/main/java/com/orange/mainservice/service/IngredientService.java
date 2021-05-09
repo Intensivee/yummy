@@ -11,6 +11,9 @@ import com.orange.mainservice.response.IngredientResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class IngredientService {
@@ -45,6 +48,12 @@ public class IngredientService {
 
     public void delete(Long id) {
         ingredientRepository.delete(getById(id));
+    }
+
+    public Set<IngredientResponse> getByRecipeId(Long id) {
+        return ingredientRepository.findByRecipeId(id).stream()
+                .map(responseMapper::ingredientToResponse)
+                .collect(Collectors.toSet());
     }
 
     private void validateEditInput(Long id, IngredientRequest request){
