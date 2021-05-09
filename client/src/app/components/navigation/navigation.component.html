@@ -11,6 +11,8 @@
 
   <ul class="nav-icon-list">
     <li><a class="link"><em class="fas fa-globe"></em></a></li>
+    <input class="search-input" #searchInput (keyup.enter)="searchForRecipes(searchInput.value)"
+    type="search" placeholder="Search" aria-label="Search">
     <li><a class="link"><em class="fas fa-search"></em></a></li>
   </ul>
 </nav>

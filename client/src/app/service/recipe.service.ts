@@ -30,10 +30,16 @@ export class RecipeService {
   }
 
   getPagedByComponentName(component: string, page: number, pageSize: number)
-  : Observable<GetPagedResponse> {
-  const url = `${RESOURCE_URL}/search/findByComponentName/${component}?page=${page}&size=${pageSize}`;
-  return this.http.get<GetPagedResponse>(url);
-}
+    : Observable<GetPagedResponse> {
+    const url = `${RESOURCE_URL}/search/findByComponentName/${component}?page=${page}&size=${pageSize}`;
+    return this.http.get<GetPagedResponse>(url);
+  }
+
+  getPagedBySearchKey(searchKey: string, page: number, pageSize: number)
+    : Observable<GetPagedResponse> {
+    const url = `${RESOURCE_URL}/search/findByTitleContaining/${searchKey}?page=${page}&size=${pageSize}`;
+    return this.http.get<GetPagedResponse>(url);
+  }
 
   getByUserIdPaged(userId: number, page: number, pageSize: number): Observable<GetPagedResponse> {
     const url = `${RESOURCE_URL}/search/findByUserId/${userId}?page=${page}&size=${pageSize}`;

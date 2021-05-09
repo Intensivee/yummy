@@ -17,6 +17,10 @@ nav {
   margin-left: 40px;
 }
 
+.search-input {
+  height: 1.9em;
+}
+
 /* ========== COMPONENTS ===========*/
 .hamburger {
   display: none;
@@ -53,7 +57,7 @@ nav {
   nav {
     background-color: #FFFFFF;
   }
-  
+
   .left-nav-wrapper,
   .nav-icon-list {
     display: none;

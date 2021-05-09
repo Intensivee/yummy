@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { RecipeCategoryService } from '../../service/recipe-category.service';
 import { Component, OnInit } from '@angular/core';
 import { ComponentCategoryService } from '../../service/component-category.service';
@@ -13,7 +14,8 @@ export class NavigationComponent implements OnInit {
   componentCategories: ComponentCategory[];
   recipeCategories: RecipeCategory[];
 
-  constructor(private componentCatService: ComponentCategoryService,
+  constructor(private route: Router,
+              private componentCatService: ComponentCategoryService,
               private recipeCatService: RecipeCategoryService) { }
 
   ngOnInit(): void {
@@ -35,4 +37,7 @@ export class NavigationComponent implements OnInit {
       .subscribe(categories => this.recipeCategories = categories);
   }
 
+  searchForRecipes(key: string): void {
+    this.route.navigate(['recipes/search', key]);
+  }
 }

@@ -45,6 +45,11 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.getByComponentName(component, pageable));
     }
 
+    @GetMapping("/search/findByTitleContaining/{searchKey}")
+    public ResponseEntity<Page<RecipeResponse>> getBySearchKey(@PathVariable String searchKey, Pageable pageable){
+        return ResponseEntity.ok(recipeService.getBySearchKey(searchKey, pageable));
+    }
+
     @PostMapping
     public ResponseEntity<RecipeResponse> create(@Valid @RequestBody RecipeRequest request){
         RecipeResponse created = recipeService.add(request);
