@@ -16,6 +16,8 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RecipeBlockComponent } from './components/recipe-block/recipe-block.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AngularFireStorageModule } from '@Angular/fire/storage';
+import { AngularFireModule } from '@Angular/fire';
 
 const MAT_MODULES = [
   MatMenuModule,
@@ -41,7 +43,17 @@ const MAT_MODULES = [
     BrowserModule,
     RouterModule,
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp({
+      apiKey: 'AIzaSyDN_CBrVbRsBgsnRDNh_jsub74J1wL6zoE',
+      authDomain: 'yummy-b2c0e.firebaseapp.com',
+      projectId: 'yummy-b2c0e',
+      storageBucket: 'yummy-b2c0e.appspot.com',
+      messagingSenderId: '1044823503985',
+      appId: '1:1044823503985:web:8bd6482c1c388a2a3857d0',
+      measurementId: 'G-B48CWF6LE9'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
