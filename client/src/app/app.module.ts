@@ -18,12 +18,17 @@ import { RecipeBlockComponent } from './components/recipe-block/recipe-block.com
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AngularFireStorageModule } from '@Angular/fire/storage';
 import { AngularFireModule } from '@Angular/fire';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LoginComponent } from './components/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './components/register/register.component';
 
 const MAT_MODULES = [
   MatMenuModule,
   BrowserAnimationsModule,
   MatListModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatDialogModule
 ];
 
 @NgModule({
@@ -35,7 +40,9 @@ const MAT_MODULES = [
     RecipesComponent,
     RecipeComponent,
     UserComponent,
-    RecipeBlockComponent
+    RecipeBlockComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     MAT_MODULES,
@@ -44,6 +51,7 @@ const MAT_MODULES = [
     RouterModule,
     FontAwesomeModule,
     HttpClientModule,
+    ReactiveFormsModule,
     AngularFireStorageModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyDN_CBrVbRsBgsnRDNh_jsub74J1wL6zoE',

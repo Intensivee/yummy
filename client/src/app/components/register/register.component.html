@@ -1,0 +1,28 @@
+<main>
+    <i [mat-dialog-close] class="dialog-close-btn fas fa-times"></i>
+    <h2>Register</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="inputs">
+            <p class="input-header">Email</p>
+            <input type="text" class="text-input" formControlName="email">
+            <small *ngIf="email.dirty && email.invalid" class="error-msg">Wrong email</small>
+
+            <p class="input-header">Username</p>
+            <input type="password" class="text-input" formControlName="username">
+            <small *ngIf="username.dirty && username.invalid" class="error-msg">Wrong username.</small>
+
+            <p class="input-header">Password</p>
+            <input type="password" class="text-input" formControlName="password">
+            <small *ngIf="password.dirty && password.invalid" class="error-msg">Password is too short.</small>
+
+            <p class="input-header">Confirm password</p>
+            <input type="password" class="text-input" formControlName="confirmPassword">
+            <small *ngIf="confirmPassword.dirty && loginForm.hasError('notSame')" class="error-msg">Password is too short.</small>
+        </div>
+
+        <div class="buttons">
+            <button class="btn-green" type="submit">Register</button>
+        </div>
+    </form>
+</main>

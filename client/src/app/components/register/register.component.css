@@ -1,0 +1,87 @@
+main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 220px;
+  height: 420px;
+}
+
+.dialog-close-btn {
+  position: absolute;
+  font-size: 1.5em;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  transition: .3s;
+}
+
+.dialog-close-btn:hover {
+  color: brown;
+  cursor: pointer;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-header {
+  font-size: .9em;
+  font-weight: bold;
+  margin: 15px 0 5px 0;
+  padding: 0;
+}
+
+.text-input {
+  margin-bottom: 5px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.error-msg {
+  font-size: .7em;
+  color: red;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 50px;
+}
+
+.btn-black-fill,
+.btn-green {
+  padding: 5px 25px;
+  margin: 2px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color .6s, background-color .4s;
+}
+
+.btn-black-fill {
+  border: none;
+  color: white;
+  background-color: #2D2D2D;
+}
+
+.btn-green {
+  border: 1px solid #419A1C;
+  color: #419A1C;
+  background-color: white;
+}
+
+.btn-green:hover {
+  color: white;
+  background-color: #2d6215;
+}
+
+.btn-black-fill:hover {
+  color: black;
+  background-color: white;
+  border: 1px solid black;
+}
