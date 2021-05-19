@@ -2,6 +2,8 @@
 
   <h1>{{recipe.title}}</h1>
 
+  <p class="owner-username" routerLink="/user/{{recipe.username}}">{{recipe.username}}</p>
+
   <section class="central-section">
       <img class="recipe-img" src="{{recipe.img}}" alt="img of recipe" onerror="this.src='/assets/img/on-error.jpg'">
 
@@ -17,6 +19,7 @@
   </section>
 
   <section class="info-section">
+
     <button class="red-btn">Send recipe to email <em class="fas fa-chevron-right"></em></button>
 
     <p class="rate">

@@ -35,6 +35,11 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.getByUserIdPaged(id, pageable));
     }
 
+    @GetMapping("/search/findByUsername/{username}")
+    public ResponseEntity<Page<RecipeResponse>> getByUsernamePaged(@PathVariable("username") String username, Pageable pageable){
+        return ResponseEntity.ok(recipeService.getByUsernamePaged(username, pageable));
+    }
+
     @GetMapping("/search/findByCategoryName/{category}")
     public ResponseEntity<Page<RecipeResponse>> getByCategoryName(@PathVariable String category, Pageable pageable){
         return ResponseEntity.ok(recipeService.getByCategoryName(category, pageable));

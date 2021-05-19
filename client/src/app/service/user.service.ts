@@ -17,4 +17,9 @@ export class UserService {
     const url = `${RESOURCE_URL}/${userId}`;
     return this.http.get<User>(url);
   }
+
+  getByUsername(username: string): Observable<User> {
+    const url = `${RESOURCE_URL}/search/findByUsername/${username}`;
+    return this.http.get<User>(url);
+  }
 }

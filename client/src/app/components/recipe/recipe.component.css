@@ -85,6 +85,19 @@ section {
   display: flex;
 }
 
+.owner-username {
+  margin-top: 0;
+  margin-bottom: 1.2em;
+  font-size: 1.3em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.owner-username:hover {
+  color: brown;
+}
+
+
 .iconify {
   margin: 0 .5em 0 0;
 }

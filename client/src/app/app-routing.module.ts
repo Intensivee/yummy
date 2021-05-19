@@ -9,6 +9,7 @@ import { UserComponent } from './components/user/user.component';
 const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'welcome', component: WelcomeComponent },
+  { path: 'user/:username', component: UserComponent },
   { path: 'user', component: UserComponent },
   { path: 'recipes', component: RecipesComponent },
   { path: 'recipes/byCategory/:category', component: RecipesComponent },

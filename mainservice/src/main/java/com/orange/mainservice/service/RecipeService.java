@@ -34,6 +34,11 @@ public class RecipeService {
                 .map(responseMapper::recipeToResponse);
     }
 
+    public Page<RecipeResponse> getByUsernamePaged(String username, Pageable pageable){
+        return recipeRepository.findAllByUser_Username(username, pageable)
+                .map(responseMapper::recipeToResponse);
+    }
+
     public Page<RecipeResponse> getByCategoryName(String category, Pageable pageable){
         return recipeRepository.findAllByCategories_Name(category, pageable)
                 .map(responseMapper::recipeToResponse);

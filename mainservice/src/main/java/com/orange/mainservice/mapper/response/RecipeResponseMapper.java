@@ -24,7 +24,8 @@ public class RecipeResponseMapper {
                 recipe.getTimeType(),
                 recipe.getTitle(),
                 recipe.getImgUrl(),
-                rateService.getRecipeAvgRate(recipe.getId())
+                rateService.getRecipeAvgRate(recipe.getId()),
+                recipe.getUser().getUsername()
         );
     }
 }

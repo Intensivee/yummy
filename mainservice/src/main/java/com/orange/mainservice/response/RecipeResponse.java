@@ -13,4 +13,5 @@ public final class RecipeResponse {
     private final String title;
     private final String img;
     private final Double avgRate;
+    private final String username;
 }

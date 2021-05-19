@@ -6,4 +6,5 @@ export class Recipe {
     title: string;
     img: string;
     avgRate: number;
+    username: string;
 }
