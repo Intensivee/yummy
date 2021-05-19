@@ -51,7 +51,7 @@
       <ng-container *ngFor="let comment of comments">
         <div class="review-details">
           <img class="profile-img" src="{{comment.userImg}}" alt="user avatar" onerror="this.src='/assets/img/on-error.jpg'">
-          <p class="username">{{comment.username}}</p>
+          <p class="username" routerLink="/user/{{recipe.username}}" >{{comment.username}}</p>
           <p class="review-date">{{comment.dateCreated | date:"dd.MM.yyyy - HH:MM"}}</p>
         </div>
         <p class="review">{{comment.body}}</p>
