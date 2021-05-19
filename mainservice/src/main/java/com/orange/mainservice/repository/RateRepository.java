@@ -17,8 +17,8 @@ public interface RateRepository extends JpaRepository<Rate, Long> {
     Optional<Double> getRecipeAverageRate(Long recipeId);
 
     @Query(
-            value = "SELECT avg(r.value) FROM rates r WHERE r.user_id=?",
+            value = "SELECT avg(r.value) FROM rates r JOIN recipes rr ON r.recipe_id = rr.id WHERE rr.user_id=?",
             nativeQuery = true
     )
-    Optional<Double> getUserAverageRate(Long recipeId);
+    Optional<Double> getUserAverageRate(Long userId);
 }
