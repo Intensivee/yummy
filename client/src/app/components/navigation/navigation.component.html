@@ -10,7 +10,7 @@
   </div>
 
   <ul class="nav-icon-list">
-    <li><a class="link"><em class="fas fa-globe"></em></a></li>
+    <li><a class="link" mat-button [matMenuTriggerFor]="user_menu"><em class="fas fa-globe"></em></a></li>
     <input class="search-input" #searchInput (keyup.enter)="searchForRecipes(searchInput.value)"
     type="search" placeholder="Search" aria-label="Search">
     <li><a class="link"><em class="fas fa-search"></em></a></li>
@@ -36,3 +36,9 @@
     </mat-menu>
   </ng-container>
 </mat-menu> 
+
+<mat-menu #user_menu="matMenu">
+  <button mat-menu-item routerLink="/user">My Profile</button>
+  <button mat-menu-item routerLink="/user">Edit Profile</button>
+  <button mat-menu-item>Logout</button>
+</mat-menu>
