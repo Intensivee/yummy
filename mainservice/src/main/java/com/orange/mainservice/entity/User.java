@@ -1,8 +1,8 @@
 package com.orange.mainservice.entity;
 
 import com.orange.mainservice.entity.enums.UserRole;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 
@@ -19,8 +19,8 @@ import java.util.Set;
         },
         indexes = @Index( name = "users_username_index", columnList = "username", unique = true)
 )
-@Getter
-@AllArgsConstructor
+@Data
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -36,12 +36,6 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
-
-    @Column(name = "first_name", columnDefinition = "VARCHAR(15)")
-    private String firstName;
-
-    @Column(name = "last_name", columnDefinition = "VARCHAR(25)")
-    private String lastName;
 
     @Column(name = "bio", columnDefinition = "VARCHAR(230)")
     private String bio;
@@ -66,7 +60,4 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Rate> rates;
-
-    protected User() {
-    }
 }

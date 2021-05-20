@@ -1,0 +1,54 @@
+package com.orange.mainservice.security;
+
+import com.orange.mainservice.config.JwtTokenConfig;
+import com.orange.mainservice.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.net.URI;
+
+@RestController
+@RequestMapping("/authentication")
+public class AuthenticationController {
+
+    private final AuthenticationService authenticationService;
+    private final JwtTokenUtil tokenUtil;
+    private final JwtTokenConfig tokenConfig;
+
+    @Autowired
+    public AuthenticationController(JwtTokenUtil tokenUtil,
+                                    JwtTokenConfig tokenConfig, AuthenticationService authenticationService) {
+        this.tokenUtil = tokenUtil;
+        this.tokenConfig = tokenConfig;
+        this.authenticationService = authenticationService;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenResponse> authenticateCredentials(@Valid @RequestBody LoginRequest loginRequest){
+        Authentication authentication = this.authenticationService.authenticateCredentials(loginRequest);
+
+        String token = this.tokenUtil.createToken(authentication);
+
+        return ResponseEntity.ok(new TokenResponse(this.tokenConfig.getTokenPrefix() + token));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterRequest registerRequest){
+        User user = this.authenticationService.registerUser(registerRequest);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/users/{id}")
+                .buildAndExpand(user.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(user.getId());
+    }
+}
