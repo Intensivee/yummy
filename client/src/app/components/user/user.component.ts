@@ -1,3 +1,4 @@
+import { AuthenticationService } from '../../security/authentication.service';
 import { RecipeService } from '../../service/recipe.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -23,7 +24,8 @@ export class UserComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private recipeService: RecipeService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
 
@@ -35,10 +37,8 @@ export class UserComponent implements OnInit {
     if (this.route.snapshot.paramMap.has(USERNAME_CATEGORY_PARAM)) {
       this.user.username = this.route.snapshot.paramMap.get(USERNAME_CATEGORY_PARAM);
     } else {
-      this.user.username = 'Wolodymir'; // get From session
+      this.user.username = this.authenticationService.getAuthenticatedUsername();
     }
-
-    console.log(this.user.username);
     this.loadUserData();
     this.loadUserRecipes();
   }

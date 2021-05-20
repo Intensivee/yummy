@@ -39,7 +39,7 @@ public class AuthenticationService implements UserDetailsService {
         return this.userRepository.findByUsername(username)
                 .map( user -> new JwtUserDetails(
                         user.getId(),
-                        user.getEmail(),
+                        user.getUsername(),
                         user.getPassword(),
                         Collections.singleton(new SimpleGrantedAuthority(user.getUserRole().toString())
                 )))
