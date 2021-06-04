@@ -1,3 +1,4 @@
+import { AuthenticationService } from '../../security/authentication.service';
 import { Router } from '@angular/router';
 import { RecipeCategoryService } from '../../service/recipe-category.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +17,8 @@ export class NavigationComponent implements OnInit {
 
   constructor(private route: Router,
               private componentCatService: ComponentCategoryService,
-              private recipeCatService: RecipeCategoryService) { }
+              private recipeCatService: RecipeCategoryService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -39,5 +41,9 @@ export class NavigationComponent implements OnInit {
 
   searchForRecipes(key: string): void {
     this.route.navigate(['recipes/search', key]);
+  }
+
+  logout(): void {
+    this.authenticationService.logout();
   }
 }

@@ -25,6 +25,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(createBody(e, HttpStatus.BAD_REQUEST));
     }
 
+    @ExceptionHandler({RegistrationException.class})
+    public final ResponseEntity<ExceptionResponse> conflictHandler(Exception e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(this.createBody(e, HttpStatus.CONFLICT));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   WebRequest request) {
