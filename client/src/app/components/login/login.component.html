@@ -1,9 +1,10 @@
 <main>
-    <i [mat-dialog-close] class="dialog-close-btn fas fa-times"></i>
+    <em [mat-dialog-close] class="dialog-close-btn fas fa-times"></em>
     <h2>Login</h2>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="inputs">
+            <p *ngIf="errorResponse" class="error-msg">Invalid credentials.</p>
             <p class="input-header">Email</p>
             <input type="text" class="text-input" formControlName="email">
             <small *ngIf="email.dirty && email.invalid" class="error-msg">Wrong email</small>

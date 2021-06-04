@@ -13,7 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RecipeBlockComponent } from './components/recipe-block/recipe-block.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AngularFireStorageModule } from '@Angular/fire/storage';
@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
+import { JwtHttpInterceptorService } from './security/jwt-http-interceptor.service';
 
 const MAT_MODULES = [
   MatMenuModule,
@@ -63,7 +64,9 @@ const MAT_MODULES = [
       measurementId: 'G-B48CWF6LE9'
     })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

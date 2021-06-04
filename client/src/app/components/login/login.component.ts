@@ -1,3 +1,4 @@
+import { AuthenticationService } from '../../security/authentication.service';
 import { RegisterComponent } from '../register/register.component';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -12,11 +13,13 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  errorResponse = false;
 
   constructor(private router: Router,
               private dialog: MatDialog,
               private formBuilder: FormBuilder,
-              public dialogRef: MatDialogRef<LoginComponent>) { }
+              public dialogRef: MatDialogRef<LoginComponent>,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -31,6 +34,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.loginForm);
+    this.authenticationService.authenticateCredentials(
+      this.loginForm.controls.email.value, this.loginForm.controls.password.value)
+      .subscribe(
+        () => {
+          this.router.navigate(['user',  this.authenticationService.getAuthenticatedUsername()]);
+        }, () => {
+          this.errorResponse = true;
+        }
+      );
+    this.errorResponse = true;
   }
 
   openRegisterDialog(): void {
@@ -39,6 +52,6 @@ export class LoginComponent implements OnInit {
     this.dialog.open(RegisterComponent, dialogConfig);
   }
 
-  get email() {return this.loginForm.controls.email; }
-  get password() {return this.loginForm.controls.password; }
+  get email() { return this.loginForm.controls.email; }
+  get password() { return this.loginForm.controls.password; }
 }
