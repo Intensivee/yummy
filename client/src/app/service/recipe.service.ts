@@ -51,9 +51,15 @@ export class RecipeService {
     return this.http.get<GetPagedResponse>(url);
   }
 
-  get3TopRatedRecipes(): Observable<Recipe[]>{
+  get3TopRatedRecipes(): Observable<Recipe[]> {
     const url = `${RESOURCE_URL}/search/top3`;
     return this.http.get<Recipe[]>(url);
+  }
+
+  getRecipesByTimeTypePaged(timeType: string, page: number, pageSize: number): Observable<GetPagedResponse> {
+    console.log(timeType);
+    const url = `${RESOURCE_URL}/search/findByTimeType/${timeType}?page=${page}&size=${pageSize}`;
+    return this.http.get<GetPagedResponse>(url);
   }
 }
 

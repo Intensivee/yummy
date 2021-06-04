@@ -84,6 +84,11 @@ main {
   margin: 0 .5em;
   width: 17vw;
   min-width: 300px;
+  transition: .3s;
+}
+
+.recipe:hover {
+  opacity: 0.8;
 }
 
 .recipe-img {
