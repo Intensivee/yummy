@@ -90,7 +90,7 @@ export class RecipesComponent implements OnInit {
 
   loadRecipesPaginatedBySearchKey(): void {
     this.recipeService.getPagedBySearchKey(this.key, this.pageNumber, this.pageSize)
-    .subscribe(this.processResponse());
+      .subscribe(this.processResponse());
   }
 
   loadAllRecipesPaginated(): void {
