@@ -55,7 +55,7 @@ public class Recipe {
     )
     private Set<RecipeCategory> categories;
 
-    protected Recipe() {
+    public Recipe() {
     }
 
     public Recipe(Long id, TimeType timeType, String title, String imgUrl, User user, Set<RecipeCategory> categories) {

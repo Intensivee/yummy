@@ -10,9 +10,11 @@ import com.orange.mainservice.request.RecipeRequest;
 import com.orange.mainservice.response.RecipeResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +54,12 @@ public class RecipeService {
     public Page<RecipeResponse> getBySearchKey(String searchKey, Pageable pageable){
         return recipeRepository.findByTitleIgnoreCaseContaining(searchKey, pageable)
                 .map(responseMapper::recipeToResponse);
+    }
+
+    public List<RecipeResponse> getTop3RatedRecipes() {
+        return recipeRepository.getRecipesByRateDesc(PageRequest.of(0, 3)).stream()
+                .map(responseMapper::recipeToResponse)
+                .collect(Collectors.toList());
     }
 
     public RecipeResponse getResponseById(Long id){

@@ -32,21 +32,13 @@
       <h2 class="recipes-title">Popular recipes!</h2>
 
       <div class="recipes">
-          <div class="recipe">
-            <img class="recipe-img" src="assets/img/recipes/salad.jpg" alt="recipe">
-              <p class="recipe-title">Homemade salad</p>
-          </div>
-
-          <div class="recipe">
-            <img class="recipe-img" src="../../../assets/img/recipes/spaghetti.jpg" alt="recipe">
-            <p class="recipe-title">spaghetti with cauliflower</p>
-          </div>
-
-          <div class="recipe">
-            <img class="recipe-img" src="assets/img/recipes/goulash.jpg" alt="recipe">
-            <p class="recipe-title">beef goulash</p>
-          </div>
-      </div>
+        <div class="recipe"  
+        *ngFor="let recipe of recipes"
+        routerLink="/recipe/{{recipe.id}}">
+          <img class="recipe-img" src="{{recipe.img}}" alt="recipe">
+            <p class="recipe-title">{{recipe.title}}</p>
+        </div>
+    </div>
 
   </section>
 

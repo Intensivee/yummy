@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("recipes")
@@ -53,6 +54,11 @@ public class RecipeController {
     @GetMapping("/search/findByTitleContaining/{searchKey}")
     public ResponseEntity<Page<RecipeResponse>> getBySearchKey(@PathVariable String searchKey, Pageable pageable){
         return ResponseEntity.ok(recipeService.getBySearchKey(searchKey, pageable));
+    }
+
+    @GetMapping("/search/top3")
+    public ResponseEntity<List<RecipeResponse>> get3TopRatedRecipes() {
+        return ResponseEntity.ok(recipeService.getTop3RatedRecipes());
     }
 
     @PostMapping

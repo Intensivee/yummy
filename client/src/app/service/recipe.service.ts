@@ -50,6 +50,11 @@ export class RecipeService {
     const url = `${RESOURCE_URL}/search/findByUsername/${username}?page=${page}&size=${pageSize}`;
     return this.http.get<GetPagedResponse>(url);
   }
+
+  get3TopRatedRecipes(): Observable<Recipe[]>{
+    const url = `${RESOURCE_URL}/search/top3`;
+    return this.http.get<Recipe[]>(url);
+  }
 }
 
 interface GetPagedResponse {
