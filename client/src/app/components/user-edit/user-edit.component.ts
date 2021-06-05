@@ -1,3 +1,4 @@
+import {EditPasswordComponent} from '../edit-password/edit-password.component';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../service/user.service';
 import {AngularFireStorage} from '@angular/fire/storage';
@@ -7,6 +8,7 @@ import {User} from 'src/app/model/user';
 import {DEFAULT_IMG} from 'src/app/constants';
 import {finalize} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-edit',
@@ -24,12 +26,13 @@ export class UserEditComponent implements OnInit {
               private userService: UserService,
               private formBuilder: FormBuilder,
               private fireStorage: AngularFireStorage,
-              private router: Router) {
+              private router: Router,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.initializeForm();
-    const username = this.authenticationService.getAuthenticatedUsername()
+    const username = this.authenticationService.getAuthenticatedUsername();
 
     this.userService.getByUsername(username).subscribe(data => {
       this.user = data;
@@ -59,7 +62,7 @@ export class UserEditComponent implements OnInit {
 
       reader.onload = (e: any) => {
         this.userForm.patchValue({imgSource: e.target.result});
-      }
+      };
       reader.readAsDataURL(event.target.files[0]);
       this.selectedImage = event.target.files[0];
     } else {
@@ -129,6 +132,11 @@ export class UserEditComponent implements OnInit {
 
   removeImgFromFireStorage(): void {
     this.fireStorage.refFromURL(this.userForm.controls.imgSource.value).delete();
+  }
+
+  openPasswordEditPopup(): void {
+    this.dialog.open(EditPasswordComponent);
+
   }
 
   get imgSource() {

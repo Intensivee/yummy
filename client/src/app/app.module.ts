@@ -25,6 +25,7 @@ import {RegisterComponent} from './components/register/register.component';
 import {JwtHttpInterceptorService} from './security/jwt-http-interceptor.service';
 import {UserEditComponent} from './components/user-edit/user-edit.component';
 import {environment} from 'src/environments/environment';
+import { EditPasswordComponent } from './components/edit-password/edit-password.component';
 
 const MAT_MODULES = [
   MatMenuModule,
@@ -46,7 +47,8 @@ const MAT_MODULES = [
     RecipeBlockComponent,
     LoginComponent,
     RegisterComponent,
-    UserEditComponent
+    UserEditComponent,
+    EditPasswordComponent
   ],
   imports: [
     MAT_MODULES,
