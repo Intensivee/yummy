@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "yummy-b2c0e": {
+      "hosting": {
+        "client": [
+          "yummy-b2c0e"
+        ]
+      }
+    }
+  }
+}

@@ -1,19 +1,19 @@
 <nav>
-  <a class="hamburger link" mat-button [matMenuTriggerFor]="components_menu" ><em class="fas fa-bars"></em></a>
+  <a class="hamburger link" mat-button [matMenuTriggerFor]="components_menu"><em class="fas fa-bars"></em></a>
   <div class="left-nav-wrapper">
     <img class="logo-img" routerLink="/main" src="./assets/img/logo.png" alt="site logo">
 
     <ul class="nav-list">
       <li><a class="link">Tips and tricks</a></li>
-      <li><a class="link" mat-button [matMenuTriggerFor]="components_menu" >Ingredients</a></li>
-      <li><a class="link" mat-button [matMenuTriggerFor]="recipes_menu" >Recipes</a></li>
+      <li><a class="link" mat-button [matMenuTriggerFor]="components_menu">Ingredients</a></li>
+      <li><a class="link" mat-button [matMenuTriggerFor]="recipes_menu">Recipes</a></li>
     </ul>
   </div>
 
   <ul class="nav-icon-list">
     <li><a class="link" mat-button [matMenuTriggerFor]="user_menu"><em class="fas fa-globe"></em></a></li>
     <input class="search-input" #searchInput (keyup.enter)="searchForRecipes(searchInput.value)"
-    type="search" placeholder="Search" aria-label="Search">
+           type="search" placeholder="Search" aria-label="Search">
     <li><a class="link"><em class="fas fa-search"></em></a></li>
   </ul>
 </nav>
@@ -29,17 +29,17 @@
 
 <mat-menu #components_menu="matMenu">
   <ng-container *ngFor="let componentCat of componentCategories">
-    <button mat-menu-item [matMenuTriggerFor]="sub_menu" >{{componentCat.name}}</button>
+    <button mat-menu-item [matMenuTriggerFor]="sub_menu">{{componentCat.name}}</button>
     <mat-menu #sub_menu="matMenu">
       <ng-container *ngFor="let component of componentCat.components">
         <button mat-menu-item routerLink="/recipes/byComponent/{{component.name}}">{{component.name}}</button>
       </ng-container>
     </mat-menu>
   </ng-container>
-</mat-menu> 
+</mat-menu>
 
 <mat-menu #user_menu="matMenu">
   <button mat-menu-item routerLink="/user">My Profile</button>
-  <button mat-menu-item routerLink="/user">Edit Profile</button>
+  <button mat-menu-item routerLink="/user-edit">Edit Profile</button>
   <button mat-menu-item (click)="logout()">Logout</button>
 </mat-menu>

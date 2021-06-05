@@ -1,0 +1,17 @@
+<main>
+  <p *ngIf="errorMessage" class="error-msg">{{errorMessage}}</p>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <section class="img-section">
+      <img alt="photo inserted by user" [src]="imgSource.value" class="img">
+      <input (change)="onImgChange($event)" type="file" class="img-input" accept=".png, .img, .jpng, .jpg">
+    </section>
+
+    <section class="details-section">
+      <p class="input-header">Bio</p>
+      <input type="text" class="text-input" formControlName="bio">
+      <small *ngIf="bio.touched && bio.invalid" class="error-msg">Bio is too long</small>
+    </section>
+
+    <button class="submit-btn" type="submit">Submit</button>
+  </form>
+</main>>
