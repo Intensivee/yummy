@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'recipes', component: RecipesComponent },
   { path: 'recipes/byCategory/:category', component: RecipesComponent },
   { path: 'recipes/byComponent/:component', component: RecipesComponent },
+  { path: 'recipes/byTimeType/:timeType', component: RecipesComponent },
   { path: 'recipes/search/:searchKey', component: RecipesComponent },
   { path: 'recipe/:id', component: RecipeComponent },
   { path: '', redirectTo: '/main', pathMatch: 'full' },

@@ -1,5 +1,6 @@
 package com.orange.mainservice.controller;
 
+import com.orange.mainservice.entity.enums.TimeType;
 import com.orange.mainservice.request.RecipeRequest;
 import com.orange.mainservice.response.RecipeResponse;
 import com.orange.mainservice.service.RecipeService;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("recipes")
@@ -53,6 +55,16 @@ public class RecipeController {
     @GetMapping("/search/findByTitleContaining/{searchKey}")
     public ResponseEntity<Page<RecipeResponse>> getBySearchKey(@PathVariable String searchKey, Pageable pageable){
         return ResponseEntity.ok(recipeService.getBySearchKey(searchKey, pageable));
+    }
+
+    @GetMapping("/search/findByTimeType/{timeType}")
+    public ResponseEntity<Page<RecipeResponse>> getByTimeType(@PathVariable TimeType timeType, Pageable pageable){
+        return ResponseEntity.ok(recipeService.getRecipesByTimeType(timeType, pageable));
+    }
+
+    @GetMapping("/search/top3")
+    public ResponseEntity<List<RecipeResponse>> get3TopRatedRecipes() {
+        return ResponseEntity.ok(recipeService.getTop3RatedRecipes());
     }
 
     @PostMapping

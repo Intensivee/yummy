@@ -8,6 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import {RecipeService} from '../../service/recipe.service';
 import {Recipe} from '../../model/recipe';
 import {Ingredient} from 'src/app/model/ingredient';
+import { TimeType } from 'src/app/model/timeType';
 
 @Component({
   selector: 'app-recipe',
@@ -16,6 +17,7 @@ import {Ingredient} from 'src/app/model/ingredient';
 })
 export class RecipeComponent implements OnInit {
 
+  timeTypeEnum = TimeType;
   recipe: Recipe = new Recipe();
   ingredients: Ingredient[];
   directions: Direction[];

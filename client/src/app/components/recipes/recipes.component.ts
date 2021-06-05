@@ -3,9 +3,11 @@ import { RecipeService } from '../../service/recipe.service';
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/model/recipe';
 import { PageEvent } from '@angular/material/paginator';
+import { TimeType } from 'src/app/model/TimeType';
 
 const RECIPE_CATEGORY_PARAM = 'category';
 const RECIPE_COMPONENT_PARAM = 'component';
+const RECIPE_TIME_TYPE_PARAM = 'timeType';
 const RECIPE_SEARCH_PARAM = 'searchKey';
 
 @Component({
@@ -33,6 +35,8 @@ export class RecipesComponent implements OnInit {
       this.handleRouteWithCategoryParam();
     } else if (this.route.snapshot.paramMap.has(RECIPE_COMPONENT_PARAM)) {
       this.handleRouteWithComponentParam();
+    } else if (this.route.snapshot.paramMap.has(RECIPE_TIME_TYPE_PARAM)) {
+      this.handleRouteWithTimeTypeParam();
     } else if (this.route.snapshot.paramMap.has(RECIPE_SEARCH_PARAM)) {
       this.handleRouteWithSearchParam();
     } else {
@@ -52,6 +56,13 @@ export class RecipesComponent implements OnInit {
     this.resetPageNumberIfNewParam(newComponent);
     this.key = newComponent;
     this.loadRecipesPaginatedByComponent();
+  }
+
+  handleRouteWithTimeTypeParam(): void {
+    const newTimeTypeKey = this.route.snapshot.paramMap.get(RECIPE_TIME_TYPE_PARAM);
+    this.resetPageNumberIfNewParam(newTimeTypeKey);
+    this.key = '< ' + TimeType[newTimeTypeKey] + ' min';
+    this.loadRecipesPaginatedByTimeType(newTimeTypeKey);
   }
 
   handleRouteWithSearchParam(): void {
@@ -79,11 +90,16 @@ export class RecipesComponent implements OnInit {
 
   loadRecipesPaginatedBySearchKey(): void {
     this.recipeService.getPagedBySearchKey(this.key, this.pageNumber, this.pageSize)
-    .subscribe(this.processResponse());
+      .subscribe(this.processResponse());
   }
 
   loadAllRecipesPaginated(): void {
     this.recipeService.getPaged(this.pageNumber, this.pageSize)
+      .subscribe(this.processResponse());
+  }
+
+  loadRecipesPaginatedByTimeType(timetypeKey: string): void {
+    this.recipeService.getRecipesByTimeTypePaged(timetypeKey, this.pageNumber, this.pageSize)
       .subscribe(this.processResponse());
   }
 

@@ -1,6 +1,7 @@
 package com.orange.mainservice.service;
 
 import com.orange.mainservice.entity.Recipe;
+import com.orange.mainservice.entity.enums.TimeType;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
@@ -10,9 +11,11 @@ import com.orange.mainservice.request.RecipeRequest;
 import com.orange.mainservice.response.RecipeResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +55,17 @@ public class RecipeService {
     public Page<RecipeResponse> getBySearchKey(String searchKey, Pageable pageable){
         return recipeRepository.findByTitleIgnoreCaseContaining(searchKey, pageable)
                 .map(responseMapper::recipeToResponse);
+    }
+
+    public Page<RecipeResponse> getRecipesByTimeType(TimeType timeType, Pageable pageable) {
+        return recipeRepository.findByTimeType(pageable, timeType)
+                .map(responseMapper::recipeToResponse);
+    }
+
+    public List<RecipeResponse> getTop3RatedRecipes() {
+        return recipeRepository.getRecipesByRateDesc(PageRequest.of(0, 3)).stream()
+                .map(responseMapper::recipeToResponse)
+                .collect(Collectors.toList());
     }
 
     public RecipeResponse getResponseById(Long id){

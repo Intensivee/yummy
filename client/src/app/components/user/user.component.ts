@@ -39,8 +39,6 @@ export class UserComponent implements OnInit {
     } else {
       this.user.username = this.authenticationService.getAuthenticatedUsername();
     }
-
-    console.log(this.user.username);
     this.loadUserData();
     this.loadUserRecipes();
   }
