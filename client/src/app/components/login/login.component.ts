@@ -1,9 +1,9 @@
-import { AuthenticationService } from '../../security/authentication.service';
-import { RegisterComponent } from '../register/register.component';
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {AuthenticationService} from '../../security/authentication.service';
+import {RegisterComponent} from '../register/register.component';
+import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material/dialog';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
               private dialog: MatDialog,
               private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<LoginComponent>,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService) {
+  }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -33,17 +34,16 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.loginForm);
     this.authenticationService.authenticateCredentials(
       this.loginForm.controls.email.value, this.loginForm.controls.password.value)
       .subscribe(
         () => {
-          this.router.navigate(['user',  this.authenticationService.getAuthenticatedUsername()]);
+          this.router.navigate(['user', this.authenticationService.getAuthenticatedUsername()]);
+          this.dialogRef.close();
         }, () => {
           this.errorResponse = true;
         }
       );
-    this.errorResponse = true;
   }
 
   openRegisterDialog(): void {
@@ -52,6 +52,11 @@ export class LoginComponent implements OnInit {
     this.dialog.open(RegisterComponent, dialogConfig);
   }
 
-  get email() { return this.loginForm.controls.email; }
-  get password() { return this.loginForm.controls.password; }
+  get email() {
+    return this.loginForm.controls.email;
+  }
+
+  get password() {
+    return this.loginForm.controls.password;
+  }
 }

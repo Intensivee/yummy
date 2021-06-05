@@ -1,3 +1,4 @@
+import { UserRoleType } from '../model/UserRoleType';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -64,11 +65,15 @@ export class AuthenticationService {
     return sessionStorage.getItem(JWT_TOKEN);
   }
 
-  getUserRoleId(): string {
+  getUserRole(): string {
     if (this.isAuthenticated()) {
       return sessionStorage.getItem(ROLE);
     }
     return '';
+  }
+
+  isAdmin(): boolean {
+    return this.getUserRole() === UserRoleType.ROLE_ADMIN;
   }
 
   logout(): void {

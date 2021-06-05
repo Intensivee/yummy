@@ -26,6 +26,7 @@ import {JwtHttpInterceptorService} from './security/jwt-http-interceptor.service
 import {UserEditComponent} from './components/user-edit/user-edit.component';
 import {environment} from 'src/environments/environment';
 import { EditPasswordComponent } from './components/edit-password/edit-password.component';
+import { ComponentsMenagePanelComponent } from './components/components-menage-panel/components-menage-panel.component';
 
 const MAT_MODULES = [
   MatMenuModule,
@@ -48,7 +49,8 @@ const MAT_MODULES = [
     LoginComponent,
     RegisterComponent,
     UserEditComponent,
-    EditPasswordComponent
+    EditPasswordComponent,
+    ComponentsMenagePanelComponent
   ],
   imports: [
     MAT_MODULES,
