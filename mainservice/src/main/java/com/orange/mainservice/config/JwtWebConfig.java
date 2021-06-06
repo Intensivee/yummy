@@ -1,6 +1,5 @@
 package com.orange.mainservice.config;
 
-import com.orange.mainservice.entity.enums.UserRole;
 import com.orange.mainservice.security.AuthenticationService;
 import com.orange.mainservice.security.JwtAuthenticationEntryPoint;
 import com.orange.mainservice.security.JwtTokenUtil;
@@ -18,6 +17,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static com.orange.mainservice.entity.enums.UserRole.ROLE_ADMIN;
+import static com.orange.mainservice.entity.enums.UserRole.ROLE_USER;
 
 @Configuration
 @EnableWebSecurity
@@ -78,7 +80,7 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
                             "/**/*.html",
                             "/**/*.css",
                             "/**/*.js").permitAll()
-                    .antMatchers("/**").hasAnyAuthority(UserRole.ROLE_USER.name());
+                    .antMatchers("/**").hasAnyAuthority(ROLE_USER.name(),ROLE_ADMIN.name());
 
     }
 }

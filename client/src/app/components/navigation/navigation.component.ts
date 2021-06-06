@@ -1,10 +1,10 @@
-import { AuthenticationService } from '../../security/authentication.service';
-import { Router } from '@angular/router';
-import { RecipeCategoryService } from '../../service/recipe-category.service';
-import { Component, OnInit } from '@angular/core';
-import { ComponentCategoryService } from '../../service/component-category.service';
-import { ComponentCategory } from '../../model/component-category';
-import { RecipeCategory } from 'src/app/model/recipe-category';
+import {AuthenticationService} from '../../security/authentication.service';
+import {Router} from '@angular/router';
+import {RecipeCategoryService} from '../../service/recipe-category.service';
+import {Component, OnInit} from '@angular/core';
+import {ComponentCategoryService} from '../../service/component-category.service';
+import {ComponentCategory} from '../../model/component-category';
+import {RecipeCategory} from 'src/app/model/recipe-category';
 
 @Component({
   selector: 'app-navigation',
@@ -18,7 +18,8 @@ export class NavigationComponent implements OnInit {
   constructor(private route: Router,
               private componentCatService: ComponentCategoryService,
               private recipeCatService: RecipeCategoryService,
-              private authenticationService: AuthenticationService) { }
+              public authService: AuthenticationService) {
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -44,6 +45,6 @@ export class NavigationComponent implements OnInit {
   }
 
   logout(): void {
-    this.authenticationService.logout();
+    this.authService.logout();
   }
 }
