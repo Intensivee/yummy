@@ -1,6 +1,7 @@
 import { RecipeService } from '../../service/recipe.service';
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/model/recipe';
+import { TimeType } from 'src/app/model/timeType';
 
 @Component({
   selector: 'app-main',
@@ -9,11 +10,14 @@ import { Recipe } from 'src/app/model/recipe';
 })
 export class MainComponent implements OnInit {
 
+  timeTypeEnum = TimeType;
   recipes: Recipe[] = [];
+
 
   constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
+    console.log(this.timeTypeEnum.TIME_1);
     this.recipeService.get3TopRatedRecipes().subscribe(data => {
       this.recipes = data;
     });

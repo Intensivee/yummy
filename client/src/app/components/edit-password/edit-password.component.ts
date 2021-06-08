@@ -24,7 +24,6 @@ export class EditPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.passwordForm);
   }
 
   get password() { return this.passwordForm.controls.password; }
