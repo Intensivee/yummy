@@ -4,11 +4,12 @@ import {DirectionService} from '../../service/direction.service';
 import {CommentService} from '../../service/comment.service';
 import {IngredientService} from '../../service/ingredient.service';
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {RecipeService} from '../../service/recipe.service';
 import {Recipe} from '../../model/recipe';
 import {Ingredient} from 'src/app/model/ingredient';
 import { TimeType } from 'src/app/model/timeType';
+import {AuthenticationService} from '../../security/authentication.service';
 
 @Component({
   selector: 'app-recipe',
@@ -24,10 +25,12 @@ export class RecipeComponent implements OnInit {
   comments: Comment[];
 
   constructor(private rout: ActivatedRoute,
+              private route: Router,
               private recipeService: RecipeService,
               private ingredientService: IngredientService,
               private commentService: CommentService,
-              private directionService: DirectionService) {
+              private directionService: DirectionService,
+              public authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -60,5 +63,9 @@ export class RecipeComponent implements OnInit {
   loadComments(): void {
     this.commentService.getByRecipeId(this.recipe.id)
       .subscribe(comments => this.comments = comments);
+  }
+
+  deleteRecipe(recipeId: number): void {
+    this.recipeService.deleteById(recipeId).subscribe(() => this.route.navigate(['recipes']));
   }
 }

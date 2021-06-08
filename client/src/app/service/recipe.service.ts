@@ -60,6 +60,11 @@ export class RecipeService {
     const url = `${RESOURCE_URL}/search/findByTimeType/${timeType}?page=${page}&size=${pageSize}`;
     return this.http.get<GetPagedResponse>(url);
   }
+
+  deleteById(id: number): Observable<any> {
+    const url = `${RESOURCE_URL}/${id}`;
+    return this.http.delete<any>(url);
+  }
 }
 
 interface GetPagedResponse {

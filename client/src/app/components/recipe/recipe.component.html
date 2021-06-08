@@ -1,6 +1,12 @@
 <main>
 
-  <h1>{{recipe.title}}</h1>
+  <section class="header-section">
+    <h1>{{recipe.title}}</h1>
+    <button 
+      *ngIf="recipe.username == authService.getAuthenticatedUsername() || authService.isAdmin()" 
+      class="delete-btn"
+      (click)="deleteRecipe(recipe.id)">delete</button>
+  </section>
 
   <p class="owner-username" routerLink="/user/{{recipe.username}}">{{recipe.username}}</p>
 
@@ -16,6 +22,7 @@
           </p>
         </ng-container>
       </div>
+
   </section>
 
   <section class="info-section">
