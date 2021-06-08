@@ -32,8 +32,8 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
-    const username = this.authenticationService.getAuthenticatedUsername();
 
+    const username = this.authenticationService.getAuthenticatedUsername();
     this.userService.getByUsername(username).subscribe(data => {
       this.user = data;
       this.patchFormWithUserDetails();
@@ -108,8 +108,7 @@ export class UserEditComponent implements OnInit {
     this.userService.editUser(user).subscribe(
       () => {
         this.router.navigate(['/user']);
-      }, (err) => {
-        console.log(err);
+      }, () => {
         this.clearAllFields();
         this.errorMessage = 'Could not edit details';
       }

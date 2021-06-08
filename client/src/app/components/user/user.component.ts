@@ -28,8 +28,6 @@ export class UserComponent implements OnInit {
               private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-
-    this.user.id = 1; // TODO: load from session
     this.loadData();
   }
 

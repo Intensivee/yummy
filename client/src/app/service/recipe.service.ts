@@ -57,7 +57,6 @@ export class RecipeService {
   }
 
   getRecipesByTimeTypePaged(timeType: string, page: number, pageSize: number): Observable<GetPagedResponse> {
-    console.log(timeType);
     const url = `${RESOURCE_URL}/search/findByTimeType/${timeType}?page=${page}&size=${pageSize}`;
     return this.http.get<GetPagedResponse>(url);
   }

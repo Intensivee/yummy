@@ -17,7 +17,6 @@ export class MainComponent implements OnInit {
   constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
-    console.log(this.timeTypeEnum.TIME_1);
     this.recipeService.get3TopRatedRecipes().subscribe(data => {
       this.recipes = data;
     });
