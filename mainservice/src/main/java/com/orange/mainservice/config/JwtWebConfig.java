@@ -53,8 +53,8 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
-                    .userDetailsService(this.userDetailsService)
-                    .passwordEncoder(this.passwordEncoder());
+                .userDetailsService(this.userDetailsService)
+                .passwordEncoder(this.passwordEncoder());
     }
 
     @Override
@@ -71,16 +71,20 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 // ------- general -------
-                    .antMatchers("/authentication/**").permitAll()
-                    .antMatchers("/",
-                            "/**/*.png",
-                            "/**/*.gif",
-                            "/**/*.svg",
-                            "/**/*.jpg",
-                            "/**/*.html",
-                            "/**/*.css",
-                            "/**/*.js").permitAll()
-                    .antMatchers("/**").hasAnyAuthority(ROLE_USER.name(),ROLE_ADMIN.name());
+                .antMatchers("/authentication/**").permitAll()
+                .antMatchers("/",
+                        "/**/*.png",
+                        "/**/*.gif",
+                        "/**/*.svg",
+                        "/**/*.jpg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js").permitAll()
+                .antMatchers("/ingredients/**").permitAll()
+                .antMatchers("/components/**").permitAll()
+                .antMatchers("/componentCategories/**").permitAll()
+                .antMatchers("/recipeCategories/**").permitAll()
+                .antMatchers("/**").hasAnyAuthority(ROLE_USER.name(), ROLE_ADMIN.name());
 
     }
 }
