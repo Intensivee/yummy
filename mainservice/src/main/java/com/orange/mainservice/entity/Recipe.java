@@ -1,5 +1,6 @@
 package com.orange.mainservice.entity;
 
+import com.orange.mainservice.comment.Comment;
 import com.orange.mainservice.entity.enums.TimeType;
 import com.orange.mainservice.rate.Rate;
 import lombok.Getter;

@@ -1,8 +1,5 @@
-package com.orange.mainservice.controller;
+package com.orange.mainservice.comment;
 
-import com.orange.mainservice.request.CommentRequest;
-import com.orange.mainservice.response.CommentResponse;
-import com.orange.mainservice.service.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +12,17 @@ import java.util.Set;
 @RestController
 @RequestMapping("comments")
 @AllArgsConstructor
-public class CommentController {
+class CommentController {
 
     private final CommentService commentService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<CommentResponse> getById(@PathVariable("id") Long id){
+    public ResponseEntity<CommentResponse> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(commentService.getResponseById(id));
     }
 
     @PostMapping
-    public ResponseEntity<CommentResponse> create(@Valid @RequestBody CommentRequest request){
+    public ResponseEntity<CommentResponse> create(@Valid @RequestBody CommentRequest request) {
         CommentResponse created = commentService.add(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

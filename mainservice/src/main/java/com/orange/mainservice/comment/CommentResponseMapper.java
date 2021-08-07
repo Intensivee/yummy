@@ -1,13 +1,11 @@
-package com.orange.mainservice.mapper.response;
+package com.orange.mainservice.comment;
 
-import com.orange.mainservice.entity.Comment;
-import com.orange.mainservice.response.CommentResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommentResponseMapper {
+class CommentResponseMapper {
 
-    public CommentResponse commentToResponse(Comment comment) {
+    CommentResponse commentToResponse(Comment comment) {
         return new CommentResponse(
                 comment.getId(),
                 comment.getBody(),

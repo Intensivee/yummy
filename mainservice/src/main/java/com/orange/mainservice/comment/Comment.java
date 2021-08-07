@@ -1,5 +1,7 @@
-package com.orange.mainservice.entity;
+package com.orange.mainservice.comment;
 
+import com.orange.mainservice.entity.Recipe;
+import com.orange.mainservice.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
