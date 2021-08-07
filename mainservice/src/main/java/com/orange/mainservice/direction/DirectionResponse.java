@@ -1,11 +1,11 @@
-package com.orange.mainservice.response;
+package com.orange.mainservice.direction;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public final class DirectionResponse {
+final class DirectionResponse {
 
     private final Long id;
     private final Integer order;

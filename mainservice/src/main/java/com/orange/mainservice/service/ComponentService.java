@@ -23,7 +23,7 @@ public class ComponentService {
     private final ComponentCategoryService categoryService;
 
     public Set<ComponentResponse> getByCategoryId(Long id){
-        return componentRepository.findAllByCategoriesId(id).stream()
+        return componentRepository.findAllByCategories_Id(id).stream()
                 .map(responseMapper::componentToResponse)
                 .collect(Collectors.toSet());
     }

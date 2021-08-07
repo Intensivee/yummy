@@ -1,5 +1,6 @@
-package com.orange.mainservice.entity;
+package com.orange.mainservice.direction;
 
+import com.orange.mainservice.entity.Recipe;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

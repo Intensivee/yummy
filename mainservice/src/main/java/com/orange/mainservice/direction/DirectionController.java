@@ -1,8 +1,5 @@
-package com.orange.mainservice.controller;
+package com.orange.mainservice.direction;
 
-import com.orange.mainservice.request.DirectionRequest;
-import com.orange.mainservice.response.DirectionResponse;
-import com.orange.mainservice.service.DirectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +12,17 @@ import java.util.Set;
 @RestController
 @RequestMapping("directions")
 @AllArgsConstructor
-public class DirectionController {
+class DirectionController {
 
     private final DirectionService directionService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<DirectionResponse> getById(@PathVariable("id") Long id){
+    public ResponseEntity<DirectionResponse> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(directionService.getResponseById(id));
     }
 
     @PostMapping
-    public ResponseEntity<DirectionResponse> create(@Valid @RequestBody DirectionRequest request){
+    public ResponseEntity<DirectionResponse> create(@Valid @RequestBody DirectionRequest request) {
         DirectionResponse created = directionService.add(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
