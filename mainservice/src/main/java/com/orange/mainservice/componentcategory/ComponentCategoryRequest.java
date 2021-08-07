@@ -1,4 +1,4 @@
-package com.orange.mainservice.request;
+package com.orange.mainservice.componentcategory;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,10 +8,10 @@ import javax.validation.constraints.Size;
 
 @Getter
 @AllArgsConstructor
-public final class ComponentCategoryRequest {
+final class ComponentCategoryRequest {
 
     private final Long id;
     @NotBlank
-    @Size(max=25)
+    @Size(max = 25)
     private final String name;
 }

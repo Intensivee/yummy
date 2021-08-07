@@ -1,5 +1,6 @@
 package com.orange.mainservice.service;
 
+import com.orange.mainservice.componentcategory.ComponentCategoryFacade;
 import com.orange.mainservice.entity.Component;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
@@ -20,7 +21,7 @@ public class ComponentService {
 
     private final ComponentRepository componentRepository;
     private final ComponentResponseMapper responseMapper;
-    private final ComponentCategoryService categoryService;
+    private final ComponentCategoryFacade categoryFacade;
 
     public Set<ComponentResponse> getByCategoryId(Long id){
         return componentRepository.findAllByCategories_Id(id).stream()
@@ -85,7 +86,7 @@ public class ComponentService {
                 request.getIsAccepted(),
                 request.getCategoriesIds() != null ? request.getCategoriesIds()
                         .stream()
-                        .map(categoryService::getById)
+                        .map(categoryFacade::getById)
                         .collect(Collectors.toSet()) : null
         );
     }

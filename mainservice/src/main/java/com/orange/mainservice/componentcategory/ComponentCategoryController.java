@@ -1,8 +1,5 @@
-package com.orange.mainservice.controller;
+package com.orange.mainservice.componentcategory;
 
-import com.orange.mainservice.request.ComponentCategoryRequest;
-import com.orange.mainservice.response.ComponentCategoryResponse;
-import com.orange.mainservice.service.ComponentCategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +12,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("componentCategories")
 @AllArgsConstructor
-public class ComponentCategoryController {
+class ComponentCategoryController {
 
     private final ComponentCategoryService categoryService;
 
@@ -25,7 +22,7 @@ public class ComponentCategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ComponentCategoryResponse> getById(@PathVariable("id") Long id){
+    public ResponseEntity<ComponentCategoryResponse> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(categoryService.getResponseById(id));
     }
 
