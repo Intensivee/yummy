@@ -1,6 +1,5 @@
-package com.orange.mainservice.repository;
+package com.orange.mainservice.recipe;
 
-import com.orange.mainservice.entity.Recipe;
 import com.orange.mainservice.entity.enums.TimeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface RecipeRepository extends JpaRepository<Recipe, Long> {
+interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     Page<Recipe> findAllByUserId(Long id, Pageable pageable);
 

@@ -3,6 +3,7 @@ package com.orange.mainservice.entity;
 import com.orange.mainservice.comment.Comment;
 import com.orange.mainservice.entity.enums.UserRole;
 import com.orange.mainservice.rate.Rate;
+import com.orange.mainservice.recipe.Recipe;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;

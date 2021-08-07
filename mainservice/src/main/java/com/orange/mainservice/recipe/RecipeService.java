@@ -1,15 +1,11 @@
-package com.orange.mainservice.service;
+package com.orange.mainservice.recipe;
 
-import com.orange.mainservice.entity.Recipe;
 import com.orange.mainservice.entity.enums.TimeType;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
-import com.orange.mainservice.mapper.response.RecipeResponseMapper;
 import com.orange.mainservice.recipecategory.RecipeCategoryFacade;
-import com.orange.mainservice.repository.RecipeRepository;
-import com.orange.mainservice.request.RecipeRequest;
-import com.orange.mainservice.response.RecipeResponse;
+import com.orange.mainservice.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,91 +17,91 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class RecipeService {
+class RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final RecipeResponseMapper responseMapper;
     private final UserService userService;
     private final RecipeCategoryFacade categoryFacade;
 
-    public Page<RecipeResponse> getAllPaged(Pageable pageable) {
+    Recipe getById(Long id) {
+        return recipeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", id));
+    }
+
+    Page<RecipeResponse> getAllPaged(Pageable pageable) {
         return recipeRepository.findAll(pageable)
                 .map(responseMapper::recipeToResponse);
     }
 
-    public Page<RecipeResponse> getByUserIdPaged(Long id, Pageable pageable){
+    Page<RecipeResponse> getByUserIdPaged(Long id, Pageable pageable) {
         return recipeRepository.findAllByUserId(id, pageable)
                 .map(responseMapper::recipeToResponse);
     }
 
-    public Page<RecipeResponse> getByUsernamePaged(String username, Pageable pageable){
+    Page<RecipeResponse> getByUsernamePaged(String username, Pageable pageable) {
         return recipeRepository.findAllByUser_Username(username, pageable)
                 .map(responseMapper::recipeToResponse);
     }
 
-    public Page<RecipeResponse> getByCategoryName(String category, Pageable pageable){
+    Page<RecipeResponse> getByCategoryName(String category, Pageable pageable) {
         return recipeRepository.findAllByCategories_Name(category, pageable)
                 .map(responseMapper::recipeToResponse);
     }
 
-    public Page<RecipeResponse> getByComponentName(String component, Pageable pageable) {
+    Page<RecipeResponse> getByComponentName(String component, Pageable pageable) {
         return recipeRepository.findAllDistinctByIngredients_Component_name(component, pageable)
                 .map(responseMapper::recipeToResponse);
     }
 
-    public Page<RecipeResponse> getBySearchKey(String searchKey, Pageable pageable){
+    Page<RecipeResponse> getBySearchKey(String searchKey, Pageable pageable) {
         return recipeRepository.findByTitleIgnoreCaseContaining(searchKey, pageable)
                 .map(responseMapper::recipeToResponse);
     }
 
-    public Page<RecipeResponse> getRecipesByTimeType(TimeType timeType, Pageable pageable) {
+    Page<RecipeResponse> getRecipesByTimeType(TimeType timeType, Pageable pageable) {
         return recipeRepository.findByTimeType(pageable, timeType)
                 .map(responseMapper::recipeToResponse);
     }
 
-    public List<RecipeResponse> getTop3RatedRecipes() {
+    List<RecipeResponse> getTop3RatedRecipes() {
         return recipeRepository.getRecipesByRateDesc(PageRequest.of(0, 3)).stream()
                 .map(responseMapper::recipeToResponse)
                 .collect(Collectors.toList());
     }
 
-    public RecipeResponse getResponseById(Long id){
+    RecipeResponse getResponseById(Long id) {
         return responseMapper.recipeToResponse(getById(id));
     }
 
-    public Recipe getById(Long id){
-        return recipeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", id));
-    }
-
-    public RecipeResponse add(RecipeRequest request){
+    RecipeResponse add(RecipeRequest request) {
         validateCreateRequest(request);
         Recipe recipeToAdd = createEntityFromRequest(request);
         Recipe addedRecipe = recipeRepository.save(recipeToAdd);
         return responseMapper.recipeToResponse(addedRecipe);
     }
 
-    public RecipeResponse edit(Long id, RecipeRequest request){
+    RecipeResponse edit(Long id, RecipeRequest request) {
         validateEditInput(id, request);
         Recipe recipeToEdit = createEntityFromRequest(request);
         Recipe editedRecipe = recipeRepository.save(recipeToEdit);
         return responseMapper.recipeToResponse(editedRecipe);
     }
 
-    public void delete(Long id) {
+    void delete(Long id) {
         recipeRepository.delete(getById(id));
     }
 
     private void validateEditInput(Long id, RecipeRequest request){
-        if(idNotPresentORNotMatching(id, request)){
+        if (isIdNotPresentOrNotMatching(id, request)) {
             throw new PathNotMatchBodyException(id, request.getId());
         }
-        if(!recipeRepository.existsById(id)){
+        if (!recipeRepository.existsById(id)) {
             throw new ResourceNotFoundException("ComponentCategory", "id", id);
         }
     }
 
-    private boolean idNotPresentORNotMatching(Long pathId, RecipeRequest request){
+    private boolean isIdNotPresentOrNotMatching(Long pathId, RecipeRequest request) {
         return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 

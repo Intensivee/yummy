@@ -1,7 +1,8 @@
-package com.orange.mainservice.entity;
+package com.orange.mainservice.recipe;
 
 import com.orange.mainservice.comment.Comment;
 import com.orange.mainservice.direction.Direction;
+import com.orange.mainservice.entity.User;
 import com.orange.mainservice.entity.enums.TimeType;
 import com.orange.mainservice.ingredient.Ingredient;
 import com.orange.mainservice.rate.Rate;

@@ -1,4 +1,4 @@
-package com.orange.mainservice.request;
+package com.orange.mainservice.recipe;
 
 import com.orange.mainservice.entity.enums.TimeType;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Getter
 @AllArgsConstructor
-public final class RecipeRequest {
+final class RecipeRequest {
 
     private final Long id;
     @NotNull

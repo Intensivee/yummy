@@ -4,7 +4,7 @@ import com.orange.mainservice.component.ComponentFacade;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
-import com.orange.mainservice.service.RecipeService;
+import com.orange.mainservice.recipe.RecipeFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ class IngredientService {
 
     private final IngredientRepository ingredientRepository;
     private final IngredientResponseMapper responseMapper;
-    private final RecipeService recipeService;
+    private final RecipeFacade recipeFacade;
     private final ComponentFacade componentFacade;
 
     IngredientResponse getResponseById(Long id) {
@@ -81,7 +81,7 @@ class IngredientService {
                 request.getId(),
                 request.getAmount(),
                 request.getAmountType(),
-                recipeService.getById(request.getRecipeId()),
+                recipeFacade.getById(request.getRecipeId()),
                 componentFacade.getById(request.getComponentId())
         );
     }

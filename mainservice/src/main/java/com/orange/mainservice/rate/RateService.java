@@ -3,7 +3,7 @@ package com.orange.mainservice.rate;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
-import com.orange.mainservice.service.RecipeService;
+import com.orange.mainservice.recipe.RecipeFacade;
 import com.orange.mainservice.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ class RateService {
     private final RateRepository rateRepository;
     private final RateResponseMapper responseMapper;
     private final UserService userService;
-    private final RecipeService recipeService;
+    private final RecipeFacade recipeFacade;
 
     Double getRecipeAverageRate(Long recipeId) {
         return rateRepository.getRecipeAverageRate(recipeId)
@@ -83,7 +83,7 @@ class RateService {
                 request.getValue(),
                 null,
                 userService.getById(request.getUserId()),
-                recipeService.getById(request.getRecipeId())
+                recipeFacade.getById(request.getRecipeId())
         );
     }
 
@@ -94,7 +94,7 @@ class RateService {
                 request.getValue(),
                 rate.getDateCreated(),
                 userService.getById(request.getUserId()),
-                recipeService.getById(request.getRecipeId())
+                recipeFacade.getById(request.getRecipeId())
         );
     }
 }

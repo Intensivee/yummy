@@ -3,7 +3,7 @@ package com.orange.mainservice.direction;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
-import com.orange.mainservice.service.RecipeService;
+import com.orange.mainservice.recipe.RecipeFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ class DirectionService {
 
     private final DirectionRepository directionRepository;
     private final DirectionResponseMapper responseMapper;
-    private final RecipeService recipeService;
+    private final RecipeFacade recipeFacade;
 
     DirectionResponse getResponseById(Long id) {
         return responseMapper.directionToDto(getById(id));
@@ -80,7 +80,7 @@ class DirectionService {
                 request.getId(),
                 request.getOrder(),
                 request.getDescription(),
-                recipeService.getById(request.getRecipeId())
+                recipeFacade.getById(request.getRecipeId())
         );
     }
 }

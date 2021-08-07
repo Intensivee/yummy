@@ -1,9 +1,6 @@
-package com.orange.mainservice.controller;
+package com.orange.mainservice.recipe;
 
 import com.orange.mainservice.entity.enums.TimeType;
-import com.orange.mainservice.request.RecipeRequest;
-import com.orange.mainservice.response.RecipeResponse;
-import com.orange.mainservice.service.RecipeService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,12 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("recipes")
 @AllArgsConstructor
-public class RecipeController {
+class RecipeController {
 
     private final RecipeService recipeService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecipeResponse> getById(@PathVariable("id") Long id){
+    public ResponseEntity<RecipeResponse> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(recipeService.getResponseById(id));
     }
 

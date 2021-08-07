@@ -1,8 +1,8 @@
 package com.orange.mainservice.ingredient;
 
 import com.orange.mainservice.component.Component;
-import com.orange.mainservice.entity.Recipe;
 import com.orange.mainservice.entity.enums.AmountType;
+import com.orange.mainservice.recipe.Recipe;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.annotations.Type;

@@ -1,4 +1,4 @@
-package com.orange.mainservice.response;
+package com.orange.mainservice.recipe;
 
 import com.orange.mainservice.entity.enums.TimeType;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public final class RecipeResponse {
+final class RecipeResponse {
 
     private final Long id;
     private final TimeType timeType;
