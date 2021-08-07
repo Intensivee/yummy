@@ -6,6 +6,7 @@ import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.mapper.response.RecipeResponseMapper;
+import com.orange.mainservice.recipecategory.RecipeCategoryFacade;
 import com.orange.mainservice.repository.RecipeRepository;
 import com.orange.mainservice.request.RecipeRequest;
 import com.orange.mainservice.response.RecipeResponse;
@@ -25,7 +26,7 @@ public class RecipeService {
     private final RecipeRepository recipeRepository;
     private final RecipeResponseMapper responseMapper;
     private final UserService userService;
-    private final RecipeCategoryService categoryService;
+    private final RecipeCategoryFacade categoryFacade;
 
     public Page<RecipeResponse> getAllPaged(Pageable pageable) {
         return recipeRepository.findAll(pageable)
@@ -126,7 +127,7 @@ public class RecipeService {
                 request.getImg(),
                 userService.getById(request.getUserId()),
                 request.getCategoriesIds().stream()
-                        .map(categoryService::getById)
+                        .map(categoryFacade::getById)
                         .collect(Collectors.toSet())
         );
     }

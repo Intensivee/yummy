@@ -1,5 +1,6 @@
-package com.orange.mainservice.entity;
+package com.orange.mainservice.recipecategory;
 
+import com.orange.mainservice.entity.Recipe;
 import lombok.Getter;
 
 import javax.persistence.*;

@@ -1,13 +1,8 @@
-package com.orange.mainservice.service;
+package com.orange.mainservice.recipecategory;
 
-import com.orange.mainservice.entity.RecipeCategory;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
-import com.orange.mainservice.mapper.response.RecipeCategoryResponseMapper;
-import com.orange.mainservice.repository.RecipeCategoryRepository;
-import com.orange.mainservice.request.RecipeCategoryRequest;
-import com.orange.mainservice.response.RecipeCategoryResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,54 +11,54 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class RecipeCategoryService {
+class RecipeCategoryService {
 
     private final RecipeCategoryRepository categoryRepository;
     private final RecipeCategoryResponseMapper responseMapper;
 
-    public Set<RecipeCategoryResponse> getAll(){
+    Set<RecipeCategoryResponse> getAll() {
         return categoryRepository.findAll().stream()
                 .map(responseMapper::categoryToResponse)
                 .collect(Collectors.toSet());
     }
 
-    public RecipeCategoryResponse getResponseById(Long id){
+    RecipeCategoryResponse getResponseById(Long id) {
         return responseMapper.categoryToResponse(getById(id));
     }
 
-    public RecipeCategory getById(Long id){
+    RecipeCategory getById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("RecipeCategory", "id", id));
     }
 
-    public RecipeCategoryResponse add(RecipeCategoryRequest request){
+    RecipeCategoryResponse add(RecipeCategoryRequest request) {
         validateCreateRequest(request);
         RecipeCategory categoryToAdd = createEntityFromRequest(request);
         RecipeCategory addedCategory = categoryRepository.save(categoryToAdd);
         return responseMapper.categoryToResponse(addedCategory);
     }
 
-    public RecipeCategoryResponse edit(Long id, RecipeCategoryRequest request){
+    RecipeCategoryResponse edit(Long id, RecipeCategoryRequest request) {
         validateEditInput(id, request);
         RecipeCategory categoryToEdit = createEntityFromRequest(request);
         RecipeCategory editedCategory = categoryRepository.save(categoryToEdit);
         return responseMapper.categoryToResponse(editedCategory);
     }
 
-    public void delete(Long id) {
+    void delete(Long id) {
         categoryRepository.delete(getById(id));
     }
 
     private void validateEditInput(Long id, RecipeCategoryRequest request){
-        if(idNotPresentORNotMatching(id, request)){
+        if (isIdNotPresentOrNotMatching(id, request)) {
             throw new PathNotMatchBodyException(id, request.getId());
         }
-        if(!categoryRepository.existsById(id)){
+        if (!categoryRepository.existsById(id)) {
             throw new ResourceNotFoundException("ComponentCategory", "id", id);
         }
     }
 
-    private boolean idNotPresentORNotMatching(Long pathId, RecipeCategoryRequest request){
+    private boolean isIdNotPresentOrNotMatching(Long pathId, RecipeCategoryRequest request) {
         return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 

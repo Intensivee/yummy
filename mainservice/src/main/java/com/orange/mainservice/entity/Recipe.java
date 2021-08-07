@@ -5,6 +5,7 @@ import com.orange.mainservice.direction.Direction;
 import com.orange.mainservice.entity.enums.TimeType;
 import com.orange.mainservice.ingredient.Ingredient;
 import com.orange.mainservice.rate.Rate;
+import com.orange.mainservice.recipecategory.RecipeCategory;
 import lombok.Getter;
 import org.hibernate.annotations.Type;
 

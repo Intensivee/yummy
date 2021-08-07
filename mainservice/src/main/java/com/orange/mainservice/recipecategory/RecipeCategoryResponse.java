@@ -1,11 +1,11 @@
-package com.orange.mainservice.response;
+package com.orange.mainservice.recipecategory;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public final class RecipeCategoryResponse {
+final class RecipeCategoryResponse {
 
     private final Long id;
     private final String name;
