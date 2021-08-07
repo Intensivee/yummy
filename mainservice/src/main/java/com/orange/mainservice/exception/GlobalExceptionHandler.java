@@ -32,19 +32,24 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  WebRequest request) {
+                                                               WebRequest request) {
         List<String> messages = getMethodArgumentNotValidMessages(ex);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(createBodyWithMultipleMessages(ex.getClass().getTypeName(), HttpStatus.BAD_REQUEST, messages));
     }
 
-    private List<String> getMethodArgumentNotValidMessages(MethodArgumentNotValidException e){
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ExceptionResponse> handleAuthenticationFailed(AuthenticationException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(createBody(e, HttpStatus.UNAUTHORIZED));
+    }
+
+    private List<String> getMethodArgumentNotValidMessages(MethodArgumentNotValidException e) {
         return e.getBindingResult()
-            .getFieldErrors()
-            .stream()
-            .map(DefaultMessageSourceResolvable::getDefaultMessage)
-            .collect(Collectors.toList());
+                .getFieldErrors()
+                .stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.toList());
     }
 
     private ExceptionResponse createBody(Exception e, HttpStatus httpStatus) {

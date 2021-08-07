@@ -1,8 +1,9 @@
 package com.orange.mainservice.security;
 
-import com.orange.mainservice.config.JwtTokenConfig;
+import com.orange.mainservice.exception.AuthenticationException;
 import io.jsonwebtoken.JwtException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,37 +18,32 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class JwtTokenVerifierFilter extends OncePerRequestFilter {
+import static com.orange.mainservice.util.Constants.EMPTY_STRING;
+
+@RequiredArgsConstructor
+class JwtTokenVerifierFilter extends OncePerRequestFilter {
 
     private final JwtTokenConfig tokenConfig;
     private final JwtTokenUtil tokenUtil;
-
-    @Autowired
-    public JwtTokenVerifierFilter(JwtTokenConfig tokenConfig, JwtTokenUtil tokenUtil) {
-        this.tokenConfig = tokenConfig;
-        this.tokenUtil = tokenUtil;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        final String authorizationHeader = request.getHeader(this.tokenConfig.getAuthenticationHeaders());
+        final String authorizationHeader = request.getHeader(tokenConfig.getAuthenticationHeaders());
 
-        if (null == (authorizationHeader) || "".equals(authorizationHeader) ||
-                !authorizationHeader.startsWith(this.tokenConfig.getTokenPrefix())) {
+        if (Strings.isEmpty(authorizationHeader) || !authorizationHeader.startsWith(tokenConfig.getTokenPrefix())) {
             filterChain.doFilter(request, response);
             return;
         }
 
         try {
-            String token = authorizationHeader.replace(this.tokenConfig.getTokenPrefix(), "");
+            String token = authorizationHeader.replace(tokenConfig.getTokenPrefix(), EMPTY_STRING);
 
-            String email = this.tokenUtil.getUsername(token);
+            String email = tokenUtil.getUsername(token);
 
-            Set<SimpleGrantedAuthority> simpleGrantedAuthorities = this.tokenUtil.getAuthorities(token)
-                    .stream()
+            Set<SimpleGrantedAuthority> simpleGrantedAuthorities = tokenUtil.getAuthorities(token).stream()
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toSet());
 
@@ -59,9 +55,8 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         } catch (JwtException e){
-            throw new IllegalStateException("Token cannot be trusted");
+            throw new AuthenticationException("Token has not been recognised");
         }
-        // pass request+response to next filter in chain
         filterChain.doFilter(request, response);
     }
 }

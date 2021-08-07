@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Set;
 
-public class JwtUserDetails implements UserDetails {
+class JwtUserDetails implements UserDetails {
 
-    private Long id;
+    private final Long id;
     private final String email;
     private final String password;
     private final Set<? extends GrantedAuthority> grantedAuthorities;
@@ -17,10 +17,10 @@ public class JwtUserDetails implements UserDetails {
     private final Boolean isCredentialsNonExpired;
     private final Boolean isEnabled;
 
-    public JwtUserDetails(
-                          Long id, String email,
-                          String password,
-                          Set<? extends GrantedAuthority> grantedAuthorities) {
+    JwtUserDetails(
+            Long id, String email,
+            String password,
+            Set<? extends GrantedAuthority> grantedAuthorities) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -31,7 +31,7 @@ public class JwtUserDetails implements UserDetails {
         this.isEnabled = true;
     }
 
-    public Long getId() {
+    Long getId() {
         return id;
     }
 

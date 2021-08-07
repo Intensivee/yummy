@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 @Service
-public class AuthenticationService implements UserDetailsService {
+class AuthenticationService implements UserDetailsService {
 
 
     private final UserRepository userRepository;
@@ -36,19 +36,19 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        return this.userRepository.findByUsername(username)
-                .map( user -> new JwtUserDetails(
+        return userRepository.findByUsername(username)
+                .map(user -> new JwtUserDetails(
                         user.getId(),
                         user.getUsername(),
                         user.getPassword(),
                         Collections.singleton(new SimpleGrantedAuthority(user.getUserRole().toString())
-                )))
+                        )))
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with Username %s not found", username)));
     }
 
 
-    public Authentication authenticateCredentials(LoginRequest loginRequest) {
-        Authentication authentication = this.authenticationManager.authenticate(
+    Authentication authenticateCredentials(LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
                         loginRequest.getPassword()
@@ -59,20 +59,20 @@ public class AuthenticationService implements UserDetailsService {
         return authentication;
     }
 
-    public User registerUser(RegisterRequest registerRequest){
-        this.userRepository.findByEmail(registerRequest.getEmail())
-                .ifPresent( user -> {
+    User registerUser(RegisterRequest registerRequest) {
+        userRepository.findByEmail(registerRequest.getEmail())
+                .ifPresent(user -> {
                     throw new RegistrationException(String.format(
                             "Email: %s already exists.", registerRequest.getEmail()
                     ));
                 });
 
-        User user = this.createUserFromRegisterRequest(registerRequest);
-        return this.userRepository.save(user);
+        User user = createUserFromRegisterRequest(registerRequest);
+        return userRepository.save(user);
     }
 
-    private User createUserFromRegisterRequest(RegisterRequest registerRequest){
-        User user = new User();
+    private User createUserFromRegisterRequest(RegisterRequest registerRequest) {
+        var user = new User();
         user.setEmail(registerRequest.getEmail());
         user.setEmail(registerRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
