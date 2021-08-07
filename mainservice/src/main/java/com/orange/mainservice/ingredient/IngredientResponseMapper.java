@@ -1,13 +1,11 @@
-package com.orange.mainservice.mapper.response;
+package com.orange.mainservice.ingredient;
 
-import com.orange.mainservice.entity.Ingredient;
-import com.orange.mainservice.response.IngredientResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IngredientResponseMapper {
+class IngredientResponseMapper {
 
-    public IngredientResponse ingredientToResponse(Ingredient ingredient){
+    IngredientResponse ingredientToResponse(Ingredient ingredient) {
         return new IngredientResponse(
                 ingredient.getId(),
                 ingredient.getComponent().getId(),

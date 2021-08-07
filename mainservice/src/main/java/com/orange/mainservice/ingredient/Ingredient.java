@@ -1,6 +1,7 @@
-package com.orange.mainservice.entity;
+package com.orange.mainservice.ingredient;
 
 import com.orange.mainservice.component.Component;
+import com.orange.mainservice.entity.Recipe;
 import com.orange.mainservice.entity.enums.AmountType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.orange.mainservice.response;
+package com.orange.mainservice.ingredient;
 
 import com.orange.mainservice.entity.enums.AmountType;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public final class IngredientResponse {
+final class IngredientResponse {
 
     private final Long id;
     private final Long componentId;

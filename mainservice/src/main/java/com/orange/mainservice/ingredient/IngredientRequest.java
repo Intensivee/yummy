@@ -1,4 +1,4 @@
-package com.orange.mainservice.request;
+package com.orange.mainservice.ingredient;
 
 import com.orange.mainservice.entity.enums.AmountType;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import javax.validation.constraints.Positive;
 
 @Getter
 @AllArgsConstructor
-public final class IngredientRequest {
+final class IngredientRequest {
 
     private final Long id;
     @NotNull
