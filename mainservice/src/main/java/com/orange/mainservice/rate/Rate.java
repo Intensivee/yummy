@@ -1,7 +1,7 @@
 package com.orange.mainservice.rate;
 
-import com.orange.mainservice.entity.User;
 import com.orange.mainservice.recipe.Recipe;
+import com.orange.mainservice.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;

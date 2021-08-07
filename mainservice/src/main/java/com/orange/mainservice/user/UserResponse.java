@@ -1,4 +1,4 @@
-package com.orange.mainservice.response;
+package com.orange.mainservice.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @AllArgsConstructor
-public final class UserResponse {
+final class UserResponse {
 
     private final Long id;
     private final String email;

@@ -4,7 +4,7 @@ import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.recipe.RecipeFacade;
-import com.orange.mainservice.service.UserService;
+import com.orange.mainservice.user.UserFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ class CommentService {
 
     private final CommentRepository commentRepository;
     private final CommentResponseMapper commentMapper;
-    private final UserService userService;
+    private final UserFacade userFacade;
     private final RecipeFacade recipeFacade;
 
     CommentResponse getResponseById(Long id) {
@@ -82,7 +82,7 @@ class CommentService {
                 request.getId(),
                 request.getBody(),
                 null,
-                userService.getById(request.getUserId()),
+                userFacade.getById(request.getUserId()),
                 recipeFacade.getById(request.getRecipeId())
         );
     }
@@ -93,7 +93,7 @@ class CommentService {
                 request.getId(),
                 request.getBody(),
                 comment.getDateCreated(),
-                userService.getById(request.getUserId()),
+                userFacade.getById(request.getUserId()),
                 recipeFacade.getById(request.getRecipeId())
         );
     }

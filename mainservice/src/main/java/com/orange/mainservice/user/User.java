@@ -1,4 +1,4 @@
-package com.orange.mainservice.entity;
+package com.orange.mainservice.user;
 
 import com.orange.mainservice.comment.Comment;
 import com.orange.mainservice.entity.enums.UserRole;

@@ -1,11 +1,11 @@
-package com.orange.mainservice.request;
+package com.orange.mainservice.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public final class UserRequest {
+final class UserRequest {
 
     private final String img;
     private final String bio;

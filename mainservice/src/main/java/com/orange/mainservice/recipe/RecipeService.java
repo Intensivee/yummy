@@ -5,7 +5,7 @@ import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.recipecategory.RecipeCategoryFacade;
-import com.orange.mainservice.service.UserService;
+import com.orange.mainservice.user.UserFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 class RecipeService {
 
+    private final UserFacade userFacade;
+    private final RecipeCategoryFacade categoryFacade;
     private final RecipeRepository recipeRepository;
     private final RecipeResponseMapper responseMapper;
-    private final UserService userService;
-    private final RecipeCategoryFacade categoryFacade;
 
     Recipe getById(Long id) {
         return recipeRepository.findById(id)
@@ -121,7 +121,7 @@ class RecipeService {
                 request.getTimeType(),
                 request.getTitle(),
                 request.getImg(),
-                userService.getById(request.getUserId()),
+                userFacade.getById(request.getUserId()),
                 request.getCategoriesIds().stream()
                         .map(categoryFacade::getById)
                         .collect(Collectors.toSet())

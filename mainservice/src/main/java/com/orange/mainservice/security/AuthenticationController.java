@@ -1,6 +1,6 @@
 package com.orange.mainservice.security;
 
-import com.orange.mainservice.entity.User;
+import com.orange.mainservice.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

@@ -1,14 +1,12 @@
-package com.orange.mainservice.mapper.response;
+package com.orange.mainservice.user;
 
-import com.orange.mainservice.entity.User;
 import com.orange.mainservice.rate.RateFacade;
-import com.orange.mainservice.response.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserResponseMapper {
+class UserResponseMapper {
 
     private final RateFacade rateFacade;
 
@@ -17,7 +15,7 @@ public class UserResponseMapper {
         this.rateFacade = rateFacade;
     }
 
-    public UserResponse userToResponse(User user) {
+    UserResponse userToResponse(User user) {
         return new UserResponse(
                 user.getId(),
                 user.getEmail(),

@@ -1,8 +1,5 @@
-package com.orange.mainservice.controller;
+package com.orange.mainservice.user;
 
-import com.orange.mainservice.request.UserRequest;
-import com.orange.mainservice.response.UserResponse;
-import com.orange.mainservice.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +9,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("users")
 @AllArgsConstructor
-public class UserController {
+class UserController {
 
     private final UserService userService;
 

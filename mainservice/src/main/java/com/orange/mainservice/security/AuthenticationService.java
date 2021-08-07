@@ -1,8 +1,8 @@
 package com.orange.mainservice.security;
 
-import com.orange.mainservice.entity.User;
 import com.orange.mainservice.exception.RegistrationException;
-import com.orange.mainservice.repository.UserRepository;
+import com.orange.mainservice.user.User;
+import com.orange.mainservice.user.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,21 +22,21 @@ import java.util.Collections;
 class AuthenticationService implements UserDetailsService {
 
 
-    private final UserRepository userRepository;
+    private final UserFacade userFacade;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public AuthenticationService(@Lazy PasswordEncoder passwordEncoder, UserRepository userRepository,
+    public AuthenticationService(@Lazy PasswordEncoder passwordEncoder, UserFacade userFacade,
                                  @Lazy AuthenticationManager authenticationManager) {
-        this.userRepository = userRepository;
+        this.userFacade = userFacade;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        return userRepository.findByUsername(username)
+        return userFacade.findByUsername(username)
                 .map(user -> new JwtUserDetails(
                         user.getId(),
                         user.getUsername(),
@@ -60,15 +60,14 @@ class AuthenticationService implements UserDetailsService {
     }
 
     User registerUser(RegisterRequest registerRequest) {
-        userRepository.findByEmail(registerRequest.getEmail())
+        userFacade.findByEmail(registerRequest.getEmail())
                 .ifPresent(user -> {
                     throw new RegistrationException(String.format(
                             "Email: %s already exists.", registerRequest.getEmail()
                     ));
                 });
 
-        User user = createUserFromRegisterRequest(registerRequest);
-        return userRepository.save(user);
+        return userFacade.save(createUserFromRegisterRequest(registerRequest));
     }
 
     private User createUserFromRegisterRequest(RegisterRequest registerRequest) {
