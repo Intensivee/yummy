@@ -1,6 +1,5 @@
-package com.orange.mainservice.repository;
+package com.orange.mainservice.rate;
 
-import com.orange.mainservice.entity.Rate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface RateRepository extends JpaRepository<Rate, Long> {
+interface RateRepository extends JpaRepository<Rate, Long> {
 
     @Query(
             value = "SELECT avg(r.value) FROM rates r WHERE r.recipe_id=?",

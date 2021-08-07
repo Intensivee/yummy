@@ -1,5 +1,7 @@
-package com.orange.mainservice.entity;
+package com.orange.mainservice.rate;
 
+import com.orange.mainservice.entity.Recipe;
+import com.orange.mainservice.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,7 +15,7 @@ import java.util.Date;
         uniqueConstraints = {
                 @UniqueConstraint(name = "rate_user_recipe_unique", columnNames = {"user_id", "recipe_id"})
         },
-        indexes = @Index( name = "rates_recipe_id_index", columnList = "recipe_id")
+        indexes = @Index(name = "rates_recipe_id_index", columnList = "recipe_id")
 )
 @Getter
 @AllArgsConstructor

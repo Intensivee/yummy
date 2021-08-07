@@ -1,4 +1,4 @@
-package com.orange.mainservice.request;
+package com.orange.mainservice.rate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
-public final class RateRequest {
+final class RateRequest {
 
     private final Long id;
     @Min(0)

@@ -1,6 +1,7 @@
 package com.orange.mainservice.entity;
 
 import com.orange.mainservice.entity.enums.UserRole;
+import com.orange.mainservice.rate.Rate;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;

@@ -1,11 +1,11 @@
-package com.orange.mainservice.response;
+package com.orange.mainservice.rate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public final class RateResponse {
+final class RateResponse {
 
     private final Long id;
     private final Integer value;

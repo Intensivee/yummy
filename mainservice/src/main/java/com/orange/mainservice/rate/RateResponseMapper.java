@@ -1,13 +1,11 @@
-package com.orange.mainservice.mapper.response;
+package com.orange.mainservice.rate;
 
-import com.orange.mainservice.entity.Rate;
-import com.orange.mainservice.response.RateResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RateResponseMapper {
+class RateResponseMapper {
 
-    public RateResponse rateToResponse(Rate rate){
+    public RateResponse rateToResponse(Rate rate) {
         return new RateResponse(
                 rate.getId(),
                 rate.getValue(),

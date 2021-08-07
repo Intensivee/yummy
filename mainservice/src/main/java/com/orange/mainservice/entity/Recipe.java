@@ -1,6 +1,7 @@
 package com.orange.mainservice.entity;
 
 import com.orange.mainservice.entity.enums.TimeType;
+import com.orange.mainservice.rate.Rate;
 import lombok.Getter;
 import org.hibernate.annotations.Type;
 
