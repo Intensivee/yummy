@@ -1,13 +1,12 @@
-package com.orange.mainservice.repository;
+package com.orange.mainservice.component;
 
-import com.orange.mainservice.entity.Component;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 import java.util.Set;
 
 
-public interface ComponentRepository extends JpaRepository<Component, Long> {
+interface ComponentRepository extends JpaRepository<Component, Long> {
 
     Optional<Component> getById(Long id);
 

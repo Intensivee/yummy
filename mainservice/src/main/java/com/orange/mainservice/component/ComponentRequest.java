@@ -1,4 +1,4 @@
-package com.orange.mainservice.request;
+package com.orange.mainservice.component;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,11 +10,11 @@ import java.util.Set;
 
 @Getter
 @AllArgsConstructor
-public final class ComponentRequest {
+final class ComponentRequest {
 
     private final Long id;
     @NotBlank
-    @Size(max=30)
+    @Size(max = 30)
     private final String name;
     @NotNull
     private final Boolean isAccepted;

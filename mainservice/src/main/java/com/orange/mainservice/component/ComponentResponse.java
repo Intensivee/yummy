@@ -1,11 +1,11 @@
-package com.orange.mainservice.response;
+package com.orange.mainservice.component;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public final class ComponentResponse {
+final class ComponentResponse {
 
     private final Long id;
     private final String name;

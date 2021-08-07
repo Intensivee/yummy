@@ -1,5 +1,6 @@
 package com.orange.mainservice.service;
 
+import com.orange.mainservice.component.ComponentFacade;
 import com.orange.mainservice.entity.Ingredient;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
@@ -21,7 +22,7 @@ public class IngredientService {
     private final IngredientRepository ingredientRepository;
     private final IngredientResponseMapper responseMapper;
     private final RecipeService recipeService;
-    private final ComponentService componentService;
+    private final ComponentFacade componentFacade;
 
     public IngredientResponse getResponseById(Long id){
         return responseMapper.ingredientToResponse(getById(id));
@@ -85,7 +86,7 @@ public class IngredientService {
                 request.getAmount(),
                 request.getAmountType(),
                 recipeService.getById(request.getRecipeId()),
-                componentService.getById(request.getComponentId())
+                componentFacade.getById(request.getComponentId())
         );
     }
 }

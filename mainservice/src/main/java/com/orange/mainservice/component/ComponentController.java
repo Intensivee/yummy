@@ -1,8 +1,5 @@
-package com.orange.mainservice.controller;
+package com.orange.mainservice.component;
 
-import com.orange.mainservice.request.ComponentRequest;
-import com.orange.mainservice.response.ComponentResponse;
-import com.orange.mainservice.service.ComponentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +12,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("components")
 @AllArgsConstructor
-public class ComponentController {
+class ComponentController {
 
     private final ComponentService componentService;
 

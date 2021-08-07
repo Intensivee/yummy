@@ -1,71 +1,66 @@
-package com.orange.mainservice.service;
+package com.orange.mainservice.component;
 
 import com.orange.mainservice.componentcategory.ComponentCategoryFacade;
-import com.orange.mainservice.entity.Component;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
-import com.orange.mainservice.mapper.response.ComponentResponseMapper;
-import com.orange.mainservice.repository.ComponentRepository;
-import com.orange.mainservice.request.ComponentRequest;
-import com.orange.mainservice.response.ComponentResponse;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
-public class ComponentService {
+@RequiredArgsConstructor
+class ComponentService {
 
     private final ComponentRepository componentRepository;
     private final ComponentResponseMapper responseMapper;
     private final ComponentCategoryFacade categoryFacade;
 
-    public Set<ComponentResponse> getByCategoryId(Long id){
+    Component getById(Long id) {
+        return this.componentRepository.getById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Component", "id", id));
+    }
+
+    Set<ComponentResponse> getByCategoryId(Long id) {
         return componentRepository.findAllByCategories_Id(id).stream()
                 .map(responseMapper::componentToResponse)
                 .collect(Collectors.toSet());
     }
 
-    public ComponentResponse getResponseById(Long id){
+    ComponentResponse getResponseById(Long id) {
         return responseMapper.componentToResponse(getById(id));
     }
 
-    public Component getById(Long id) {
-        return this.componentRepository.getById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Component", "id", id));
-    }
-
-    public ComponentResponse add(ComponentRequest request){
+    ComponentResponse add(ComponentRequest request) {
         validateCreateRequest(request);
         Component componentToAdd = createEntityFromRequest(request);
         Component addedComponent = componentRepository.save(componentToAdd);
         return responseMapper.componentToResponse(addedComponent);
     }
 
-    public ComponentResponse edit(Long id, ComponentRequest request){
+    ComponentResponse edit(Long id, ComponentRequest request) {
         validateEditInput(id, request);
         Component componentToEdit = createEntityFromRequest(request);
         Component editedComponent = componentRepository.save(componentToEdit);
         return responseMapper.componentToResponse(editedComponent);
     }
 
-    public void delete(Long id) {
+    void delete(Long id) {
         componentRepository.delete(getById(id));
     }
 
     private void validateEditInput(Long id, ComponentRequest request){
-        if(idNotPresentORNotMatching(id, request)){
+        if (isIdNotPresentOrNotMatching(id, request)) {
             throw new PathNotMatchBodyException(id, request.getId());
         }
-        if(!componentRepository.existsById(id)){
+        if (!componentRepository.existsById(id)) {
             throw new ResourceNotFoundException("ComponentCategory", "id", id);
         }
     }
 
-    private boolean idNotPresentORNotMatching(Long pathId, ComponentRequest request){
+    private boolean isIdNotPresentOrNotMatching(Long pathId, ComponentRequest request) {
         return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
