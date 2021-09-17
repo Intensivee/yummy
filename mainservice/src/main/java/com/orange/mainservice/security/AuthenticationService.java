@@ -1,5 +1,6 @@
 package com.orange.mainservice.security;
 
+import com.orange.mainservice.exception.AuthenticationException;
 import com.orange.mainservice.exception.RegistrationException;
 import com.orange.mainservice.user.User;
 import com.orange.mainservice.user.UserFacade;
@@ -12,7 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,22 +35,22 @@ class AuthenticationService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        return userFacade.findByUsername(username)
+    public UserDetails loadUserByUsername(String email) {
+        return userFacade.findByEmail(email)
                 .map(user -> new JwtUserDetails(
                         user.getId(),
                         user.getUsername(),
                         user.getPassword(),
                         Collections.singleton(new SimpleGrantedAuthority(user.getUserRole().toString())
                         )))
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with Username %s not found", username)));
+                .orElseThrow(() -> new AuthenticationException(String.format("User with email %s not found", email)));
     }
 
 
     Authentication authenticateCredentials(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
+                        loginRequest.getEmail(),
                         loginRequest.getPassword()
                 )
         );

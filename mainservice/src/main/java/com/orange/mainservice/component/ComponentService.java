@@ -81,8 +81,7 @@ class ComponentService {
                 request.getName(),
                 request.getIsAccepted(),
                 Objects.nonNull(request.getCategoriesIds())
-                        ? request.getCategoriesIds()
-                        .stream()
+                        ? request.getCategoriesIds().stream()
                         .map(categoryFacade::getById)
                         .collect(Collectors.toSet())
                         : null

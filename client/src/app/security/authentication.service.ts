@@ -1,11 +1,11 @@
-import { UserRoleType } from '../model/UserRoleType';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { API_URL } from '../constants';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import {UserRoleType} from '../model/UserRoleType';
+import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {API_URL} from '../constants';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 export const JWT_TOKEN = 'token';
 export const AUTHENTICATED_USER = 'authenticatedUsername';
@@ -21,15 +21,15 @@ export class AuthenticationService {
               private router: Router) { }
 
 
-  public authenticateCredentials(username: string, password: string): Observable<any> {
+  public authenticateCredentials(email: string, password: string): Observable<any> {
 
-    return this.http.post<any>(`${API_URL}/authentication/login`, { username, password })
+    return this.http.post<any>(`${API_URL}/authentication/login`, {email, password})
       .pipe(map(
         response => {
           this.setSessionStorage(response);
           return response;
         }
-      )
+        )
       );
   }
 

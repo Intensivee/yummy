@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 final class LoginRequest {
 
     @NotBlank(message = "Provided email is not valid.")
-    private final String username;
+    private final String email;
 
     @NotBlank(message = "Password must be specified!")
     private final String password;
