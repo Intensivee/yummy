@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @AllArgsConstructor
-public final class RegisterRequest {
+final class RegisterRequest {
 
     @Size(min = 3, max = 15, message = "username must be between 3 and 15 characters")
     private final String username;

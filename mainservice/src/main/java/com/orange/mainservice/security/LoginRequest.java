@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @AllArgsConstructor
-public final class LoginRequest {
+final class LoginRequest {
 
     @NotBlank(message = "Provided email is not valid.")
     private final String username;

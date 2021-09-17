@@ -66,6 +66,8 @@ export class RecipeComponent implements OnInit {
   }
 
   deleteRecipe(recipeId: number): void {
+    if (confirm('Do you really want to delete recipe?')){
     this.recipeService.deleteById(recipeId).subscribe(() => this.route.navigate(['recipes']));
+    }
   }
 }

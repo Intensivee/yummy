@@ -1,8 +1,7 @@
 package com.orange.mainservice.security;
 
-import com.orange.mainservice.config.JwtTokenConfig;
-import com.orange.mainservice.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.orange.mainservice.user.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,32 +15,25 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/authentication")
-public class AuthenticationController {
+@RequiredArgsConstructor
+class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final JwtTokenUtil tokenUtil;
     private final JwtTokenConfig tokenConfig;
 
-    @Autowired
-    public AuthenticationController(JwtTokenUtil tokenUtil,
-                                    JwtTokenConfig tokenConfig, AuthenticationService authenticationService) {
-        this.tokenUtil = tokenUtil;
-        this.tokenConfig = tokenConfig;
-        this.authenticationService = authenticationService;
-    }
-
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> authenticateCredentials(@Valid @RequestBody LoginRequest loginRequest){
-        Authentication authentication = this.authenticationService.authenticateCredentials(loginRequest);
+    public ResponseEntity<TokenResponse> authenticateCredentials(@Valid @RequestBody LoginRequest loginRequest) {
+        Authentication authentication = authenticationService.authenticateCredentials(loginRequest);
 
-        String token = this.tokenUtil.createToken(authentication);
+        String token = tokenUtil.createToken(authentication);
 
-        return ResponseEntity.ok(new TokenResponse(this.tokenConfig.getTokenPrefix() + token));
+        return ResponseEntity.ok(new TokenResponse(tokenConfig.getTokenPrefix() + token));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterRequest registerRequest){
-        User user = this.authenticationService.registerUser(registerRequest);
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+        User user = authenticationService.registerUser(registerRequest);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath()

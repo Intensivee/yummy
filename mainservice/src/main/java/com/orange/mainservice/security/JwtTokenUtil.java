@@ -1,9 +1,8 @@
 package com.orange.mainservice.security;
 
-import com.orange.mainservice.config.JwtTokenConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -16,57 +15,54 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtTokenUtil {
+@RequiredArgsConstructor
+class JwtTokenUtil {
 
     private final JwtTokenConfig tokenConfig;
 
-    @Autowired
-    public JwtTokenUtil(JwtTokenConfig jwtConfig) {
-        this.tokenConfig = jwtConfig;
-    }
-
-    public String createToken(Authentication authResult) {
+    String createToken(Authentication authResult) {
         JwtUserDetails userDetails = (JwtUserDetails) authResult.getPrincipal();
 
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .claim("authorities", authResult.getAuthorities())
                 .setIssuedAt(new Date())
-                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(this.tokenConfig.getTokenExpirationAfterDays())))
-                .signWith(this.tokenConfig.getSecretKeyForSigning())
+                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(tokenConfig.getTokenExpirationAfterDays())))
+                .signWith(tokenConfig.getSecretKeyForSigning())
                 .compact();
     }
 
-    public <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
-        Claims claims = this.getClaims(token);
+    <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
+        Claims claims = getClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    public Claims getClaims(String token){
+    Claims getClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(this.tokenConfig.getSecretKeyForSigning())
+                .setSigningKey(tokenConfig.getSecretKeyForSigning())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
 
-    public String getUsername(String token) {
-        return this.getClaim(token, Claims::getSubject);
+    String getUsername(String token) {
+        return getClaim(token, Claims::getSubject);
     }
 
-    public Set<String> getAuthorities(String token) {
-        Claims claims = this.getClaims(token);
+    @SuppressWarnings("unchecked")
+    Set<String> getAuthorities(String token) {
+        Claims claims = getClaims(token);
         var authorities = (List<Map<String, String>>) claims.get("authorities");
         return authorities.stream()
                 .map(auth -> auth.get("authority"))
                 .collect(Collectors.toSet());
     }
 
-    public Date getExpirationDate(String token) {
-        return this.getClaim(token, Claims::getExpiration);
+    Date getExpirationDate(String token) {
+        return getClaim(token, Claims::getExpiration);
     }
 
-    public Boolean isExpired(String token) {
-        return this.getExpirationDate(token).before(new Date());
+    Boolean isExpired(String token) {
+        return getExpirationDate(token).before(new Date());
     }
 }
