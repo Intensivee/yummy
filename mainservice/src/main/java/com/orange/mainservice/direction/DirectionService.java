@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -72,7 +73,7 @@ class DirectionService {
     }
 
     private boolean isIdInRequest(DirectionRequest request){
-        return request.getId() != null;
+        return Objects.nonNull(request.getId());
     }
 
     private Direction createEntityFromRequest(DirectionRequest request) {

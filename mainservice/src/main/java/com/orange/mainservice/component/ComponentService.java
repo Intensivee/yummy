@@ -7,6 +7,7 @@ import com.orange.mainservice.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -51,7 +52,7 @@ class ComponentService {
         componentRepository.delete(getById(id));
     }
 
-    private void validateEditInput(Long id, ComponentRequest request){
+    private void validateEditInput(Long id, ComponentRequest request) {
         if (isIdNotPresentOrNotMatching(id, request)) {
             throw new PathNotMatchBodyException(id, request.getId());
         }
@@ -64,14 +65,14 @@ class ComponentService {
         return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
-    private void validateCreateRequest(ComponentRequest request){
-        if(isIdInRequest(request)){
+    private void validateCreateRequest(ComponentRequest request) {
+        if (isIdInRequest(request)) {
             throw new ResourceCreateException(request.getId());
         }
     }
 
-    private boolean isIdInRequest(ComponentRequest request){
-        return request.getId() != null;
+    private boolean isIdInRequest(ComponentRequest request) {
+        return Objects.nonNull(request.getId());
     }
 
     private Component createEntityFromRequest(ComponentRequest request) {
@@ -79,10 +80,12 @@ class ComponentService {
                 request.getId(),
                 request.getName(),
                 request.getIsAccepted(),
-                request.getCategoriesIds() != null ? request.getCategoriesIds()
+                Objects.nonNull(request.getCategoriesIds())
+                        ? request.getCategoriesIds()
                         .stream()
                         .map(categoryFacade::getById)
-                        .collect(Collectors.toSet()) : null
+                        .collect(Collectors.toSet())
+                        : null
         );
     }
 }

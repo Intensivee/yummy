@@ -6,6 +6,7 @@ import com.orange.mainservice.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -69,7 +70,7 @@ class RecipeCategoryService {
     }
 
     private boolean isIdInRequest(RecipeCategoryRequest request){
-        return request.getId() != null;
+        return Objects.nonNull(request.getId());
     }
 
     private RecipeCategory createEntityFromRequest(RecipeCategoryRequest request){

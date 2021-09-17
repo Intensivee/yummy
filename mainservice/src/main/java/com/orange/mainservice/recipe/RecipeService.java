@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -112,7 +113,7 @@ class RecipeService {
     }
 
     private boolean isIdInRequest(RecipeRequest request){
-        return request.getId() != null;
+        return Objects.nonNull(request.getId());
     }
 
     private Recipe createEntityFromRequest(RecipeRequest request){

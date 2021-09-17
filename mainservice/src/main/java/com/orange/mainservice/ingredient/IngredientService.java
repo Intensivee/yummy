@@ -8,6 +8,7 @@ import com.orange.mainservice.recipe.RecipeFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -73,7 +74,7 @@ class IngredientService {
     }
 
     private boolean isIdInRequest(IngredientRequest request){
-        return request.getId() != null;
+        return Objects.nonNull(request.getId());
     }
 
     private Ingredient createEntityFromRequest(IngredientRequest request){

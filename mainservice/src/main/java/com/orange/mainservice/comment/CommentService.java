@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -74,7 +75,7 @@ class CommentService {
     }
 
     private boolean isIdInRequest(CommentRequest request){
-        return request.getId() != null;
+        return Objects.nonNull(request.getId());
     }
 
     private Comment createNewEntityFromRequest(CommentRequest request) {

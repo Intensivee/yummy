@@ -4,6 +4,7 @@ import com.orange.mainservice.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -30,10 +31,10 @@ class UserService {
     UserResponse patchUser(String username, UserRequest userRequest) {
         User user = findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-        if (userRequest.getBio() != null) {
+        if (Objects.nonNull(userRequest.getBio())) {
             user.setBio(userRequest.getBio());
         }
-        if (userRequest.getImg() != null) {
+        if (Objects.nonNull(userRequest.getImg())) {
             user.setImgUrl(userRequest.getImg());
         }
         return responseMapper.userToResponse(save(user));

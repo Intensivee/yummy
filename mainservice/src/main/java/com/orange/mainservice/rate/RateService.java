@@ -8,6 +8,8 @@ import com.orange.mainservice.user.UserFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @AllArgsConstructor
 class RateService {
@@ -74,7 +76,7 @@ class RateService {
     }
 
     private boolean isIdInRequest(RateRequest request) {
-        return request.getId() != null;
+        return Objects.nonNull(request.getId());
     }
 
     private Rate createNewEntityFromRequest(RateRequest request) {

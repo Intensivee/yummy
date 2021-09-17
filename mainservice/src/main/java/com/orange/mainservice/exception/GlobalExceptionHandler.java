@@ -10,6 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -57,7 +58,7 @@ public class GlobalExceptionHandler {
                 httpStatus,
                 new Date(),
                 e.getClass().getTypeName(),
-                e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.toString()
+                Objects.nonNull(e.getLocalizedMessage()) ? e.getLocalizedMessage() : e.toString()
         );
     }
 
