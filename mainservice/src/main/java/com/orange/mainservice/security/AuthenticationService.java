@@ -39,7 +39,7 @@ class AuthenticationService implements UserDetailsService {
         return userFacade.findByEmail(email)
                 .map(user -> new JwtUserDetails(
                         user.getId(),
-                        user.getUsername(),
+                        user.getEmail(),
                         user.getPassword(),
                         Collections.singleton(new SimpleGrantedAuthority(user.getUserRole().toString())
                         )))
