@@ -7,6 +7,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -22,7 +23,7 @@ class ComponentController {
     }
 
     @GetMapping("/names")
-    public ResponseEntity<Set<String>> getAllNamesOrdered() {
+    public ResponseEntity<List<String>> getAllNamesOrdered() {
         return ResponseEntity.ok(componentService.getAllNamesOrdered());
     }
 

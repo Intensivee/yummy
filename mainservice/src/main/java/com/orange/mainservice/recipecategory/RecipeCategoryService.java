@@ -6,8 +6,8 @@ import com.orange.mainservice.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,10 +17,10 @@ class RecipeCategoryService {
     private final RecipeCategoryRepository categoryRepository;
     private final RecipeCategoryResponseMapper responseMapper;
 
-    Set<RecipeCategoryResponse> getAll() {
-        return categoryRepository.findAll().stream()
+    List<RecipeCategoryResponse> getAllOrderByName() {
+        return categoryRepository.findAllByOrderByNameAsc().stream()
                 .map(responseMapper::categoryToResponse)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     RecipeCategoryResponse getResponseById(Long id) {

@@ -71,6 +71,7 @@
           <p class="input-header">Title :</p>
           <input class="input" formControlName="title">
         </div>
+
         <div>
           <p *ngIf="timeType.errors?.required && timeType.touched" class="error-msg"> time is required.</p>
           <p class="input-header">Time:</p>
@@ -78,6 +79,15 @@
             <option *ngFor="let time of TimeType | keyvalue" [ngValue]="time.key">
               {{time.value}} < min
             </option>
+          </select>
+        </div>
+
+        <div>
+          <p *ngIf="category.errors?.required && category.touched" class="error-msg"> category is required.</p>
+          <p class="input-header">Category:</p>
+          <select class="select-input" formControlName="category">
+            <option *ngFor="let category of categories$ | async" [ngValue]="category.id">
+              {{category.name}}</option>
           </select>
         </div>
       </div>

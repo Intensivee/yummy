@@ -16,4 +16,12 @@ public class ComponentFacade {
     public Component getOrCreateComponentByName(String componentName) {
         return componentService.getOrCreateComponentByName(componentName);
     }
+
+    public void deleteById(Long componentId) {
+        componentService.deleteComponent(componentId);
+    }
+
+    public boolean isNotAcceptedAndReferencedInJustOneIngredient(Component component) {
+        return this.componentService.isNotAcceptedAndReferencedInJustOneIngredient(component);
+    }
 }

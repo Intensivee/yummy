@@ -1,10 +1,13 @@
 package com.orange.mainservice.recipe;
 
+import com.orange.mainservice.component.Component;
+import com.orange.mainservice.component.ComponentFacade;
 import com.orange.mainservice.direction.DirectionFacade;
 import com.orange.mainservice.entity.enums.TimeType;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
+import com.orange.mainservice.ingredient.Ingredient;
 import com.orange.mainservice.ingredient.IngredientFacade;
 import com.orange.mainservice.recipecategory.RecipeCategoryFacade;
 import com.orange.mainservice.security.AuthenticationFacade;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +32,7 @@ class RecipeService {
     private final IngredientFacade ingredientFacade;
     @Lazy
     private final DirectionFacade directionFacade;
+    private final ComponentFacade componentFacade;
     private final AuthenticationFacade authenticationFacade;
     private final RecipeCategoryFacade categoryFacade;
     private final RecipeRepository recipeRepository;
@@ -36,12 +41,24 @@ class RecipeService {
     @Transactional(rollbackFor = Exception.class)
     public RecipeResponse createRecipe(RecipeCreateRequest recipeCreateRequest) {
         var recipeRequest = recipeCreateRequest.getRecipeRequest();
-        validateCreateRequest(recipeRequest);
+        validateRecipeRequest(recipeRequest);
 
         var createdRecipe = recipeRepository.save(createEntityFromRequest(recipeRequest));
         directionFacade.createDirections(recipeCreateRequest.getDirections(), createdRecipe);
         ingredientFacade.createIngredients(recipeCreateRequest.getIngredients(), createdRecipe);
         return responseMapper.recipeToResponse(createdRecipe);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteRecipe(Long recipeId) {
+        Set<Long> notAcceptedComponentIdList = getById(recipeId).getIngredients()
+                .stream()
+                .map(Ingredient::getComponent)
+                .filter(componentFacade::isNotAcceptedAndReferencedInJustOneIngredient)
+                .map(Component::getId)
+                .collect(Collectors.toSet());
+        recipeRepository.deleteById(recipeId);
+        notAcceptedComponentIdList.forEach(componentFacade::deleteById);
     }
 
     Recipe getById(Long id) {
@@ -85,7 +102,8 @@ class RecipeService {
     }
 
     List<RecipeResponse> getTop3RatedRecipes() {
-        return recipeRepository.getRecipesByRateDesc(PageRequest.of(0, 3)).stream()
+        return recipeRepository.getRecipesByRateDesc(PageRequest.of(0, 3))
+                .stream()
                 .map(responseMapper::recipeToResponse)
                 .collect(Collectors.toList());
     }
@@ -100,11 +118,7 @@ class RecipeService {
         return responseMapper.recipeToResponse(editedRecipe);
     }
 
-    void deleteRecipe(Long id) {
-        recipeRepository.delete(getById(id));
-    }
-
-    private void validateEditInput(Long id, RecipeRequest request){
+    private void validateEditInput(Long id, RecipeRequest request) {
         if (isIdNotPresentOrNotMatching(id, request)) {
             throw new PathNotMatchBodyException(id, request.getId());
         }
@@ -117,17 +131,17 @@ class RecipeService {
         return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
-    private void validateCreateRequest(RecipeRequest request){
-        if(isIdInRequest(request)){
+    private void validateRecipeRequest(RecipeRequest request) {
+        if (isIdInRequest(request)) {
             throw new ResourceCreateException(request.getId());
         }
     }
 
-    private boolean isIdInRequest(RecipeRequest request){
+    private boolean isIdInRequest(RecipeRequest request) {
         return Objects.nonNull(request.getId());
     }
 
-    private Recipe createEntityFromRequest(RecipeRequest request){
+    private Recipe createEntityFromRequest(RecipeRequest request) {
         return new Recipe(
                 request.getId(),
                 request.getTimeType(),

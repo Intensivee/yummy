@@ -1,3 +1,6 @@
+import {RecipeService} from '../../service/recipe.service';
+import {RecipeCategory} from '../../model/recipe-category';
+import {RecipeCategoryService} from '../../service/recipe-category.service';
 import {ComponentService} from '../../service/component.service';
 import {IngredientService} from '../../service/ingredient.service';
 import {Observable} from 'rxjs';
@@ -8,6 +11,7 @@ import {Component, OnInit} from '@angular/core';
 import {DEFAULT_IMG} from 'src/app/constants';
 import * as clone from 'clone';
 import {MatDialogRef} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-recipe',
@@ -21,11 +25,19 @@ export class CreateRecipeComponent implements OnInit {
   recipeForm: FormGroup;
   TimeType = TimeType;
   amountTypes$: Observable<string[]>;
+  categories$: Observable<RecipeCategory[]>;
 
   constructor(private dialogRef: MatDialogRef<any>,
+              private router: Router,
               private formBuilder: FormBuilder,
               private ingredientService: IngredientService,
-              private componentService: ComponentService) {
+              private componentService: ComponentService,
+              private recipeCategoryService: RecipeCategoryService,
+              private recipeService: RecipeService) {
+  }
+
+  get category() {
+    return this.recipeForm.get('category') as FormArray;
   }
 
   ngOnInit(): void {
@@ -34,16 +46,7 @@ export class CreateRecipeComponent implements OnInit {
     this.resetIngredientForm();
     this.initializeComponentControl();
     this.amountTypes$ = this.ingredientService.getAmountTypes();
-  }
-
-  resetRecipeForm(): void {
-    this.recipeForm = this.formBuilder.group({
-      title: new FormControl('', Validators.required),
-      timeType: new FormControl('', Validators.required),
-      directions: new FormArray([new FormControl('')]),
-      imgSource: new FormControl(DEFAULT_IMG),
-      ingredients: new FormArray([], Validators.required),
-    });
+    this.categories$ = this.recipeCategoryService.getAll();
   }
 
   get componentName() {
@@ -89,8 +92,15 @@ export class CreateRecipeComponent implements OnInit {
     this.directions.removeAt(index);
   }
 
-  onSubmit(): void {
-    this.recipeForm.markAllAsTouched();
+  resetRecipeForm(): void {
+    this.recipeForm = this.formBuilder.group({
+      title: new FormControl('', Validators.required),
+      timeType: new FormControl('', Validators.required),
+      directions: new FormArray([new FormControl('')]),
+      imgSource: new FormControl(DEFAULT_IMG),
+      ingredients: new FormArray([], Validators.required),
+      category: new FormControl(null, Validators.required),
+    });
   }
 
   get amountType() {
@@ -119,6 +129,25 @@ export class CreateRecipeComponent implements OnInit {
 
   get ingredients() {
     return this.recipeForm.get('ingredients') as FormArray;
+  }
+
+  onSubmit(): void {
+    this.recipeForm.markAllAsTouched();
+    if (this.recipeForm.valid) {
+      const recipeCreateRequest = {
+        recipeRequest: {
+          timeType: this.timeType.value,
+          title: this.title.value,
+          categoriesIds: [this.category.value]
+        },
+        ingredients: this.ingredients.value,
+        directions: this.directions.value
+      };
+      this.recipeService.createRecipe(recipeCreateRequest).subscribe(recipe => {
+        this.router.navigate(['recipe', recipe.id]);
+        this.dialogRef.close();
+      });
+    }
   }
 
   resetIngredientForm(): void {

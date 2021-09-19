@@ -10,6 +10,7 @@ import com.orange.mainservice.recipe.RecipeFacade;
 import com.orange.mainservice.recipe.RecipeIngredientsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +27,19 @@ class IngredientService {
     private final RecipeFacade recipeFacade;
     private final ComponentFacade componentFacade;
 
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteIngredient(Long ingredientId) {
+        var component = getIngredientById(ingredientId).getComponent();
+        boolean shouldComponentBeDeleted = componentFacade.isNotAcceptedAndReferencedInJustOneIngredient(component);
+
+        ingredientRepository.deleteById(ingredientId);
+        if (shouldComponentBeDeleted) {
+            componentFacade.deleteById(component.getId());
+        }
+    }
+
     IngredientResponse getResponseById(Long id) {
-        return responseMapper.ingredientToResponse(getById(id));
+        return responseMapper.ingredientToResponse(getIngredientById(id));
     }
 
     IngredientResponse createIngredient(IngredientRequest request) {
@@ -47,10 +59,6 @@ class IngredientService {
         return responseMapper.ingredientToResponse(editedIngredient);
     }
 
-    void deleteIngredient(Long id) {
-        ingredientRepository.delete(getById(id));
-    }
-
     Set<IngredientResponse> getByRecipeId(Long id) {
         return ingredientRepository.findByRecipeId(id).stream()
                 .map(responseMapper::ingredientToResponse)
@@ -61,7 +69,7 @@ class IngredientService {
         return Arrays.asList(AmountType.values());
     }
 
-    private Ingredient getById(Long id) {
+    private Ingredient getIngredientById(Long id) {
         return ingredientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ingredient", "id", id));
     }

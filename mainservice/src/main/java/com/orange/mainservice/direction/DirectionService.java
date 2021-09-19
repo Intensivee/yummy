@@ -28,8 +28,8 @@ class DirectionService {
     }
 
     public void createDirections(List<String> directions, Recipe recipe) {
-        IntStream.range(0, directions.size())
-                .forEach(order -> directionRepository.save(new Direction(order, directions.get(order), recipe)));
+        IntStream.range(1, directions.size())
+                .forEach(order -> directionRepository.save(new Direction(order, directions.get(order - 1), recipe)));
     }
 
     DirectionResponse createDirection(DirectionRequest request) {

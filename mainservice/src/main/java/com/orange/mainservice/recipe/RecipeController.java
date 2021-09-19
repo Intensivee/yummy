@@ -65,13 +65,12 @@ class RecipeController {
 
     @PostMapping
     public ResponseEntity<RecipeResponse> create(@Valid @RequestBody RecipeCreateRequest request) {
-        RecipeResponse created = recipeService.createRecipe(request);
-
+        var recipeResponse = recipeService.createRecipe(request);
         var location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(created.getId())
+                .buildAndExpand(recipeResponse.getId())
                 .toUri();
-        return ResponseEntity.created(location).body(created);
+        return ResponseEntity.created(location).body(recipeResponse);
     }
 
     @PutMapping("/{id}")

@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { API_URL } from '../constants';
-import { Recipe } from '../model/recipe';
-import { Observable } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {API_URL} from '../constants';
+import {Recipe} from '../model/recipe';
+import {Observable} from 'rxjs';
 
 const RESOURCE_URL = `${API_URL}/recipes`;
 
@@ -11,7 +11,8 @@ const RESOURCE_URL = `${API_URL}/recipes`;
 })
 export class RecipeService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getById(id: number): Observable<Recipe> {
     const url = `${RESOURCE_URL}/${id}`;
@@ -59,6 +60,10 @@ export class RecipeService {
   getRecipesByTimeTypePaged(timeType: string, page: number, pageSize: number): Observable<GetPagedResponse> {
     const url = `${RESOURCE_URL}/search/findByTimeType/${timeType}?page=${page}&size=${pageSize}`;
     return this.http.get<GetPagedResponse>(url);
+  }
+
+  createRecipe(recipeCreateRequest: any): Observable<Recipe> {
+    return this.http.post<Recipe>(RESOURCE_URL, recipeCreateRequest);
   }
 
   deleteById(id: number): Observable<any> {

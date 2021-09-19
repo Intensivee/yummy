@@ -7,6 +7,7 @@ import com.orange.mainservice.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -50,14 +51,17 @@ class ComponentService {
         componentRepository.delete(getById(id));
     }
 
-
-    Set<String> getAllNamesOrdered() {
-        return this.componentRepository.findAllNamesOrdered();
+    List<String> getAllNamesOrdered() {
+        return this.componentRepository.findAllAcceptedNamesOrdered();
     }
 
     Component getOrCreateComponentByName(String componentName) {
         return componentRepository.findByName(componentName)
                 .orElseGet(() -> componentRepository.save(new Component(componentName, false)));
+    }
+
+    boolean isNotAcceptedAndReferencedInJustOneIngredient(Component component) {
+        return !component.getIsAccepted() && component.getIngredients().size() == 1;
     }
 
     private void validateEditInput(Long id, ComponentRequest request) {

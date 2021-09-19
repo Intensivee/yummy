@@ -38,7 +38,7 @@ main {
 .right-header {
   display: flex;
   justify-content: space-between;
-  width: 60%;
+  width: 80%;
 }
 
 .dialog-close-btn {
