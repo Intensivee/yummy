@@ -16,9 +16,8 @@
       <div class="ingredients">
         <h3 class="ingredients-header">Ingredients: </h3>
         <ng-container *ngFor="let ingredient of ingredients">
-          <p> -
-            <span class="ingredient-component" routerLink="/recipes/byComponent/{{ingredient.componentName}}">{{ingredient.componentName}}</span>
-            --- {{ingredient.amount}} {{ingredient.amountType}}
+          <p><span class="ingredient-component" routerLink="/recipes/byComponent/{{ingredient.componentName}}">
+            {{ingredient.componentName | align : 30 : '-'}} </span>{{ingredient.amount}} {{ingredient.amountType}}
           </p>
         </ng-container>
       </div>
@@ -42,7 +41,7 @@
   </section>
 
   <section class="directions-section">
-    <h2>Directions:</h2>
+    <h2>Directions: </h2>
 
     <div class="step" *ngFor="let direction of directions">
       <p class="step-header">Step {{direction.order}}</p>

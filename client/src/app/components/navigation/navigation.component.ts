@@ -1,3 +1,5 @@
+import {CreateRecipeComponent} from '../create-recipe/create-recipe.component';
+import {MatDialog} from '@angular/material/dialog';
 import {AuthenticationService} from '../../security/authentication.service';
 import {Router} from '@angular/router';
 import {RecipeCategoryService} from '../../service/recipe-category.service';
@@ -16,6 +18,7 @@ export class NavigationComponent implements OnInit {
   recipeCategories: RecipeCategory[];
 
   constructor(private route: Router,
+              private dialog: MatDialog,
               private componentCatService: ComponentCategoryService,
               private recipeCatService: RecipeCategoryService,
               public authService: AuthenticationService) {
@@ -42,6 +45,10 @@ export class NavigationComponent implements OnInit {
 
   searchForRecipes(key: string): void {
     this.route.navigate(['recipes/search', key]);
+  }
+
+  openRecipeCreatePopup(): void {
+    this.dialog.open(CreateRecipeComponent);
   }
 
   logout(): void {

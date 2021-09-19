@@ -1,6 +1,7 @@
 package com.orange.mainservice.ingredient;
 
 import com.orange.mainservice.component.ComponentFacade;
+import com.orange.mainservice.entity.enums.AmountType;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
@@ -8,6 +9,8 @@ import com.orange.mainservice.recipe.RecipeFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,6 +50,10 @@ class IngredientService {
         return ingredientRepository.findByRecipeId(id).stream()
                 .map(responseMapper::ingredientToResponse)
                 .collect(Collectors.toSet());
+    }
+
+    List<AmountType> getAmountTypes() {
+        return Arrays.asList(AmountType.values());
     }
 
     private Ingredient getById(Long id) {

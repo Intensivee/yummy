@@ -21,6 +21,11 @@ class ComponentController {
         return ResponseEntity.ok(componentService.getResponseById(id));
     }
 
+    @GetMapping("/names")
+    public ResponseEntity<Set<String>> getAllNamesOrdered() {
+        return ResponseEntity.ok(componentService.getAllNamesOrdered());
+    }
+
     @PostMapping
     public ResponseEntity<ComponentResponse> create(@Valid @RequestBody ComponentRequest request) {
         ComponentResponse created = componentService.add(request);
@@ -42,7 +47,6 @@ class ComponentController {
         componentService.delete(id);
         return ResponseEntity.ok().build();
     }
-
 
     @GetMapping("/search/findByCategoryId/{id}")
     public ResponseEntity<Set<ComponentResponse>> getByCategoryId(@PathVariable("id") Long id){

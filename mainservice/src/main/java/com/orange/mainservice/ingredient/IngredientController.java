@@ -1,5 +1,6 @@
 package com.orange.mainservice.ingredient;
 
+import com.orange.mainservice.entity.enums.AmountType;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -38,7 +40,7 @@ class IngredientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         ingredientService.delete(id);
         return ResponseEntity.ok().build();
     }
@@ -47,5 +49,10 @@ class IngredientController {
     public ResponseEntity<Set<IngredientResponse>> getByRecipeId(@PathVariable Long id) {
         Set<IngredientResponse> ingredients = ingredientService.getByRecipeId(id);
         return ResponseEntity.ok(ingredients);
+    }
+
+    @GetMapping("/amount-types")
+    public ResponseEntity<List<AmountType>> getAmountTypes() {
+        return ResponseEntity.ok(ingredientService.getAmountTypes());
     }
 }

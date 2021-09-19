@@ -4,9 +4,18 @@
     <img class="logo-img" routerLink="/main" src="./assets/img/logo.png" alt="site logo">
 
     <ul class="nav-list">
-      <li><a class="link">Tips and tricks</a></li>
-      <li><a class="link" mat-button [matMenuTriggerFor]="components_menu">Ingredients</a></li>
-      <li><a class="link" mat-button [matMenuTriggerFor]="recipes_menu">Recipes</a></li>
+      <li>
+        <a class="link">Tips and tricks</a>
+      </li>
+      <li>
+        <a class="link" mat-button [matMenuTriggerFor]="components_menu">Ingredients</a>
+      </li>
+      <li>
+        <a class="link" mat-button [matMenuTriggerFor]="recipes_menu">Recipes</a>
+      </li>
+      <li *ngIf="authService.isAuthenticated()">
+        <a (click)="openRecipeCreatePopup()" class="link">Create new</a>
+      </li>
     </ul>
   </div>
 

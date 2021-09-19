@@ -52,6 +52,11 @@ class ComponentService {
         componentRepository.delete(getById(id));
     }
 
+
+    Set<String> getAllNamesOrdered() {
+        return this.componentRepository.findAllNamesOrdered();
+    }
+
     private void validateEditInput(Long id, ComponentRequest request) {
         if (isIdNotPresentOrNotMatching(id, request)) {
             throw new PathNotMatchBodyException(id, request.getId());

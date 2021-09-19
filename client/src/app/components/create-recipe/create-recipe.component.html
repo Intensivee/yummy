@@ -1,0 +1,102 @@
+<main>
+  <em [mat-dialog-close] class="dialog-close-btn fas fa-times"></em>
+  <h2 class="title">Create Recipe</h2>
+
+  <form [formGroup]="recipeForm" class="form-container">
+
+    <div class="left-inputs">
+
+      <div class="img-container">
+        <img [src]="imgSource.value" alt="user img" class="img">
+        <input accept=".png, .img, .jpng, .jpg" class="img-input" type="file">
+      </div>
+
+      <p class="input-header">Ingredients: </p>
+      <ng-container *ngFor="let ingredient of ingredients.controls; index as i">
+        <p>
+          <span
+            class="ingredient-component"><strong>{{ingredient.value.componentName | align : 30 : '-'}}</strong></span>
+          {{ingredient.value.amount}} {{ingredient.value.amountType}}
+          <em (click)="removeIngredient(i)" class="remove-btn fas fa-times"></em>
+        </p>
+      </ng-container>
+
+      <div>
+        <p *ngIf="componentName.errors?.required && componentName.touched" class="error-msg"> name is required.</p>
+        <p *ngIf="componentName.errors?.maxlength && componentName.touched" class="error-msg"> name should be less than
+          20 chars.</p>
+        <p *ngIf="amountType.errors?.required && amountType.touched" class="error-msg"> type is required.</p>
+        <p *ngIf="amount.errors?.required && amount.touched" class="error-msg"> amount is required.</p>
+        <p *ngIf="amount.errors?.pattern && amount.touched" class="error-msg"> incorrect amount format.</p>
+        <p *ngIf="amount.errors?.maxlength && amount.touched" class="error-msg">amount should be less than 7 digits.</p>
+        <p *ngIf="amount.errors?.min && amount.touched" class="error-msg">amount must be a positive value.</p>
+
+        <div [formGroup]="ingredientForm" class="ingredient-form-group">
+          <div class="ingredient-input-container">
+            <p class="input-header-small">Name:</p>
+            <mat-form-field>
+              <input [formControl]="componentName" [matAutocomplete]="auto" matInput type="text">
+              <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+                <mat-option *ngFor="let option of filteredComponentOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="ingredient-input-container">
+            <p class="input-header-small">Type:</p>
+            <select class="select-input" formControlName="amountType">
+              <option *ngFor="let amountType of amountTypes$ | async" [ngValue]="amountType">
+                {{amountType}}
+              </option>
+            </select>
+          </div>
+
+          <div class="ingredient-input-container">
+            <p class="input-header-small">Amount:</p>
+            <input class="numeric-input" formControlName="amount"/>
+          </div>
+
+        </div>
+        <button (click)="addIngredientToList()" class="add-btn">Add ingredient</button>
+
+      </div>
+    </div>
+    <div class="right-inputs">
+
+      <div class="right-header">
+        <div>
+          <p *ngIf="title.errors?.required && title.touched" class="error-msg"> title is required.</p>
+          <p class="input-header">Title :</p>
+          <input class="input" formControlName="title">
+        </div>
+        <div>
+          <p *ngIf="timeType.errors?.required && timeType.touched" class="error-msg"> time is required.</p>
+          <p class="input-header">Time:</p>
+          <select class="select-input" formControlName="timeType">
+            <option *ngFor="let time of TimeType | keyvalue" [ngValue]="time.key">
+              {{time.value}} < min
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <ng-container formArrayName="directions">
+          <p class="input-header">Directions:</p>
+          <div *ngFor="let direction of directions.controls; index as i">
+            <p *ngIf="direction.errors?.required && direction.touched" class="error-msg">direction step must not be
+              empty.</p>
+            <p class="input-header-small">Step {{i + 1}}:</p>
+            <input [formControlName]="i" class="directions-input"/>
+            <em (click)="removeDirectionStep(i)" class="remove-btn fas fa-times"></em>
+          </div>
+          <button (click)="addDirectionStep()" class="add-btn directions-add-btn">Add step</button>
+        </ng-container>
+      </div>
+
+    </div>
+  </form>
+  <button (click)="onSubmit()" class="submit-btn">Create</button>
+</main>

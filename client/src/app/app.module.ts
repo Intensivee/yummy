@@ -13,9 +13,10 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RecipeBlockComponent} from './components/recipe-block/recipe-block.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import {AngularFireStorageModule} from '@Angular/fire/storage';
 import {AngularFireModule} from '@Angular/fire';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -25,15 +26,22 @@ import {RegisterComponent} from './components/register/register.component';
 import {JwtHttpInterceptorService} from './security/jwt-http-interceptor.service';
 import {UserEditComponent} from './components/user-edit/user-edit.component';
 import {environment} from 'src/environments/environment';
-import { EditPasswordComponent } from './components/edit-password/edit-password.component';
-import { ComponentsMenagePanelComponent } from './components/components-menage-panel/components-menage-panel.component';
+import {EditPasswordComponent} from './components/edit-password/edit-password.component';
+import {ComponentsMenagePanelComponent} from './components/components-menage-panel/components-menage-panel.component';
+import {CreateRecipeComponent} from './components/create-recipe/create-recipe.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatInputModule} from '@angular/material/input';
+import {AlignPipe} from './pipes/align.pipe';
 
 const MAT_MODULES = [
   MatMenuModule,
   BrowserAnimationsModule,
   MatListModule,
   MatPaginatorModule,
-  MatDialogModule
+  MatDialogModule,
+  MatAutocompleteModule,
+  MatFormFieldModule,
+  MatInputModule
 ];
 
 @NgModule({
@@ -50,7 +58,9 @@ const MAT_MODULES = [
     RegisterComponent,
     UserEditComponent,
     EditPasswordComponent,
-    ComponentsMenagePanelComponent
+    ComponentsMenagePanelComponent,
+    CreateRecipeComponent,
+    AlignPipe
   ],
   imports: [
     MAT_MODULES,
@@ -62,7 +72,7 @@ const MAT_MODULES = [
     ReactiveFormsModule,
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireStorageModule
+    AngularFireStorageModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptorService, multi: true}

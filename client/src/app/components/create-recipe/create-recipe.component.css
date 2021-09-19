@@ -1,0 +1,159 @@
+main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin-bottom: 2em;
+}
+
+.form-container {
+  display: flex;
+  width: 90%;
+}
+
+.left-inputs {
+  width: 55%;
+}
+
+.img-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.ingredient-form-group {
+  display: flex;
+  max-width: 100%;
+}
+
+.right-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.right-header {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.dialog-close-btn {
+  position: absolute;
+  font-size: 1.5em;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  transition: .3s;
+}
+
+.error-msg {
+  margin: 0 !important;
+  color: red;
+  font-size: .9em;
+}
+
+/* INPUTS */
+
+.input-header,
+.input-header-small {
+  font-weight: bold;
+  margin-bottom: 5px;
+  padding: 0;
+}
+
+.input-header-small {
+  font-size: .8em;
+}
+
+.input-header {
+  margin-top: .5em;
+  font-size: 1.15em;
+}
+
+.input,
+.numeric-input,
+.directions-input {
+  height: 29px;
+}
+
+.input {
+  width: 200px;
+  margin-bottom: 1em;
+  font-size: 1em;
+}
+
+.select-input {
+  height: 34px;
+  width: 100px;
+}
+
+.numeric-input {
+  width: 60px;
+}
+
+.directions-input {
+  width: 80%;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+  border-top: 0;
+}
+
+.ng-star-inserted {
+  margin: .4em
+}
+
+.ingredient-input-container {
+  margin-left: 1.5em
+}
+
+.ingredient-input-container:first-child {
+  margin-left: 0
+}
+
+/* BUTTONS */
+
+.remove-btn {
+  margin-left: 5px;
+  color: brown;
+}
+
+.directions-add-btn {
+  margin-top: 1em !important;
+}
+
+.add-btn,
+.submit-btn {
+  height: 2.4em;
+  padding: 0 .7em;
+  margin: auto 5% auto 0;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.add-btn {
+  background-color: #CF1717;
+}
+
+.submit-btn {
+  margin: 1.5em 0 3em 0;
+  font-size: 1em;
+  background-color: #419A1C;
+}
+
+.submit-btn:hover {
+  color: white;
+  background-color: #2d6215;
+}
+
+.add-btn:hover {
+  color: white;
+  background-color: #850202;
+}

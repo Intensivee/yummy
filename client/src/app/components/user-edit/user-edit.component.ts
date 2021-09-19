@@ -135,7 +135,6 @@ export class UserEditComponent implements OnInit {
 
   openPasswordEditPopup(): void {
     this.dialog.open(EditPasswordComponent);
-
   }
 
   get imgSource() {
