@@ -5,8 +5,10 @@ import com.orange.mainservice.entity.enums.AmountType;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
+import com.orange.mainservice.recipe.Recipe;
 import com.orange.mainservice.recipe.RecipeFacade;
-import lombok.AllArgsConstructor;
+import com.orange.mainservice.recipe.RecipeIngredientsDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -16,7 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 class IngredientService {
 
     private final IngredientRepository ingredientRepository;
@@ -28,21 +30,24 @@ class IngredientService {
         return responseMapper.ingredientToResponse(getById(id));
     }
 
-    IngredientResponse add(IngredientRequest request) {
+    IngredientResponse createIngredient(IngredientRequest request) {
         validateCreateRequest(request);
-        Ingredient ingredientToAdd = createEntityFromRequest(request);
-        Ingredient addedIngredient = ingredientRepository.save(ingredientToAdd);
-        return responseMapper.ingredientToResponse(addedIngredient);
+        var createdIngredient = ingredientRepository.save(createEntityFromRequest(request));
+        return responseMapper.ingredientToResponse(createdIngredient);
     }
 
-    IngredientResponse edit(Long id, IngredientRequest request) {
+    void createIngredients(List<RecipeIngredientsDto> ingredientsDtos, Recipe recipe) {
+        ingredientsDtos.forEach(ingredientDto ->
+                ingredientRepository.save(createEntityFromRecipeRequest(ingredientDto, recipe)));
+    }
+
+    IngredientResponse editIngredient(Long id, IngredientRequest request) {
         validateEditInput(id, request);
-        Ingredient ingredientToEdit = createEntityFromRequest(request);
-        Ingredient editedIngredient = ingredientRepository.save(ingredientToEdit);
+        var editedIngredient = ingredientRepository.save(createEntityFromRequest(request));
         return responseMapper.ingredientToResponse(editedIngredient);
     }
 
-    void delete(Long id) {
+    void deleteIngredient(Long id) {
         ingredientRepository.delete(getById(id));
     }
 
@@ -84,13 +89,22 @@ class IngredientService {
         return Objects.nonNull(request.getId());
     }
 
-    private Ingredient createEntityFromRequest(IngredientRequest request){
+    private Ingredient createEntityFromRequest(IngredientRequest request) {
         return new Ingredient(
                 request.getId(),
                 request.getAmount(),
                 request.getAmountType(),
                 recipeFacade.getById(request.getRecipeId()),
                 componentFacade.getById(request.getComponentId())
+        );
+    }
+
+    private Ingredient createEntityFromRecipeRequest(RecipeIngredientsDto recipeIngredientsDto, Recipe recipe) {
+        return new Ingredient(
+                recipeIngredientsDto.getAmount(),
+                recipeIngredientsDto.getAmountType(),
+                recipe,
+                componentFacade.getOrCreateComponentByName(recipeIngredientsDto.getComponentName())
         );
     }
 }

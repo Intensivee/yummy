@@ -3,14 +3,17 @@ package com.orange.mainservice.direction;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
+import com.orange.mainservice.recipe.Recipe;
 import com.orange.mainservice.recipe.RecipeFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @AllArgsConstructor
@@ -24,21 +27,24 @@ class DirectionService {
         return responseMapper.directionToDto(getById(id));
     }
 
-    DirectionResponse add(DirectionRequest request) {
-        validateCreateRequest(request);
-        Direction directionToAdd = createEntityFromRequest(request);
-        Direction addedDirection = directionRepository.save(directionToAdd);
-        return responseMapper.directionToDto(addedDirection);
+    public void createDirections(List<String> directions, Recipe recipe) {
+        IntStream.range(0, directions.size())
+                .forEach(order -> directionRepository.save(new Direction(order, directions.get(order), recipe)));
     }
 
-    DirectionResponse edit(Long id, DirectionRequest request) {
+    DirectionResponse createDirection(DirectionRequest request) {
+        validateCreateRequest(request);
+        var createdDirection = directionRepository.save(createEntityFromRequest(request));
+        return responseMapper.directionToDto(createdDirection);
+    }
+
+    DirectionResponse editDirection(Long id, DirectionRequest request) {
         validateEditInput(id, request);
-        Direction directionToEdit = createEntityFromRequest(request);
-        Direction editedDirection = directionRepository.save(directionToEdit);
+        var editedDirection = directionRepository.save(createEntityFromRequest(request));
         return responseMapper.directionToDto(editedDirection);
     }
 
-    void delete(Long id) {
+    void deleteDirection(Long id) {
         directionRepository.delete(getById(id));
     }
 

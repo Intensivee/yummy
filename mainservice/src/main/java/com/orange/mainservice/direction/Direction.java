@@ -35,4 +35,10 @@ public class Direction {
 
     protected Direction() {
     }
+
+    public Direction(Integer order, String description, Recipe recipe) {
+        this.order = order;
+        this.description = description;
+        this.recipe = recipe;
+    }
 }

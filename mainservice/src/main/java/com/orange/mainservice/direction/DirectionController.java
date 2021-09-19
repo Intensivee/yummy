@@ -23,7 +23,7 @@ class DirectionController {
 
     @PostMapping
     public ResponseEntity<DirectionResponse> create(@Valid @RequestBody DirectionRequest request) {
-        DirectionResponse created = directionService.add(request);
+        DirectionResponse created = directionService.createDirection(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -33,13 +33,13 @@ class DirectionController {
     @PutMapping("/{id}")
     public ResponseEntity<DirectionResponse> edit(@PathVariable("id") Long id,
                                                   @Valid @RequestBody DirectionRequest request){
-        DirectionResponse edited = directionService.edit(id, request);
+        DirectionResponse edited = directionService.editDirection(id, request);
         return ResponseEntity.ok(edited);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id){
-        directionService.delete(id);
+        directionService.deleteDirection(id);
         return ResponseEntity.ok().build();
     }
 

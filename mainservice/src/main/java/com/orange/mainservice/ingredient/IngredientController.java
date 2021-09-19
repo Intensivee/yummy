@@ -25,7 +25,7 @@ class IngredientController {
 
     @PostMapping
     public ResponseEntity<IngredientResponse> create(@Valid @RequestBody IngredientRequest request) {
-        IngredientResponse created = ingredientService.add(request);
+        IngredientResponse created = ingredientService.createIngredient(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -35,13 +35,13 @@ class IngredientController {
     @PutMapping("/{id}")
     public ResponseEntity<IngredientResponse> edit(@PathVariable("id") Long id,
                                                   @Valid @RequestBody IngredientRequest request){
-        IngredientResponse edited = ingredientService.edit(id, request);
+        IngredientResponse edited = ingredientService.editIngredient(id, request);
         return ResponseEntity.ok(edited);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        ingredientService.delete(id);
+        ingredientService.deleteIngredient(id);
         return ResponseEntity.ok().build();
     }
 

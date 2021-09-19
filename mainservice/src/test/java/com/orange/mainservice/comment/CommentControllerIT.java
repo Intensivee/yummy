@@ -56,7 +56,7 @@ class CommentControllerIT {
         // given
         String commentRequest = getExampleCommentRequestAsJson();
         CommentResponse commentResponse = getExampleCommentResponse();
-        when(commentService.add(any(CommentRequest.class))).thenReturn(commentResponse);
+        when(commentService.addComment(any(CommentRequest.class))).thenReturn(commentResponse);
 
         // when
         // then
@@ -72,7 +72,7 @@ class CommentControllerIT {
                 .andExpect(jsonPath("$.userImg").value(commentResponse.getUserImg()))
                 .andExpect(header().exists("Location"))
                 .andExpect(header().string("Location", containsString(commentResponse.getId().toString())));
-        verify(commentService).add(any(CommentRequest.class));
+        verify(commentService).addComment(any(CommentRequest.class));
     }
 
     @Test
@@ -80,7 +80,7 @@ class CommentControllerIT {
         // given
         String commentRequest = getExampleCommentRequestAsJson();
         CommentResponse commentResponse = getExampleCommentResponse();
-        when(commentService.edit(anyLong(), any(CommentRequest.class))).thenReturn(commentResponse);
+        when(commentService.editComment(anyLong(), any(CommentRequest.class))).thenReturn(commentResponse);
 
         // when
         // then
@@ -94,7 +94,7 @@ class CommentControllerIT {
                 .andExpect(jsonPath("$.body").value(commentResponse.getBody()))
                 .andExpect(jsonPath("$.username").value(commentResponse.getUsername()))
                 .andExpect(jsonPath("$.userImg").value(commentResponse.getUserImg()));
-        verify(commentService).edit(anyLong(), any(CommentRequest.class));
+        verify(commentService).editComment(anyLong(), any(CommentRequest.class));
     }
 
     @Test
@@ -103,7 +103,7 @@ class CommentControllerIT {
         mvc.perform(delete(String.format("%s/%s", URI, DUMMY_LONG)))
                 .andDo(print())
                 .andExpect(status().isOk());
-        verify(commentService).delete(DUMMY_LONG);
+        verify(commentService).deleteComponent(DUMMY_LONG);
     }
 
     private CommentResponse getExampleCommentResponse() {

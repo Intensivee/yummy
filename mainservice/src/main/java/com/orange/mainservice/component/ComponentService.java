@@ -20,7 +20,7 @@ class ComponentService {
     private final ComponentCategoryFacade categoryFacade;
 
     Component getById(Long id) {
-        return this.componentRepository.getById(id)
+        return this.componentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Component", "id", id));
     }
 
@@ -34,27 +34,30 @@ class ComponentService {
         return responseMapper.componentToResponse(getById(id));
     }
 
-    ComponentResponse add(ComponentRequest request) {
+    ComponentResponse createComponent(ComponentRequest request) {
         validateCreateRequest(request);
-        Component componentToAdd = createEntityFromRequest(request);
-        Component addedComponent = componentRepository.save(componentToAdd);
-        return responseMapper.componentToResponse(addedComponent);
+        var createdComponent = componentRepository.save(createEntityFromRequest(request));
+        return responseMapper.componentToResponse(createdComponent);
     }
 
-    ComponentResponse edit(Long id, ComponentRequest request) {
+    ComponentResponse editComponent(Long id, ComponentRequest request) {
         validateEditInput(id, request);
-        Component componentToEdit = createEntityFromRequest(request);
-        Component editedComponent = componentRepository.save(componentToEdit);
+        var editedComponent = componentRepository.save(createEntityFromRequest(request));
         return responseMapper.componentToResponse(editedComponent);
     }
 
-    void delete(Long id) {
+    void deleteComponent(Long id) {
         componentRepository.delete(getById(id));
     }
 
 
     Set<String> getAllNamesOrdered() {
         return this.componentRepository.findAllNamesOrdered();
+    }
+
+    Component getOrCreateComponentByName(String componentName) {
+        return componentRepository.findByName(componentName)
+                .orElseGet(() -> componentRepository.save(new Component(componentName, false)));
     }
 
     private void validateEditInput(Long id, ComponentRequest request) {

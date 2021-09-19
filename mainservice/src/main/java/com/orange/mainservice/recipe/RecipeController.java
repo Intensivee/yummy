@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -65,24 +64,26 @@ class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<RecipeResponse> create(@Valid @RequestBody RecipeRequest request){
-        RecipeResponse created = recipeService.add(request);
+    public ResponseEntity<RecipeResponse> create(@Valid @RequestBody RecipeCreateRequest request) {
+        RecipeResponse created = recipeService.createRecipe(request);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(created.getId()).toUri();
+        var location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(created.getId())
+                .toUri();
         return ResponseEntity.created(location).body(created);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<RecipeResponse> edit(@PathVariable("id") Long id,
                                                        @Valid @RequestBody RecipeRequest request){
-        RecipeResponse edited = recipeService.edit(id, request);
+        RecipeResponse edited = recipeService.editRecipe(id, request);
         return ResponseEntity.ok(edited);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id){
-        recipeService.delete(id);
+        recipeService.deleteRecipe(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -26,21 +26,19 @@ class CommentService {
         return commentMapper.commentToResponse(getById(id));
     }
 
-    CommentResponse add(CommentRequest request) {
+    CommentResponse addComment(CommentRequest request) {
         validateCreateRequest(request);
-        Comment commentToAdd = createNewEntityFromRequest(request);
-        Comment addedComment = commentRepository.save(commentToAdd);
-        return commentMapper.commentToResponse(addedComment);
+        var createdComment = commentRepository.save(createNewEntityFromRequest(request));
+        return commentMapper.commentToResponse(createdComment);
     }
 
-    CommentResponse edit(Long id, CommentRequest request) {
+    CommentResponse editComment(Long id, CommentRequest request) {
         validateEditRequest(id, request);
-        Comment commentToEdit = createEditedEntityFromRequest(request);
-        Comment editedComment = commentRepository.save(commentToEdit);
+        var editedComment = commentRepository.save(createEditedEntityFromRequest(request));
         return commentMapper.commentToResponse(editedComment);
     }
 
-    void delete(Long id) {
+    void deleteComponent(Long id) {
         commentRepository.delete(getById(id));
     }
 

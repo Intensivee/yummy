@@ -10,7 +10,7 @@ import java.util.Set;
 
 interface ComponentRepository extends JpaRepository<Component, Long> {
 
-    Optional<Component> getById(Long id);
+    Optional<Component> findByName(String name);
 
     Set<Component> findAllByCategories_Id(Long id);
 

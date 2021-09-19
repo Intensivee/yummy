@@ -22,7 +22,7 @@ class RateController {
 
     @PostMapping
     public ResponseEntity<RateResponse> create(@Valid @RequestBody RateRequest request) {
-        RateResponse created = rateService.add(request);
+        RateResponse created = rateService.createRate(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -32,13 +32,13 @@ class RateController {
     @PutMapping("/{id}")
     public ResponseEntity<RateResponse> edit(@PathVariable("id") Long id,
                                              @Valid @RequestBody RateRequest request) {
-        RateResponse edited = rateService.edit(id, request);
+        RateResponse edited = rateService.editRate(id, request);
         return ResponseEntity.ok(edited);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id) {
-        rateService.delete(id);
+        rateService.deleteRate(id);
         return ResponseEntity.ok().build();
     }
 }

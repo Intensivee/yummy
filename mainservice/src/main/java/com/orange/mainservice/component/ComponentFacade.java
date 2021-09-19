@@ -12,4 +12,8 @@ public class ComponentFacade {
     public Component getById(Long id) {
         return componentService.getById(id);
     }
+
+    public Component getOrCreateComponentByName(String componentName) {
+        return componentService.getOrCreateComponentByName(componentName);
+    }
 }

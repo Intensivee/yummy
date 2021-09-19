@@ -1,19 +1,16 @@
 package com.orange.mainservice.recipe;
 
 import com.orange.mainservice.rate.RateFacade;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 class RecipeResponseMapper {
 
+    @Lazy
     private final RateFacade rateFacade;
-
-    @Autowired
-    public RecipeResponseMapper(@Lazy RateFacade rateService) {
-        this.rateFacade = rateService;
-    }
 
     RecipeResponse recipeToResponse(Recipe recipe) {
         return new RecipeResponse(

@@ -43,6 +43,11 @@ public class Component {
     protected Component() {
     }
 
+    public Component(String name, Boolean isAccepted) {
+        this.name = name;
+        this.isAccepted = isAccepted;
+    }
+
     public Component(Long id, String name, Boolean isAccepted, Set<ComponentCategory> categories) {
         this.id = id;
         this.name = name;

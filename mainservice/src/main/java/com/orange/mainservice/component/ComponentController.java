@@ -28,7 +28,7 @@ class ComponentController {
 
     @PostMapping
     public ResponseEntity<ComponentResponse> create(@Valid @RequestBody ComponentRequest request) {
-        ComponentResponse created = componentService.add(request);
+        ComponentResponse created = componentService.createComponent(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -38,13 +38,13 @@ class ComponentController {
     @PutMapping("/{id}")
     public ResponseEntity<ComponentResponse> edit(@PathVariable("id") Long id,
                                                           @Valid @RequestBody ComponentRequest request){
-        ComponentResponse edited = componentService.edit(id, request);
+        ComponentResponse edited = componentService.editComponent(id, request);
         return ResponseEntity.ok(edited);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id){
-        componentService.delete(id);
+        componentService.deleteComponent(id);
         return ResponseEntity.ok().build();
     }
 

@@ -1,16 +1,20 @@
 package com.orange.mainservice.recipe;
 
+import com.orange.mainservice.direction.DirectionFacade;
 import com.orange.mainservice.entity.enums.TimeType;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
+import com.orange.mainservice.ingredient.IngredientFacade;
 import com.orange.mainservice.recipecategory.RecipeCategoryFacade;
-import com.orange.mainservice.user.UserFacade;
+import com.orange.mainservice.security.AuthenticationFacade;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,10 +24,25 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 class RecipeService {
 
-    private final UserFacade userFacade;
+    @Lazy
+    private final IngredientFacade ingredientFacade;
+    @Lazy
+    private final DirectionFacade directionFacade;
+    private final AuthenticationFacade authenticationFacade;
     private final RecipeCategoryFacade categoryFacade;
     private final RecipeRepository recipeRepository;
     private final RecipeResponseMapper responseMapper;
+
+    @Transactional(rollbackFor = Exception.class)
+    public RecipeResponse createRecipe(RecipeCreateRequest recipeCreateRequest) {
+        var recipeRequest = recipeCreateRequest.getRecipeRequest();
+        validateCreateRequest(recipeRequest);
+
+        var createdRecipe = recipeRepository.save(createEntityFromRequest(recipeRequest));
+        directionFacade.createDirections(recipeCreateRequest.getDirections(), createdRecipe);
+        ingredientFacade.createIngredients(recipeCreateRequest.getIngredients(), createdRecipe);
+        return responseMapper.recipeToResponse(createdRecipe);
+    }
 
     Recipe getById(Long id) {
         return recipeRepository.findById(id)
@@ -75,21 +94,13 @@ class RecipeService {
         return responseMapper.recipeToResponse(getById(id));
     }
 
-    RecipeResponse add(RecipeRequest request) {
-        validateCreateRequest(request);
-        Recipe recipeToAdd = createEntityFromRequest(request);
-        Recipe addedRecipe = recipeRepository.save(recipeToAdd);
-        return responseMapper.recipeToResponse(addedRecipe);
-    }
-
-    RecipeResponse edit(Long id, RecipeRequest request) {
+    RecipeResponse editRecipe(Long id, RecipeRequest request) {
         validateEditInput(id, request);
-        Recipe recipeToEdit = createEntityFromRequest(request);
-        Recipe editedRecipe = recipeRepository.save(recipeToEdit);
+        var editedRecipe = recipeRepository.save(createEntityFromRequest(request));
         return responseMapper.recipeToResponse(editedRecipe);
     }
 
-    void delete(Long id) {
+    void deleteRecipe(Long id) {
         recipeRepository.delete(getById(id));
     }
 
@@ -98,7 +109,7 @@ class RecipeService {
             throw new PathNotMatchBodyException(id, request.getId());
         }
         if (!recipeRepository.existsById(id)) {
-            throw new ResourceNotFoundException("ComponentCategory", "id", id);
+            throw new ResourceNotFoundException("Recipe", "id", id);
         }
     }
 
@@ -122,7 +133,7 @@ class RecipeService {
                 request.getTimeType(),
                 request.getTitle(),
                 request.getImg(),
-                userFacade.getById(request.getUserId()),
+                authenticationFacade.getCurrentUser(),
                 request.getCategoriesIds().stream()
                         .map(categoryFacade::getById)
                         .collect(Collectors.toSet())

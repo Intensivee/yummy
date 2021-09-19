@@ -32,21 +32,19 @@ class RecipeCategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException("RecipeCategory", "id", id));
     }
 
-    RecipeCategoryResponse add(RecipeCategoryRequest request) {
+    RecipeCategoryResponse createCategory(RecipeCategoryRequest request) {
         validateCreateRequest(request);
-        RecipeCategory categoryToAdd = createEntityFromRequest(request);
-        RecipeCategory addedCategory = categoryRepository.save(categoryToAdd);
-        return responseMapper.categoryToResponse(addedCategory);
+        var addedRecipeCategory = categoryRepository.save(createEntityFromRequest(request));
+        return responseMapper.categoryToResponse(addedRecipeCategory);
     }
 
-    RecipeCategoryResponse edit(Long id, RecipeCategoryRequest request) {
+    RecipeCategoryResponse editCategory(Long id, RecipeCategoryRequest request) {
         validateEditInput(id, request);
-        RecipeCategory categoryToEdit = createEntityFromRequest(request);
-        RecipeCategory editedCategory = categoryRepository.save(categoryToEdit);
-        return responseMapper.categoryToResponse(editedCategory);
+        var editedRecipeCategory = categoryRepository.save(createEntityFromRequest(request));
+        return responseMapper.categoryToResponse(editedRecipeCategory);
     }
 
-    void delete(Long id) {
+    void deleteCategory(Long id) {
         categoryRepository.delete(getById(id));
     }
 

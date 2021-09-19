@@ -21,8 +21,6 @@ final class RecipeRequest {
     @Size(max = 40)
     private final String title;
     private final String img;
-    @NotNull
-    private final Long userId; // TODO: userId from session
     @NotEmpty
     private final Set<Long> categoriesIds;
 }

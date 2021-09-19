@@ -28,7 +28,7 @@ class RecipeCategoryController {
 
     @PostMapping
     public ResponseEntity<RecipeCategoryResponse> create(@Valid @RequestBody RecipeCategoryRequest request){
-        RecipeCategoryResponse created = categoryService.add(request);
+        RecipeCategoryResponse created = categoryService.createCategory(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -38,13 +38,13 @@ class RecipeCategoryController {
     @PutMapping("/{id}")
     public ResponseEntity<RecipeCategoryResponse> edit(@PathVariable("id") Long id,
                                              @Valid @RequestBody RecipeCategoryRequest request){
-        RecipeCategoryResponse edited = categoryService.edit(id, request);
+        RecipeCategoryResponse edited = categoryService.editCategory(id, request);
         return ResponseEntity.ok(edited);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id){
-        categoryService.delete(id);
+        categoryService.deleteCategory(id);
         return ResponseEntity.ok().build();
     }
 }

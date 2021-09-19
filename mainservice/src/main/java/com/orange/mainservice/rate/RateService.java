@@ -33,21 +33,19 @@ class RateService {
         return responseMapper.rateToResponse(getById(id));
     }
 
-    RateResponse add(RateRequest request) {
+    RateResponse createRate(RateRequest request) {
         validateCreateRequest(request);
-        Rate rateToAdd = createNewEntityFromRequest(request);
-        Rate addedRate = rateRepository.save(rateToAdd);
-        return responseMapper.rateToResponse(addedRate);
+        var createdRate = rateRepository.save(createNewEntityFromRequest(request));
+        return responseMapper.rateToResponse(createdRate);
     }
 
-    RateResponse edit(Long id, RateRequest request) {
+    RateResponse editRate(Long id, RateRequest request) {
         validateEditInput(id, request);
-        Rate rateToEdit = createEditedEntityFromRequest(request);
-        Rate editedRate = rateRepository.save(rateToEdit);
+        var editedRate = rateRepository.save(createEditedEntityFromRequest(request));
         return responseMapper.rateToResponse(editedRate);
     }
 
-    void delete(Long id) {
+    void deleteRate(Long id) {
         rateRepository.delete(getById(id));
     }
 
@@ -90,7 +88,7 @@ class RateService {
     }
 
     private Rate createEditedEntityFromRequest(RateRequest request) {
-        Rate rate = getById(request.getId());
+        var rate = getById(request.getId());
         return new Rate(
                 request.getId(),
                 request.getValue(),

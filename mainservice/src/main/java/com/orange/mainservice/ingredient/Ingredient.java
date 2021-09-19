@@ -41,4 +41,11 @@ public class Ingredient {
 
     protected Ingredient() {
     }
+
+    public Ingredient(Double amount, AmountType amountType, Recipe recipe, Component component) {
+        this.amount = amount;
+        this.amountType = amountType;
+        this.recipe = recipe;
+        this.component = component;
+    }
 }

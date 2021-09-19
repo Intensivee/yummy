@@ -24,7 +24,7 @@
       <div>
         <p *ngIf="componentName.errors?.required && componentName.touched" class="error-msg"> name is required.</p>
         <p *ngIf="componentName.errors?.maxlength && componentName.touched" class="error-msg"> name should be less than
-          20 chars.</p>
+          40 chars.</p>
         <p *ngIf="amountType.errors?.required && amountType.touched" class="error-msg"> type is required.</p>
         <p *ngIf="amount.errors?.required && amount.touched" class="error-msg"> amount is required.</p>
         <p *ngIf="amount.errors?.pattern && amount.touched" class="error-msg"> incorrect amount format.</p>

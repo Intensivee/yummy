@@ -4,7 +4,7 @@ import com.orange.mainservice.exception.AuthenticationException;
 import com.orange.mainservice.exception.RegistrationException;
 import com.orange.mainservice.user.User;
 import com.orange.mainservice.user.UserFacade;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,20 +19,15 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 @Service
+@RequiredArgsConstructor
 class AuthenticationService implements UserDetailsService {
 
 
     private final UserFacade userFacade;
+    @Lazy
     private final PasswordEncoder passwordEncoder;
+    @Lazy
     private final AuthenticationManager authenticationManager;
-
-    @Autowired
-    public AuthenticationService(@Lazy PasswordEncoder passwordEncoder, UserFacade userFacade,
-                                 @Lazy AuthenticationManager authenticationManager) {
-        this.userFacade = userFacade;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String email) {

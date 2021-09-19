@@ -29,7 +29,7 @@ class UserService {
     }
 
     UserResponse patchUser(String username, UserRequest userRequest) {
-        User user = findByUsername(username)
+        var user = findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
         if (Objects.nonNull(userRequest.getBio())) {
             user.setBio(userRequest.getBio());

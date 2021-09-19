@@ -28,38 +28,6 @@ export class CreateRecipeComponent implements OnInit {
               private componentService: ComponentService) {
   }
 
-  get componentName() {
-    return this.ingredientForm.get('componentName');
-  }
-
-  get amountType() {
-    return this.ingredientForm.get('amountType');
-  }
-
-  get amount() {
-    return this.ingredientForm.get('amount');
-  }
-
-  get title() {
-    return this.recipeForm.get('title');
-  }
-
-  get timeType() {
-    return this.recipeForm.get('timeType');
-  }
-
-  get imgSource() {
-    return this.recipeForm.get('imgSource');
-  }
-
-  get directions() {
-    return this.recipeForm.get('directions') as FormArray;
-  }
-
-  get ingredients() {
-    return this.recipeForm.get('ingredients') as FormArray;
-  }
-
   ngOnInit(): void {
     this.dialogRef.updateSize('80vw', '90vh');
     this.resetRecipeForm();
@@ -78,20 +46,8 @@ export class CreateRecipeComponent implements OnInit {
     });
   }
 
-  resetIngredientForm(): void {
-    this.ingredientForm = this.formBuilder.group({
-      componentName: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(20)
-      ]),
-      amount: new FormControl('', [
-        Validators.required,
-        Validators.pattern('^[0-9|.]*$'),
-        Validators.maxLength(6),
-        Validators.min(0)
-      ]),
-      amountType: new FormControl('', Validators.required)
-    });
+  get componentName() {
+    return this.ingredientForm.get('componentName');
   }
 
   initializeComponentControl(): void {
@@ -135,5 +91,49 @@ export class CreateRecipeComponent implements OnInit {
 
   onSubmit(): void {
     this.recipeForm.markAllAsTouched();
+  }
+
+  get amountType() {
+    return this.ingredientForm.get('amountType');
+  }
+
+  get amount() {
+    return this.ingredientForm.get('amount');
+  }
+
+  get title() {
+    return this.recipeForm.get('title');
+  }
+
+  get timeType() {
+    return this.recipeForm.get('timeType');
+  }
+
+  get imgSource() {
+    return this.recipeForm.get('imgSource');
+  }
+
+  get directions() {
+    return this.recipeForm.get('directions') as FormArray;
+  }
+
+  get ingredients() {
+    return this.recipeForm.get('ingredients') as FormArray;
+  }
+
+  resetIngredientForm(): void {
+    this.ingredientForm = this.formBuilder.group({
+      componentName: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(40)
+      ]),
+      amount: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9|.]*$'),
+        Validators.maxLength(6),
+        Validators.min(0)
+      ]),
+      amountType: new FormControl('', Validators.required)
+    });
   }
 }

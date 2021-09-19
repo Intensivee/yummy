@@ -23,7 +23,7 @@ class CommentController {
 
     @PostMapping
     public ResponseEntity<CommentResponse> create(@Valid @RequestBody CommentRequest request) {
-        CommentResponse created = commentService.add(request);
+        CommentResponse created = commentService.addComment(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -33,13 +33,13 @@ class CommentController {
     @PutMapping("/{id}")
     public ResponseEntity<CommentResponse> edit(@PathVariable("id") Long id,
                                                 @Valid @RequestBody CommentRequest request){
-       CommentResponse edited = commentService.edit(id, request);
+        CommentResponse edited = commentService.editComment(id, request);
         return ResponseEntity.ok(edited);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id){
-        commentService.delete(id);
+        commentService.deleteComponent(id);
         return ResponseEntity.ok().build();
     }
 
