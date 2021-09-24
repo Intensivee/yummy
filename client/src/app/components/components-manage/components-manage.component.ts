@@ -31,7 +31,7 @@ export class ComponentsManageComponent implements OnInit {
     this.components$ = this.componentService.getAllByIsAcceptedAndIsReviewed(false, false);
   }
 
-  onAccept(id: number, name: string): void {
+  onAccept(component: MyComponent): void {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.data = this.categories$;
@@ -39,18 +39,24 @@ export class ComponentsManageComponent implements OnInit {
       .pipe(
         filter(selectedCategories => selectedCategories.length > 0),
       ).subscribe(
-      selectedCategories => this.patchComponent(id, name, true, true, selectedCategories)
+      selectedCategories => this.patchComponent(component, true, true, selectedCategories)
     );
   }
 
-  onReject(componentId: number, name: string): void {
-    this.patchComponent(componentId, name, false, true);
+  onReject(component: MyComponent): void {
+    this.patchComponent(component, false, true);
   }
 
-  patchComponent(id: number, name: string, isAccepted: boolean, isReviewed: boolean, categoriesIds?): void {
-    this.componentService.patchComponent({id, name, isAccepted, isReviewed, categoriesIds})
+  patchComponent(component: MyComponent, isAccepted: boolean, isReviewed: boolean, categoriesIds?): void {
+    this.componentService.patchComponent({
+      id: component.id,
+      name: component.name,
+      isAccepted,
+      isReviewed,
+      categoriesIds
+    })
       .subscribe(
-        () => this.components$ = this.getComponentsFilteredWithId(id),
+        () => this.components$ = this.getComponentsFilteredWithId(component.id),
         error => this.snackBar.open(error.error.message, 'ok', {verticalPosition: 'top'})
       );
   }

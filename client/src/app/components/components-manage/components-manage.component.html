@@ -23,8 +23,8 @@
     <ng-container matColumnDef="actions">
       <th *matHeaderCellDef mat-header-cell> Actions</th>
       <td *matCellDef="let element" mat-cell>
-        <button (click)="onReject(element.id, element.name)" class="red-btn">Reject</button>
-        <button (click)="onAccept(element.id, element.name)" class="green-btn">Accept</button>
+        <button (click)="onReject(element)" class="red-btn">Reject</button>
+        <button (click)="onAccept(element)" class="green-btn">Accept</button>
       </td>
     </ng-container>
 
