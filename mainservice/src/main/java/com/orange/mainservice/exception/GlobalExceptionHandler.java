@@ -45,6 +45,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(createBody(e, HttpStatus.UNAUTHORIZED));
     }
 
+    @ExceptionHandler(ResourceUniqueConstraintException.class)
+    public ResponseEntity<ExceptionResponse> handleResourceUniqueConstraint(ResourceUniqueConstraintException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(createBody(e, HttpStatus.CONFLICT));
+    }
+
     private List<String> getMethodArgumentNotValidMessages(MethodArgumentNotValidException e) {
         return e.getBindingResult()
                 .getFieldErrors()

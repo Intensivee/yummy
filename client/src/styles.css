@@ -35,6 +35,50 @@ main {
   color: #00b100;
 }
 
+/* ======== GLOBAL BUTTONS ========*/
+
+.dialog-close-btn {
+  position: absolute;
+  font-size: 1.5em;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  transition: .3s;
+}
+
+.dialog-close-btn:hover {
+  color: brown;
+  cursor: pointer;
+}
+
+.green-btn,
+.red-btn {
+  height: 2.4em;
+  padding: 0 1em;
+  margin: auto 5% auto 0;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.green-btn {
+  background-color: #419A1C;
+}
+
+.green-btn:hover {
+  background-color: #2d6215;
+}
+
+.red-btn {
+  background-color: #CF1717;
+}
+
+.red-btn:hover {
+  background-color: #850202;
+}
+
 /* ======== RECIPE SHARED ========*/
 
 .pagination {

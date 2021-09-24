@@ -21,17 +21,21 @@ import {AngularFireStorageModule} from '@Angular/fire/storage';
 import {AngularFireModule} from '@Angular/fire';
 import {MatDialogModule} from '@angular/material/dialog';
 import {LoginComponent} from './components/login/login.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RegisterComponent} from './components/register/register.component';
 import {JwtHttpInterceptorService} from './security/jwt-http-interceptor.service';
 import {UserEditComponent} from './components/user-edit/user-edit.component';
 import {environment} from 'src/environments/environment';
 import {EditPasswordComponent} from './components/edit-password/edit-password.component';
-import {ComponentsMenagePanelComponent} from './components/components-menage-panel/components-menage-panel.component';
 import {CreateRecipeComponent} from './components/create-recipe/create-recipe.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {AlignPipe} from './pipes/align.pipe';
+import {ComponentsManageComponent} from './components/components-manage/components-manage.component';
+import {MatSelectModule} from '@angular/material/select';
+import {ComponentCategoryMultiSelectComponent} from './components/components-manage/component-category-multi-select/component-category-multi-select.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const MAT_MODULES = [
   MatMenuModule,
@@ -41,7 +45,10 @@ const MAT_MODULES = [
   MatDialogModule,
   MatAutocompleteModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatSelectModule,
+  MatTableModule,
+  MatSnackBarModule
 ];
 
 @NgModule({
@@ -58,13 +65,15 @@ const MAT_MODULES = [
     RegisterComponent,
     UserEditComponent,
     EditPasswordComponent,
-    ComponentsMenagePanelComponent,
     CreateRecipeComponent,
-    AlignPipe
+    AlignPipe,
+    ComponentsManageComponent,
+    ComponentCategoryMultiSelectComponent
   ],
   imports: [
     MAT_MODULES,
     AppRoutingModule,
+    FormsModule,
     BrowserModule,
     RouterModule,
     FontAwesomeModule,

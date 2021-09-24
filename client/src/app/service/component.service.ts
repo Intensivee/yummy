@@ -23,4 +23,14 @@ export class ComponentService {
     const url = `${RESOURCE_URL}/search/findByCategoryId/${id}`;
     return this.http.get<Component[]>(url);
   }
+
+  getAllByIsAcceptedAndIsReviewed(isAccepted: boolean, isReviewed: boolean): Observable<Component[]> {
+    const requestParams = {isAccepted: isAccepted.toString(), isReviewed: isReviewed.toString()};
+    return this.http.get<Component[]>(RESOURCE_URL, {params: requestParams});
+  }
+
+  patchComponent(component: any): Observable<Component> {
+    const url = `${RESOURCE_URL}/` + component.id;
+    return this.http.patch<Component>(url, component);
+  }
 }

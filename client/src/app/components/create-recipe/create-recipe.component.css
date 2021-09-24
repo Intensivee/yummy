@@ -41,15 +41,6 @@ main {
   width: 80%;
 }
 
-.dialog-close-btn {
-  position: absolute;
-  font-size: 1.5em;
-  top: 0;
-  right: 0;
-  transform: translate(50%, -50%);
-  transition: .3s;
-}
-
 .error-msg {
   margin: 0 !important;
   color: red;

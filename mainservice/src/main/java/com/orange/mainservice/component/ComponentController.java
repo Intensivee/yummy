@@ -18,8 +18,14 @@ class ComponentController {
     private final ComponentService componentService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ComponentResponse> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<ComponentResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(componentService.getResponseById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ComponentResponse>> getAllByIsAcceptedAndIsReviewed(@RequestParam boolean isAccepted,
+                                                                                   @RequestParam boolean isReviewed) {
+        return ResponseEntity.ok(componentService.findAllByIsAcceptedAndIsReviewed(isAccepted, isReviewed));
     }
 
     @GetMapping("/names")
@@ -27,30 +33,38 @@ class ComponentController {
         return ResponseEntity.ok(componentService.getAllNamesOrdered());
     }
 
+    @GetMapping("/search/findByCategoryId/{id}")
+    public ResponseEntity<Set<ComponentResponse>> getByCategoryId(@PathVariable Long id) {
+        return ResponseEntity.ok(componentService.getByCategoryId(id));
+    }
+
     @PostMapping
     public ResponseEntity<ComponentResponse> create(@Valid @RequestBody ComponentRequest request) {
         ComponentResponse created = componentService.createComponent(request);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(created.getId()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(created.getId())
+                .toUri();
         return ResponseEntity.created(location).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ComponentResponse> edit(@PathVariable("id") Long id,
-                                                          @Valid @RequestBody ComponentRequest request){
+    public ResponseEntity<ComponentResponse> edit(@PathVariable Long id,
+                                                  @Valid @RequestBody ComponentRequest request) {
         ComponentResponse edited = componentService.editComponent(id, request);
         return ResponseEntity.ok(edited);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
-        componentService.deleteComponent(id);
-        return ResponseEntity.ok().build();
+    @PatchMapping("/{id}")
+    public ResponseEntity<ComponentResponse> patch(@PathVariable Long id,
+                                                   @Valid @RequestBody ComponentRequest request) {
+        ComponentResponse patchedComponent = componentService.patchComponent(id, request);
+        return ResponseEntity.ok(patchedComponent);
     }
 
-    @GetMapping("/search/findByCategoryId/{id}")
-    public ResponseEntity<Set<ComponentResponse>> getByCategoryId(@PathVariable("id") Long id){
-        return ResponseEntity.ok(componentService.getByCategoryId(id));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
+        componentService.deleteComponent(id);
+        return ResponseEntity.ok().build();
     }
 }

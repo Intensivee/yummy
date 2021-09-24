@@ -20,7 +20,6 @@
   </div>
 
   <ul class="nav-icon-list">
-    <li *ngIf="authService.isAdmin()"><a class="link" mat-button [matMenuTriggerFor]="admin_menu"><em class="fas fa-globe"></em></a></li>
     <li *ngIf="authService.isAuthenticated()"><a class="link" mat-button [matMenuTriggerFor]="user_menu"><em class="fas fa-globe"></em></a></li>
     <input class="search-input" #searchInput (keyup.enter)="searchForRecipes(searchInput.value)"
            type="search" placeholder="Search" aria-label="Search">
@@ -51,10 +50,6 @@
 <mat-menu #user_menu="matMenu">
   <button mat-menu-item routerLink="/user">My Profile</button>
   <button mat-menu-item routerLink="/user-edit">Edit Profile</button>
+  <button *ngIf="authService.isAdmin()" mat-menu-item routerLink="/components-menage">Components Menager</button>
   <button mat-menu-item (click)="logout()">Logout</button>
-</mat-menu>
-
-
-<mat-menu #admin_menu="matMenu">
-  <button mat-menu-item routerLink="/components-menage-panel">Components Menage</button>
 </mat-menu>

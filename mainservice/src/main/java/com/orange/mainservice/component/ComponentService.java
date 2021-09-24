@@ -1,9 +1,11 @@
 package com.orange.mainservice.component;
 
+import com.orange.mainservice.componentcategory.ComponentCategory;
 import com.orange.mainservice.componentcategory.ComponentCategoryFacade;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
+import com.orange.mainservice.exception.ResourceUniqueConstraintException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,12 @@ class ComponentService {
                 .collect(Collectors.toSet());
     }
 
+    List<ComponentResponse> findAllByIsAcceptedAndIsReviewed(boolean isAccepted, boolean isReviewed) {
+        return componentRepository.findAllByIsAcceptedAndIsReviewedOrderByNameAsc(isAccepted, isReviewed).stream()
+                .map(responseMapper::componentToResponse)
+                .collect(Collectors.toList());
+    }
+
     ComponentResponse getResponseById(Long id) {
         return responseMapper.componentToResponse(getById(id));
     }
@@ -42,9 +50,24 @@ class ComponentService {
     }
 
     ComponentResponse editComponent(Long id, ComponentRequest request) {
-        validateEditInput(id, request);
+        validateEditRequest(id, request);
         var editedComponent = componentRepository.save(createEntityFromRequest(request));
         return responseMapper.componentToResponse(editedComponent);
+    }
+
+    ComponentResponse patchComponent(Long id, ComponentRequest request) {
+        validateEditRequest(id, request);
+        Component component = getById(id);
+        component.setIsAccepted(Objects.requireNonNullElse(request.getIsAccepted(), component.getIsAccepted()));
+        component.setIsReviewed(Objects.requireNonNullElse(request.getIsReviewed(), component.getIsReviewed()));
+        Set<ComponentCategory> categories = Objects.nonNull(request.getCategoriesIds())
+                ? request.getCategoriesIds().stream().map(categoryFacade::getById).collect(Collectors.toSet())
+                : component.getCategories();
+        component.setCategories(categories);
+        if (isComponentNameValidForUpdate(request.getName(), component.getName())) {
+            component.setName(request.getName());
+        }
+        return responseMapper.componentToResponse(componentRepository.save(component));
     }
 
     void deleteComponent(Long id) {
@@ -56,7 +79,7 @@ class ComponentService {
     }
 
     Component getOrCreateComponentByName(String componentName) {
-        return componentRepository.findByName(componentName)
+        return componentRepository.findByNameIgnoreCase(componentName)
                 .orElseGet(() -> componentRepository.save(new Component(componentName, false)));
     }
 
@@ -64,7 +87,17 @@ class ComponentService {
         return !component.getIsAccepted() && component.getIngredients().size() == 1;
     }
 
-    private void validateEditInput(Long id, ComponentRequest request) {
+    private boolean isComponentNameValidForUpdate(String newName, String oldName) {
+        if (Objects.nonNull(newName) && !newName.equalsIgnoreCase(oldName)) {
+            componentRepository.findByNameIgnoreCase(newName).ifPresent(existingComponent -> {
+                throw new ResourceUniqueConstraintException("Component", "name", existingComponent.getName());
+            });
+            return true;
+        }
+        return false;
+    }
+
+    private void validateEditRequest(Long id, ComponentRequest request) {
         if (isIdNotPresentOrNotMatching(id, request)) {
             throw new PathNotMatchBodyException(id, request.getId());
         }

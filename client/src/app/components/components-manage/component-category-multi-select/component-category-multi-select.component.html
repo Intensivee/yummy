@@ -1,0 +1,14 @@
+<main>
+  <em (click)="onCancel()" class="dialog-close-btn fas fa-times"></em>
+  <h2>Chose categories for selected component</h2>
+  <p *ngIf="selectedCategoriesIds.errors?.required && selectedCategoriesIds.touched" class="error-msg">Select at least
+    one category.</p>
+  <mat-form-field appearance="fill">
+    <mat-select [formControl]="selectedCategoriesIds" multiple>
+      <mat-option *ngFor="let category of categories$ | async" [value]="category.id">{{category.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div>
+    <button (click)="onSubmit()" class="green-btn">Submit</button>
+  </div>
+</main>
