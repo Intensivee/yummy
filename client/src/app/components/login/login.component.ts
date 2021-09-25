@@ -2,7 +2,7 @@ import {AuthenticationService} from '../../security/authentication.service';
 import {RegisterComponent} from '../register/register.component';
 import {Router} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
-import {MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       this.loginForm.controls.email.value, this.loginForm.controls.password.value)
       .subscribe(
         () => {
-          this.router.navigate(['user', this.authenticationService.getAuthenticatedUsername()]);
+          this.router.navigate(['main']);
           this.dialogRef.close();
         }, () => {
           this.errorResponse = true;

@@ -21,13 +21,18 @@ class RecipeCategoryController {
         return ResponseEntity.ok(categoryService.getAllOrderByName());
     }
 
+    @GetMapping("/limit/{limit}")
+    public ResponseEntity<List<RecipeCategoryResponse>> getAllWithLimitAndImgConstraint(@PathVariable int limit) {
+        return ResponseEntity.ok(categoryService.getAllWithNonNullImage(limit));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<RecipeCategoryResponse> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(categoryService.getResponseById(id));
     }
 
     @PostMapping
-    public ResponseEntity<RecipeCategoryResponse> create(@Valid @RequestBody RecipeCategoryRequest request){
+    public ResponseEntity<RecipeCategoryResponse> create(@Valid @RequestBody RecipeCategoryRequest request) {
         RecipeCategoryResponse created = categoryService.createCategory(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

@@ -4,6 +4,7 @@ import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,12 @@ class RecipeCategoryService {
 
     List<RecipeCategoryResponse> getAllOrderByName() {
         return categoryRepository.findAllByOrderByNameAsc().stream()
+                .map(responseMapper::categoryToResponse)
+                .collect(Collectors.toList());
+    }
+
+    List<RecipeCategoryResponse> getAllWithNonNullImage(int limit) {
+        return categoryRepository.findAllByImgUrlIsNotNull(PageRequest.of(0, limit)).stream()
                 .map(responseMapper::categoryToResponse)
                 .collect(Collectors.toList());
     }

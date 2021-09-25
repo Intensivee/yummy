@@ -1,53 +1,73 @@
 <main>
+  <div #top class="section-top">
+    <section class="time-section">
 
-  <section class="time-section">
+      <div class="title-container">
+        <span class="clock-icon iconify" data-icon="bi:clock" data-inline="false"></span>
+        <h1>
+          Is your time <span class="red">limited</span>?<br>
+          <span class="green">Find</span> something for you!
+        </h1>
+      </div>
 
-    <div class="title-container">
-      <span class="clock-icon iconify" data-icon="bi:clock" data-inline="false"></span>
-      <h1>
-        Is your time <span class="red">limited</span>?<br>
-        <span class="green">Find</span> something for you!
-      </h1>
-    </div>
+      <div class="time-buttons">
+        <button class="btn" routerLink="/recipes/byTimeType/TIME_1">
+          <span class="btn-icon iconify" data-icon="ion:rocket-outline" data-inline="false"></span>
+          < {{timeTypeEnum.TIME_1}} min.
+        </button>
+        <button class="btn" routerLink="/recipes/byTimeType/TIME_2">
+          <span class="btn-icon iconify" data-icon="fluent:animal-rabbit-24-regular" data-inline="false"></span>
+          < {{timeTypeEnum.TIME_2}} min.
+        </button>
+        <button class="btn" routerLink="/recipes/byTimeType/TIME_3">
+          <span class="btn-icon iconify" data-icon="fluent:animal-turtle-24-regular" data-inline="false"></span>
+          < {{timeTypeEnum.TIME_3}} min.
+        </button>
+      </div>
 
-    <div class="time-buttons">
-      <button class="btn" routerLink="/recipes/byTimeType/TIME_1">
-        <span class="btn-icon iconify" data-icon="ion:rocket-outline" data-inline="false"></span>
-        < {{timeTypeEnum.TIME_1}} min.
-      </button>
-      <button class="btn" routerLink="/recipes/byTimeType/TIME_2">
-        <span class="btn-icon iconify" data-icon="fluent:animal-rabbit-24-regular" data-inline="false"></span>
-        < {{timeTypeEnum.TIME_2}} min.
-      </button>
-      <button class="btn" routerLink="/recipes/byTimeType/TIME_3">
-        <span class="btn-icon iconify" data-icon="fluent:animal-turtle-24-regular" data-inline="false"></span>
-        < {{timeTypeEnum.TIME_3}} min.
-      </button>
-    </div>
+    </section>
 
-  </section>
-
-  <section class="recipes-section">
+    <section class="recipes-section">
 
       <h2 class="recipes-title">Popular recipes!</h2>
 
       <div class="recipes">
-        <div class="recipe"  
-        *ngFor="let recipe of recipes"
-        routerLink="/recipe/{{recipe.id}}">
-          <img class="recipe-img" src="{{recipe.img}}" alt="recipe">
-            <p class="recipe-title">{{recipe.title}}</p>
-        </div>
-    </div>
-
-  </section>
-
-  <section class="categories-section">
-      <div class="header-img">
-        <div class="header-text">
-            <h1>Categories</h1>
-            <span class="iconify" data-icon="bx-bxs-down-arrow" data-inline="false"></span>
+        <div *ngFor="let recipe of recipes$ | async"
+             class="recipe"
+             routerLink="/recipe/{{recipe.id}}">
+          <img alt="recipe" class="recipe-img" src="{{recipe.img}}">
+          <p class="recipe-title">{{recipe.title}}</p>
         </div>
       </div>
-  </section>
+
+    </section>
+
+    <section (click)="scroll(bottom)" class="categories-section">
+      <div class="header-img">
+        <div class="header-text">
+          <h1>Categories</h1>
+          <span class="iconify" data-icon="bx-bxs-down-arrow" data-inline="false"></span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <div #bottom class="section-bottom">
+
+    <div (click)="scroll(top)">
+      <span class="iconify top-arrow" data-icon="bx:bxs-up-arrow" data-inline="false"></span>
+    </div>
+
+    <div class="bottom-categories">
+      <div *ngFor="let category of categories">
+        <div class="hero-image" routerLink="/recipes/byCategory/{{category.name}}">
+          <p class="hero-text">{{category.name}}</p>
+          <img alt="img of category" class="category-img" onerror="this.src='/assets/img/on-error.jpg'"
+               src="{{category.img}}">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 </main>

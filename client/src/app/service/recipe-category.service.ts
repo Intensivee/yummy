@@ -18,8 +18,8 @@ export class RecipeCategoryService {
     return this.http.get<RecipeCategory[]>(RESOURCE_URL);
   }
 
-  get6MostPopularWithImages(): Observable<RecipeCategory[]> {
-    const url = `${RESOURCE_URL}/top6-with-images`;
+  getCategoriesWithImages(numberOfCategories: number): Observable<RecipeCategory[]> {
+    const url = `${RESOURCE_URL}/limit/` + numberOfCategories;
     return this.http.get<RecipeCategory[]>(url);
   }
 }
