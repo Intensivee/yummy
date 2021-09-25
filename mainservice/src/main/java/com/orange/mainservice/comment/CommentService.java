@@ -4,13 +4,12 @@ import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.recipe.RecipeFacade;
-import com.orange.mainservice.user.UserFacade;
+import com.orange.mainservice.security.AuthenticationFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,14 +18,14 @@ class CommentService {
 
     private final CommentRepository commentRepository;
     private final CommentResponseMapper commentMapper;
-    private final UserFacade userFacade;
+    private final AuthenticationFacade authenticationFacade;
     private final RecipeFacade recipeFacade;
 
     CommentResponse getResponseById(Long id) {
         return commentMapper.commentToResponse(getById(id));
     }
 
-    CommentResponse addComment(CommentRequest request) {
+    CommentResponse createComment(CommentRequest request) {
         validateCreateRequest(request);
         var createdComment = commentRepository.save(createNewEntityFromRequest(request));
         return commentMapper.commentToResponse(createdComment);
@@ -42,10 +41,10 @@ class CommentService {
         commentRepository.delete(getById(id));
     }
 
-    Set<CommentResponse> getByRecipeId(Long id) {
+    List<CommentResponse> getByRecipeId(Long id) {
         return commentRepository.findByRecipeIdOrdered(id).stream()
                 .map(commentMapper::commentToResponse)
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+                .collect(Collectors.toList());
     }
 
     private Comment getById(Long id) {
@@ -78,10 +77,8 @@ class CommentService {
 
     private Comment createNewEntityFromRequest(CommentRequest request) {
         return new Comment(
-                request.getId(),
                 request.getBody(),
-                null,
-                userFacade.getById(request.getUserId()),
+                authenticationFacade.getCurrentUser(),
                 recipeFacade.getById(request.getRecipeId())
         );
     }
@@ -92,7 +89,7 @@ class CommentService {
                 request.getId(),
                 request.getBody(),
                 comment.getDateCreated(),
-                userFacade.getById(request.getUserId()),
+                authenticationFacade.getCurrentUser(),
                 recipeFacade.getById(request.getRecipeId())
         );
     }

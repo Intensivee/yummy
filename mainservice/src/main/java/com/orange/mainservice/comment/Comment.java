@@ -40,4 +40,10 @@ public final class Comment {
 
     protected Comment() {
     }
+
+    public Comment(String body, User user, Recipe recipe) {
+        this.body = body;
+        this.user = user;
+        this.recipe = recipe;
+    }
 }

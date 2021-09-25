@@ -69,6 +69,7 @@ class JwtWebConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js").permitAll()
                 .antMatchers("/ingredients/**").permitAll()
+                .antMatchers("/comments/**").permitAll()
                 .antMatchers("/components/**").permitAll()
                 .antMatchers("/componentCategories/**").permitAll()
                 .antMatchers("/recipeCategories/**").permitAll()

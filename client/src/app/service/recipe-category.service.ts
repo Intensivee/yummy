@@ -11,9 +11,15 @@ const RESOURCE_URL = `${API_URL}/recipeCategories`;
 })
 export class RecipeCategoryService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAll(): Observable<RecipeCategory[]> {
     return this.http.get<RecipeCategory[]>(RESOURCE_URL);
+  }
+
+  get6MostPopularWithImages(): Observable<RecipeCategory[]> {
+    const url = `${RESOURCE_URL}/top6-with-images`;
+    return this.http.get<RecipeCategory[]>(url);
   }
 }

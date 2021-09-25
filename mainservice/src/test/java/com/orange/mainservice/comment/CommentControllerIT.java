@@ -56,7 +56,7 @@ class CommentControllerIT {
         // given
         String commentRequest = getExampleCommentRequestAsJson();
         CommentResponse commentResponse = getExampleCommentResponse();
-        when(commentService.addComment(any(CommentRequest.class))).thenReturn(commentResponse);
+        when(commentService.createComment(any(CommentRequest.class))).thenReturn(commentResponse);
 
         // when
         // then
@@ -72,7 +72,7 @@ class CommentControllerIT {
                 .andExpect(jsonPath("$.userImg").value(commentResponse.getUserImg()))
                 .andExpect(header().exists("Location"))
                 .andExpect(header().string("Location", containsString(commentResponse.getId().toString())));
-        verify(commentService).addComment(any(CommentRequest.class));
+        verify(commentService).createComment(any(CommentRequest.class));
     }
 
     @Test
@@ -120,7 +120,6 @@ class CommentControllerIT {
         var exampleCommentDto = new CommentRequest(
                 DUMMY_LONG,
                 "example body",
-                DUMMY_LONG,
                 DUMMY_LONG
         );
         return new ObjectMapper().writeValueAsString(exampleCommentDto);

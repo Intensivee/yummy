@@ -2,10 +2,11 @@
 
   <section class="header-section">
     <h1>{{recipe.title}}</h1>
-    <button 
-      *ngIf="recipe.username == authService.getAuthenticatedUsername() || authService.isAdmin()" 
+    <button
+      (click)="deleteRecipe(recipe.id)"
       class="delete-btn"
-      (click)="deleteRecipe(recipe.id)">delete</button>
+      *ngIf="recipe.username == authService.getAuthenticatedUsername() || authService.isAdmin()">delete
+    </button>
   </section>
 
   <p class="owner-username" routerLink="/user/{{recipe.username}}">{{recipe.username}}</p>
@@ -15,7 +16,7 @@
 
       <div class="ingredients">
         <h3 class="ingredients-header">Ingredients: </h3>
-        <ng-container *ngFor="let ingredient of ingredients">
+        <ng-container *ngFor="let ingredient of ingredients$ | async">
           <p><span class="ingredient-component" routerLink="/recipes/byComponent/{{ingredient.componentName}}">
             {{ingredient.componentName | align : 30 : '-'}} </span>{{ingredient.amount}} {{ingredient.amountType}}
           </p>
@@ -43,7 +44,7 @@
   <section class="directions-section">
     <h2>Directions: </h2>
 
-    <div class="step" *ngFor="let direction of directions">
+    <div *ngFor="let direction of directions$ | async" class="step">
       <p class="step-header">Step {{direction.order}}</p>
       <p class="step-description">{{direction.description}}</p>
     </div>
@@ -54,21 +55,28 @@
     <h2>Reviews: </h2>
 
     <div class="reviews">
-      <ng-container *ngFor="let comment of comments">
+      <ng-container *ngFor="let comment of comments$ | async">
         <div class="review-details">
-          <img class="profile-img" src="{{comment.userImg}}" alt="user avatar" onerror="this.src='/assets/img/on-error.jpg'">
-          <p class="username" routerLink="/user/{{comment.username}}" >{{comment.username}}</p>
-          <p class="review-date">{{comment.dateCreated | date:"dd.MM.yyyy - HH:MM"}}</p>
+          <img alt="user avatar" class="profile-img" onerror="this.src='/assets/img/on-error.jpg'"
+               src="{{comment.userImg}}">
+          <p class="username" routerLink="/user/{{comment.username}}">{{comment.username}}</p>
+          <p class="review-date">{{comment.dateCreated | date:"dd.MM.yyyy - HH:mm"}}</p>
+          <em (click)="deleteComment(comment.id)"
+              *ngIf="authService.isAdmin() || comment.username == authService.getAuthenticatedUsername()"
+              class="remove-btn fas fa-times"></em>
         </div>
         <p class="review">{{comment.body}}</p>
       </ng-container>
     </div>
 
-    <div class="comment-container">
-      <textarea placeholder="Add comment.." class="">
-      </textarea>
-      <button class="tag-btn">Send <em class="fas fa-paper-plane"></em></button>
-    </div>
+    <p *ngIf="newComment.touched && newComment.errors?.required || newComment.errors?.minlength" class="error-msg">
+      Comment minimum length is 5 characters.</p>
+    <p *ngIf="newComment.errors?.maxlength && newComment.touched" class="error-msg"> Comment maxiumum length is 200
+      characters.</p>
+    <form class="comment-container">
+      <input [formControl]="newComment" class="comment-input" placeholder="Add comment..">
+      <button (click)="onCommentSend()" class="tag-btn">Send <em class="fas fa-paper-plane"></em></button>
+    </form>
 
 
   </section>

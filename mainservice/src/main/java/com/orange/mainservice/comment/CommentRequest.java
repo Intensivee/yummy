@@ -16,7 +16,5 @@ final class CommentRequest {
     @Size(max = 300)
     private final String body;
     @NotNull
-    private final Long userId;
-    @NotNull
     private final Long recipeId;
 }

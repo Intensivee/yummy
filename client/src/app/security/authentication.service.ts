@@ -18,7 +18,8 @@ export const ROLE = 'currentRole';
 export class AuthenticationService {
 
   constructor(private http: HttpClient,
-              private router: Router) { }
+              private router: Router) {
+  }
 
 
   public authenticateCredentials(email: string, password: string): Observable<any> {

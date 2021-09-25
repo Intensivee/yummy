@@ -54,12 +54,17 @@ section {
 .tag-btn {
   padding: .5em .7em;
   margin: 0.2em;
+  height: 30px;
   border: 1px solid #000000;
   border-radius: 3px;
   color: white;
   font-weight: bold;
   background: #419A1C;
   cursor: pointer;
+}
+
+.tag-btn:hover {
+  background: #245310;
 }
 
 /* ======== INFO SECTION ==========*/
@@ -171,18 +176,28 @@ section {
 
 .comment-container {
   display: flex;
-  height: 60px;
+  margin-bottom: 5em;
   align-items: flex-end;
 }
 
-textarea {
+.comment-input {
   overflow: auto;
-  height: 60px;
+  height: 30px;
   width: 90%;
-  background-color: #d9d9d9;
-  outline: none;
-  resize: none;
-  border: none;
+}
+
+.error-msg {
+  margin: 0;
+  color: red;
+  font-size: .9em;
+}
+
+.remove-btn {
+  margin-left: 1em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  color: brown;
+  cursor: pointer;
 }
 
 /* ======== MEDIA QUERIES ==========*/

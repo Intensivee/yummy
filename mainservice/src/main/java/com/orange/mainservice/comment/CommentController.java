@@ -7,7 +7,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("comments")
@@ -23,7 +23,7 @@ class CommentController {
 
     @PostMapping
     public ResponseEntity<CommentResponse> create(@Valid @RequestBody CommentRequest request) {
-        CommentResponse created = commentService.addComment(request);
+        CommentResponse created = commentService.createComment(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -44,8 +44,7 @@ class CommentController {
     }
 
     @GetMapping("search/findByRecipeId/{id}")
-    public ResponseEntity<Set<CommentResponse>> getByRecipeId(@PathVariable Long id){
-        Set<CommentResponse> comments = commentService.getByRecipeId(id);
-        return ResponseEntity.ok(comments);
+    public ResponseEntity<List<CommentResponse>> getByRecipeId(@PathVariable Long id) {
+        return ResponseEntity.ok(commentService.getByRecipeId(id));
     }
 }
