@@ -18,4 +18,6 @@ interface RateRepository extends JpaRepository<Rate, Long> {
             nativeQuery = true
     )
     Optional<Double> getUserAverageRate(Long userId);
+
+    Optional<Rate> findByUser_idAndRecipe_id(Long userId, Long recipeId);
 }

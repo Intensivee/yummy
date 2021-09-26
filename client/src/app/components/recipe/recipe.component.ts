@@ -1,3 +1,4 @@
+import {RateService} from '../../service/rate.service';
 import {FormControl, Validators} from '@angular/forms';
 import {Direction} from '../../model/direction';
 import {Comment} from '../../model/comment';
@@ -31,6 +32,7 @@ export class RecipeComponent implements OnInit {
   constructor(private rout: ActivatedRoute,
               private route: Router,
               private recipeService: RecipeService,
+              private rateService: RateService,
               private ingredientService: IngredientService,
               private commentService: CommentService,
               private directionService: DirectionService,
@@ -82,5 +84,10 @@ export class RecipeComponent implements OnInit {
 
   deleteComment(commentId: number): void {
     this.commentService.deleteCommentById(commentId).subscribe(() => this.loadComments());
+  }
+
+  onRateChange(event: any): void {
+    this.rateService.addOrReplaceRate(event.newValue, this.recipe.id)
+      .subscribe(newAverageRate => this.recipe.avgRate = newAverageRate);
   }
 }

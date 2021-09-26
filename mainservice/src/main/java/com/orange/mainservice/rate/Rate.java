@@ -4,6 +4,7 @@ import com.orange.mainservice.recipe.Recipe;
 import com.orange.mainservice.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ import java.util.Date;
         indexes = @Index(name = "rates_recipe_id_index", columnList = "recipe_id")
 )
 @Getter
+@Setter
 @AllArgsConstructor
 public class Rate {
 
@@ -42,5 +44,11 @@ public class Rate {
     private Recipe recipe;
 
     protected Rate() {
+    }
+
+    public Rate(Integer value, User user, Recipe recipe) {
+        this.value = value;
+        this.user = user;
+        this.recipe = recipe;
     }
 }

@@ -33,7 +33,13 @@
 }
 
 .rate {
+  display: flex;
+  flex-direction: row;
   margin: 0;
+}
+
+.rate-value {
+  margin-top: 5px;
 }
 
 .recipe-time {

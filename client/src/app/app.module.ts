@@ -36,6 +36,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {ComponentCategoryMultiSelectComponent} from './components/components-manage/component-category-multi-select/component-category-multi-select.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {RatingModule} from 'ng-starrating';
 
 const MAT_MODULES = [
   MatMenuModule,
@@ -72,6 +73,7 @@ const MAT_MODULES = [
   ],
   imports: [
     MAT_MODULES,
+    RatingModule,
     AppRoutingModule,
     FormsModule,
     BrowserModule,

@@ -30,12 +30,9 @@
     <button class="red-btn">Send recipe to email <em class="fas fa-chevron-right"></em></button>
 
     <p class="rate">
-      <em class="fas fa-star"></em>
-      <em class="fas fa-star"></em>
-      <em class="fas fa-star"></em>
-      <em class="fas fa-star"></em>
-      <em class="fas fa-star-half-alt"></em>
-      <span> {{recipe.avgRate | number: '1.2' }}/5.00</span>
+      <star-rating (rate)="onRateChange($event)" [totalstars]="5" checkedcolor="green" readonly="false" size="24px"
+                   uncheckedcolor="black" value="{{recipe.avgRate | number: '1.2' }}"></star-rating>
+      <span class="rate-value"> {{recipe.avgRate | number: '1.2' }}/5.00</span>
     </p>
 
     <p class="recipe-time"><span class="iconify" data-icon="bi:clock" data-inline="false"> </span> < {{timeTypeEnum[recipe.timeType]}} min.</p>
