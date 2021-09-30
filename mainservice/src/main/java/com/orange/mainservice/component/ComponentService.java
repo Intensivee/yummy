@@ -80,7 +80,7 @@ class ComponentService {
 
     Component getOrCreateComponentByName(String componentName) {
         return componentRepository.findByNameIgnoreCase(componentName)
-                .orElseGet(() -> componentRepository.save(new Component(componentName, false)));
+                .orElseGet(() -> componentRepository.save(new Component(componentName, false, false)));
     }
 
     boolean isNotAcceptedAndReferencedInJustOneIngredient(Component component) {
@@ -125,6 +125,7 @@ class ComponentService {
                 request.getId(),
                 request.getName(),
                 request.getIsAccepted(),
+                false,
                 Objects.nonNull(request.getCategoriesIds())
                         ? request.getCategoriesIds().stream()
                         .map(categoryFacade::getById)

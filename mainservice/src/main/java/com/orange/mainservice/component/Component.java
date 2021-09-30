@@ -48,15 +48,17 @@ public class Component {
     protected Component() {
     }
 
-    public Component(String name, Boolean isAccepted) {
+    public Component(String name, Boolean isAccepted, Boolean isReviewed) {
         this.name = name;
         this.isAccepted = isAccepted;
+        this.isReviewed = isReviewed;
     }
 
-    public Component(Long id, String name, Boolean isAccepted, Set<ComponentCategory> categories) {
+    public Component(Long id, String name, Boolean isAccepted, Boolean isReviewed, Set<ComponentCategory> categories) {
         this.id = id;
         this.name = name;
         this.isAccepted = isAccepted;
+        this.isReviewed = isReviewed;
         this.categories = categories;
     }
 }
