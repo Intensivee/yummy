@@ -3,7 +3,7 @@
   <section class="header-section">
     <h1>{{recipe.title}}</h1>
     <button
-      (click)="deleteRecipe(recipe.id)"
+      (click)="deleteRecipe()"
       class="delete-btn"
       *ngIf="recipe.username == authService.getAuthenticatedUsername() || authService.isAdmin()">delete
     </button>
@@ -31,8 +31,8 @@
 
     <p class="rate">
       <star-rating (rate)="onRateChange($event)" [totalstars]="5" checkedcolor="green" readonly="false" size="24px"
-                   uncheckedcolor="black" value="{{recipe.avgRate | number: '1.2' }}"></star-rating>
-      <span class="rate-value"> {{recipe.avgRate | number: '1.2' }}/5.00</span>
+                   uncheckedcolor="black" value="{{recipe.avgRate | number: '1.2-2' }}"></star-rating>
+      <span class="rate-value"> {{recipe.avgRate | number: '1.2-2' }}/5.00</span>
     </p>
 
     <p class="recipe-time"><span class="iconify" data-icon="bi:clock" data-inline="false"> </span> < {{timeTypeEnum[recipe.timeType]}} min.</p>

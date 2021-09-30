@@ -35,7 +35,7 @@
         <div *ngFor="let recipe of recipes$ | async"
              class="recipe"
              routerLink="/recipe/{{recipe.id}}">
-          <img alt="recipe" class="recipe-img" src="{{recipe.img}}">
+          <img alt="recipe" class="recipe-img" onerror="this.src='/assets/img/on-error.jpg'" src="{{recipe.img}}">
           <p class="recipe-title">{{recipe.title}}</p>
         </div>
       </div>

@@ -5,8 +5,8 @@
       <p class="recipe-title">{{recipe.title}}</p>
       <p class="rate">
         <star-rating [totalstars]="5" checkedcolor="green" readonly="true" size="18px" uncheckedcolor="black"
-                     value="{{recipe.avgRate | number: '1.2' }}"></star-rating>
-        <span class="rate-value"> {{recipe.avgRate | number: '1.2' }}/5.00</span>
+                     value="{{recipe.avgRate | number: '1.2-2' }}"></star-rating>
+        <span class="rate-value"> {{recipe.avgRate | number: '1.2-2' }}/5.00</span>
       <p class="recipe-time"><span class="iconify" data-icon="bi:clock" data-inline="false"></span>
         < {{timeTypeEnum[recipe.timeType]}} min.</p>
     </div>
