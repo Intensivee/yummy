@@ -40,11 +40,13 @@ export class RecipeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadData();
+    this.rout.paramMap.subscribe(params => {
+      this.recipe.id = +params.get('id');
+      this.loadData();
+    });
   }
 
   loadData(): void {
-    this.recipe.id = +this.rout.snapshot.paramMap.get('id');
     this.loadRecipe();
     this.loadIngredients();
     this.loadDirections();

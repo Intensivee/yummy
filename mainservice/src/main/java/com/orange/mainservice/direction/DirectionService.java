@@ -28,8 +28,11 @@ class DirectionService {
     }
 
     public void createDirections(List<String> directions, Recipe recipe) {
-        IntStream.range(1, directions.size())
-                .forEach(order -> directionRepository.save(new Direction(order, directions.get(order - 1), recipe)));
+        IntStream.range(0, directions.size())
+                .forEach(i -> {
+                    var direction = new Direction(i + 1, directions.get(i), recipe);
+                    directionRepository.save(direction);
+                });
     }
 
     DirectionResponse createDirection(DirectionRequest request) {
@@ -72,13 +75,13 @@ class DirectionService {
         return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
-    private void validateCreateRequest(DirectionRequest request){
-        if(isIdInRequest(request)){
+    private void validateCreateRequest(DirectionRequest request) {
+        if (isIdInRequest(request)) {
             throw new ResourceCreateException(request.getId());
         }
     }
 
-    private boolean isIdInRequest(DirectionRequest request){
+    private boolean isIdInRequest(DirectionRequest request) {
         return Objects.nonNull(request.getId());
     }
 
