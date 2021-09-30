@@ -4,7 +4,7 @@ main {
   flex-direction: column;
   align-items: center;
   width: 220px;
-  height: 340px;
+  height: 345px;
 }
 
 .dialog-close-btn {
@@ -21,9 +21,19 @@ main {
   cursor: pointer;
 }
 
+form {
+  margin-top: 1.5em;
+}
+
 .inputs {
   display: flex;
   flex-direction: column;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  height: 70px;
 }
 
 .input-header {
@@ -43,6 +53,13 @@ main {
 .error-msg {
   font-size: .7em;
   color: red;
+}
+
+.error-msg-top {
+  position: absolute;
+  margin-top: 5em;
+  font-size: .8em;
+  font-weight: 700;
 }
 
 .buttons {

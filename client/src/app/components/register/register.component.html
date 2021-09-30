@@ -1,25 +1,40 @@
 <main>
     <em [mat-dialog-close] class="dialog-close-btn fas fa-times"></em>
     <h2>Register</h2>
+    <p *ngIf="errorResponse" class="error-msg error-msg-top">Account already exists.</p>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="inputs">
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="inputs">
-            <p class="input-header">Email</p>
-            <input type="text" class="text-input" formControlName="email">
-            <small *ngIf="email.dirty && email.invalid" class="error-msg">Wrong email</small>
+      <div class="input-container">
+        <p class="input-header">Email</p>
+        <input class="text-input" formControlName="email" type="text">
+        <small *ngIf="email.touched && (email.errors?.required || email.errors?.email)" class="error-msg">Wrong
+          email</small>
+      </div>
 
-            <p class="input-header">Username</p>
-            <input type="password" class="text-input" formControlName="username">
-            <small *ngIf="username.dirty && username.invalid" class="error-msg">Wrong username.</small>
+      <div class="input-container">
+        <p class="input-header">Username</p>
+        <input class="text-input" formControlName="username" type="password">
+        <small *ngIf="username.touched && (username.errors?.required || username.errors?.minlength)"
+               class="error-msg">Username is to short.</small>
+        <small *ngIf="username.touched && username.errors?.maxLength" class="error-msg">Username is to short.</small>
+      </div>
 
-            <p class="input-header">Password</p>
-            <input type="password" class="text-input" formControlName="password">
-            <small *ngIf="password.dirty && password.invalid" class="error-msg">Password is too short.</small>
+      <div class="input-container">
+        <p class="input-header">Password</p>
+        <input class="text-input" formControlName="password" type="password">
+        <small *ngIf="password.touched && (password.errors?.required || password.errors?.minlength)"
+               class="error-msg">Password is too short.</small>
+      </div>
 
-            <p class="input-header">Confirm password</p>
-            <input type="password" class="text-input" formControlName="confirmPassword">
-            <small *ngIf="confirmPassword.dirty && loginForm.hasError('notSame')" class="error-msg">Password is too short.</small>
-        </div>
+      <div class="input-container">
+        <p class="input-header">Confirm password</p>
+        <input class="text-input" formControlName="confirmPassword" type="password">
+        <small
+          *ngIf="confirmPassword.touched && (confirmPassword.errors?.required || confirmPassword.errors?.minlength)"
+          class="error-msg">Password is too short.</small>
+      </div>
+    </div>
 
         <div class="buttons">
             <button class="btn-black-fill" type="submit">Register</button>

@@ -1,20 +1,25 @@
 <main>
     <em [mat-dialog-close] class="dialog-close-btn fas fa-times"></em>
     <h2>Login</h2>
+    <p *ngIf="errorResponse" class="error-msg error-msg-top">Invalid credentials.</p>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="inputs">
+      <div class="input-container">
+        <p class="input-header">Email</p>
+        <input class="text-input" formControlName="email" type="text">
+        <small *ngIf="email.touched && (email.errors?.email || email.errors?.required)" class="error-msg">Wrong
+          email</small>
+      </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="inputs">
-            <p *ngIf="errorResponse" class="error-msg">Invalid credentials.</p>
-            <p class="input-header">Email</p>
-            <input type="text" class="text-input" formControlName="email">
-            <small *ngIf="email.dirty && email.invalid" class="error-msg">Wrong email</small>
+      <div class="input-container">
+        <p class="input-header">Password</p>
+        <input class="text-input" formControlName="password" type="password">
+        <small *ngIf="password.touched && (password.errors?.minlength || password.errors?.required)"
+               class="error-msg">Password is too short.</small>
+      </div>
+    </div>
 
-            <p class="input-header">Password</p>
-            <input type="password" class="text-input" formControlName="password">
-            <small *ngIf="password.dirty && password.invalid" class="error-msg">Password is too short.</small>
-        </div>
-
-        <div class="buttons">
+    <div class="buttons">
             <button class="btn-green" type="submit">Login</button>
             <button class="btn-black-fill" [mat-dialog-close] (click)="openRegisterDialog()">Register</button>
         </div>

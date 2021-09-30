@@ -30,10 +30,18 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)])
-    });
+    }, {updateOn: 'submit'});
   }
 
   onSubmit(): void {
+    this.errorResponse = false;
+    this.loginForm.markAllAsTouched();
+    if (this.loginForm.valid) {
+      this.login();
+    }
+  }
+
+  login(): void {
     this.authenticationService.authenticateCredentials(
       this.loginForm.controls.email.value, this.loginForm.controls.password.value)
       .subscribe(
