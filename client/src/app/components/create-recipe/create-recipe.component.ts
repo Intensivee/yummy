@@ -4,7 +4,7 @@ import {RecipeCategoryService} from '../../service/recipe-category.service';
 import {ComponentService} from '../../service/component.service';
 import {IngredientService} from '../../service/ingredient.service';
 import {Observable} from 'rxjs';
-import {debounceTime, distinctUntilChanged, map, startWith, switchMap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, finalize, map, startWith, switchMap} from 'rxjs/operators';
 import {TimeType} from '../../model/TimeType';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
@@ -12,6 +12,7 @@ import {DEFAULT_IMG} from 'src/app/constants';
 import * as clone from 'clone';
 import {MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
+import {AngularFireStorage} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-create-recipe',
@@ -24,11 +25,14 @@ export class CreateRecipeComponent implements OnInit {
   ingredientForm: FormGroup;
   recipeForm: FormGroup;
   TimeType = TimeType;
+  imgErrorMessage: string = null;
+  selectedImage = null;
   amountTypes$: Observable<string[]>;
   categories$: Observable<RecipeCategory[]>;
 
   constructor(private dialogRef: MatDialogRef<any>,
               private router: Router,
+              private fireStorage: AngularFireStorage,
               private formBuilder: FormBuilder,
               private ingredientService: IngredientService,
               private componentService: ComponentService,
@@ -131,23 +135,77 @@ export class CreateRecipeComponent implements OnInit {
     return this.recipeForm.get('ingredients') as FormArray;
   }
 
-  onSubmit(): void {
-    this.recipeForm.markAllAsTouched();
-    if (this.recipeForm.valid) {
-      const recipeCreateRequest = {
-        recipeRequest: {
-          timeType: this.timeType.value,
-          title: this.title.value,
-          categoriesIds: [this.category.value]
-        },
-        ingredients: this.ingredients.value,
-        directions: this.directions.value
+  onImgChange(event: any): void {
+    this.imgErrorMessage = null;
+    this.selectedImage = null;
+
+    if (this.isImageValid(event)) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.recipeForm.patchValue({imgSource: e.target.result});
       };
-      this.recipeService.createRecipe(recipeCreateRequest).subscribe(recipe => {
-        this.router.navigate(['recipe', recipe.id]);
-        this.dialogRef.close();
-      });
+      reader.readAsDataURL(event.target.files[0]);
+      this.selectedImage = event.target.files[0];
+    } else {
+      this.imgErrorMessage = 'Provide proper image that weighs less than 2MB!';
     }
+  }
+
+  isImageValid(event: any): boolean {
+    const maxSizeInMB = 2;
+    return (event.target.files && event.target.files[0] &&
+      event.target.files[0].size / (1024 * 1024) < maxSizeInMB);
+  }
+
+  onSubmit(): void {
+    this.imgErrorMessage = null;
+    this.recipeForm.markAllAsTouched();
+    if (!this.recipeForm.valid) {
+      return;
+    }
+
+    if (this.selectedImage == null) {
+      this.imgErrorMessage = "image is required"
+    } else {
+      this.saveRecipeWithImage();
+    }
+  }
+
+  saveRecipeWithImage(): void {
+    const filePath = `recipe-img/${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+    const fileRef = this.fireStorage.ref(filePath);
+
+    this.fireStorage.upload(filePath, this.selectedImage)
+      .snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe((url) => {
+          this.recipeForm.patchValue({imgSource: url});
+          this.saveRecipe();
+        });
+      })
+    ).subscribe();
+  }
+
+  saveRecipe(): void {
+    const recipeCreateRequest = this.mapFormToRecipeCreateRequest();
+    this.recipeService.createRecipe(recipeCreateRequest).subscribe(recipe => {
+      this.router.navigate(['recipe', recipe.id]);
+      this.dialogRef.close();
+    });
+  }
+
+  mapFormToRecipeCreateRequest(): any {
+    return {
+      recipeRequest: {
+        timeType: this.timeType.value,
+        title: this.title.value,
+        img: this.imgSource.value,
+        categoriesIds: [this.category.value]
+      },
+      ingredients: this.ingredients.value,
+      directions: this.directions.value
+    };
   }
 
   resetIngredientForm(): void {

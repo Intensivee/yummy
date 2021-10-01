@@ -56,6 +56,7 @@ export class UserEditComponent implements OnInit {
 
   onImgChange(event: any): void {
     this.errorMessage = null;
+    this.selectedImage = null;
 
     if (this.isImageValid(event)) {
       const reader = new FileReader();

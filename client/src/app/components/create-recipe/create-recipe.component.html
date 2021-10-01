@@ -8,7 +8,8 @@
 
       <div class="img-container">
         <img [src]="imgSource.value" alt="user img" class="img">
-        <input accept=".png, .img, .jpng, .jpg" class="img-input" type="file">
+        <p *ngIf="imgErrorMessage" class="error-msg">{{imgErrorMessage}}</p>
+        <input (change)="onImgChange($event)" accept=".png, .img, .jpng, .jpg" class="img-input" type="file">
       </div>
 
       <p class="input-header">Ingredients: </p>
