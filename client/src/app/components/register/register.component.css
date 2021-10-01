@@ -4,7 +4,7 @@ main {
   flex-direction: column;
   align-items: center;
   width: 230px;
-  height: 420px;
+  height: 370px;
 }
 
 .dialog-close-btn {
@@ -52,12 +52,19 @@ main {
   color: red;
 }
 
+.error-msg-top {
+  position: absolute;
+  margin-top: 5em;
+  font-size: .7em;
+  color: red;
+}
+
 .buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 25px;
+  margin-top: 35px;
 }
 
 .btn-black-fill {

@@ -36,7 +36,14 @@ export class AuthenticationService {
 
   public registerUser(email: string, username: string, password: string): Observable<any> {
     return this.http.post<any>(`${API_URL}/authentication/register`,
-      { email, username, password });
+      {email, username, password})
+      .pipe(map(
+        response => {
+          this.setSessionStorage(response);
+          return response;
+        }
+        )
+      );
   }
 
   setSessionStorage(response): void {

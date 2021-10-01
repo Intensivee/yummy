@@ -1,6 +1,5 @@
 package com.orange.mainservice.security;
 
-import com.orange.mainservice.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -8,10 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/authentication")
@@ -33,14 +30,10 @@ class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-        User user = authenticationService.registerUser(registerRequest);
+        Authentication authentication = authenticationService.registerUser(registerRequest);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/users/{id}")
-                .buildAndExpand(user.getId())
-                .toUri();
+        String token = tokenUtil.createToken(authentication);
 
-        return ResponseEntity.created(location).body(user.getId());
+        return ResponseEntity.ok(new TokenResponse(tokenConfig.getTokenPrefix() + token));
     }
 }

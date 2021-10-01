@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
+import static com.orange.mainservice.entity.enums.UserRole.ROLE_USER;
+
 @Service
 @RequiredArgsConstructor
 class AuthenticationService implements UserDetailsService {
@@ -54,22 +56,32 @@ class AuthenticationService implements UserDetailsService {
         return authentication;
     }
 
-    User registerUser(RegisterRequest registerRequest) {
-        userFacade.findByEmail(registerRequest.getEmail())
-                .ifPresent(user -> {
-                    throw new RegistrationException(String.format(
-                            "Email: %s already exists.", registerRequest.getEmail()
-                    ));
-                });
+    Authentication registerUser(RegisterRequest registerRequest) {
+        validateUserNotExists(registerRequest);
+        userFacade.save(createUserFromRegisterRequest(registerRequest));
+        return authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        registerRequest.getEmail(),
+                        registerRequest.getPassword()
+                )
+        );
+    }
 
-        return userFacade.save(createUserFromRegisterRequest(registerRequest));
+    private void validateUserNotExists(RegisterRequest registerRequest) {
+        userFacade.findByEmail(registerRequest.getEmail()).ifPresent(user -> {
+            throw new RegistrationException(String.format("Email: %s already exists.", registerRequest.getEmail()));
+        });
+        userFacade.findByUsername(registerRequest.getUsername()).ifPresent(user -> {
+            throw new RegistrationException(String.format("Username: %s already exists.", registerRequest.getUsername()));
+        });
     }
 
     private User createUserFromRegisterRequest(RegisterRequest registerRequest) {
         var user = new User();
         user.setEmail(registerRequest.getEmail());
-        user.setEmail(registerRequest.getUsername());
+        user.setUsername(registerRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setUserRole(ROLE_USER);
         return user;
     }
 }
