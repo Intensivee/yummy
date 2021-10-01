@@ -1,12 +1,12 @@
 <nav>
-  <a class="hamburger link" mat-button [matMenuTriggerFor]="components_menu"><em class="fas fa-bars"></em></a>
+  <a [matMenuTriggerFor]="hamburger_menu" class="hamburger link" mat-button>
+    <em class="fas fa-bars"></em>
+  </a>
+
   <div class="left-nav-wrapper">
     <img class="logo-img" routerLink="/main" src="./assets/img/logo.png" alt="site logo">
 
     <ul class="nav-list">
-      <li>
-        <a class="link">Tips and tricks</a>
-      </li>
       <li>
         <a class="link" mat-button [matMenuTriggerFor]="components_menu">Ingredients</a>
       </li>
@@ -52,4 +52,11 @@
   <button mat-menu-item routerLink="/user-edit">Edit Profile</button>
   <button *ngIf="authService.isAdmin()" mat-menu-item routerLink="/components-menage">Components Menager</button>
   <button mat-menu-item (click)="logout()">Logout</button>
+</mat-menu>
+
+<mat-menu #hamburger_menu="matMenu">
+  <button [matMenuTriggerFor]="user_menu" class="link" mat-menu-item>User Panel</button>
+  <button [matMenuTriggerFor]="recipes_menu" class="link" mat-menu-item>Recipes</button>
+  <button [matMenuTriggerFor]="components_menu" class="link" mat-menu-item>Ingredients</button>
+  <button (click)="openRecipeCreatePopup()" class="link" mat-menu-item>Create new</button>
 </mat-menu>
