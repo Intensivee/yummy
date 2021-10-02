@@ -75,21 +75,9 @@ section {
   font-weight: bold;
 }
 
-.red-btn,
-.delete-btn {
-  height: 2.4em;
-  padding: 0 .7em;
-  margin: auto 1.8em auto 0;
-  border: 1px solid #000000;
-  border-radius: 3px;
-  color: white;
-  font-weight: bold;
-  background: #CF1717;
-  cursor: pointer;
-}
-
-.delete-btn {
-  margin-left: 20px;
+.action-buttons {
+  display: flex;
+  margin: auto 3em auto .5em;
 }
 
 .rate {

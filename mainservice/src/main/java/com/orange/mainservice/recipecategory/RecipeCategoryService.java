@@ -34,6 +34,13 @@ class RecipeCategoryService {
         return responseMapper.categoryToResponse(getById(id));
     }
 
+    List<RecipeCategoryResponse> getAllByRecipeId(Long recipeId) {
+        return this.categoryRepository.findAllByRecipes_id(recipeId)
+                .stream()
+                .map(responseMapper::categoryToResponse)
+                .collect(Collectors.toList());
+    }
+
     RecipeCategory getById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("RecipeCategory", "id", id));

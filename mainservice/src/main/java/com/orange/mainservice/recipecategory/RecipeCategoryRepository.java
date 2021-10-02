@@ -10,4 +10,6 @@ interface RecipeCategoryRepository extends JpaRepository<RecipeCategory, Long> {
     List<RecipeCategory> findAllByOrderByNameAsc();
 
     List<RecipeCategory> findAllByImgUrlIsNotNull(Pageable pageable);
+
+    List<RecipeCategory> findAllByRecipes_id(Long recipeId);
 }

@@ -31,6 +31,11 @@ class RecipeCategoryController {
         return ResponseEntity.ok(categoryService.getResponseById(id));
     }
 
+    @GetMapping("/recipes/{id}")
+    public ResponseEntity<List<RecipeCategoryResponse>> getByRecipeId(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(categoryService.getAllByRecipeId(id));
+    }
+
     @PostMapping
     public ResponseEntity<RecipeCategoryResponse> create(@Valid @RequestBody RecipeCategoryRequest request) {
         RecipeCategoryResponse created = categoryService.createCategory(request);

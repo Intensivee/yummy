@@ -15,4 +15,8 @@ public class DirectionFacade {
     public void createDirections(List<String> directions, Recipe recipe) {
         directionService.createDirections(directions, recipe);
     }
+
+    public void replaceDirections(List<String> directions, Recipe recipe) {
+        directionService.replaceDirections(directions, recipe);
+    }
 }

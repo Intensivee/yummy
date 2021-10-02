@@ -39,13 +39,12 @@ class RecipeService {
     private final RecipeResponseMapper responseMapper;
 
     @Transactional(rollbackFor = Exception.class)
-    public RecipeResponse createRecipe(RecipeCreateRequest recipeCreateRequest) {
-        var recipeRequest = recipeCreateRequest.getRecipeRequest();
-        validateRecipeRequest(recipeRequest);
+    public RecipeResponse createRecipe(RecipeRequest recipeRequest) {
+        validateRecipeCreateRequest(recipeRequest);
 
         var createdRecipe = recipeRepository.save(createEntityFromRequest(recipeRequest));
-        directionFacade.createDirections(recipeCreateRequest.getDirections(), createdRecipe);
-        ingredientFacade.createIngredients(recipeCreateRequest.getIngredients(), createdRecipe);
+        directionFacade.createDirections(recipeRequest.getDirections(), createdRecipe);
+        ingredientFacade.createIngredients(recipeRequest.getIngredients(), createdRecipe);
         return responseMapper.recipeToResponse(createdRecipe);
     }
 
@@ -59,6 +58,16 @@ class RecipeService {
                 .collect(Collectors.toSet());
         recipeRepository.deleteById(recipeId);
         notAcceptedComponentIdList.forEach(componentFacade::deleteById);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public RecipeResponse editRecipe(Long id, RecipeRequest request) {
+        validateRecipeEditRequest(id, request);
+
+        var editedRecipe = recipeRepository.save(createEntityFromRequest(request));
+        directionFacade.replaceDirections(request.getDirections(), editedRecipe);
+        ingredientFacade.replaceIngredients(request.getIngredients(), editedRecipe);
+        return responseMapper.recipeToResponse(editedRecipe);
     }
 
     Recipe getById(Long id) {
@@ -112,13 +121,7 @@ class RecipeService {
         return responseMapper.recipeToResponse(getById(id));
     }
 
-    RecipeResponse editRecipe(Long id, RecipeRequest request) {
-        validateEditInput(id, request);
-        var editedRecipe = recipeRepository.save(createEntityFromRequest(request));
-        return responseMapper.recipeToResponse(editedRecipe);
-    }
-
-    private void validateEditInput(Long id, RecipeRequest request) {
+    private void validateRecipeEditRequest(Long id, RecipeRequest request) {
         if (isIdNotPresentOrNotMatching(id, request)) {
             throw new PathNotMatchBodyException(id, request.getId());
         }
@@ -131,7 +134,7 @@ class RecipeService {
         return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
-    private void validateRecipeRequest(RecipeRequest request) {
+    private void validateRecipeCreateRequest(RecipeRequest request) {
         if (isIdInRequest(request)) {
             throw new ResourceCreateException(request.getId());
         }

@@ -87,7 +87,7 @@
           <p *ngIf="category.errors?.required && category.touched" class="error-msg"> category is required.</p>
           <p class="input-header">Category:</p>
           <select class="select-input" formControlName="category">
-            <option *ngFor="let category of categories$ | async" [ngValue]="category.id">
+            <option *ngFor="let category of categories$ | async" [value]="category.id">
               {{category.name}}</option>
           </select>
         </div>
@@ -109,5 +109,5 @@
 
     </div>
   </form>
-  <button (click)="onSubmit()" class="submit-btn">Create</button>
+  <button (click)="onSubmit()" class="submit-btn">Submit</button>
 </main>

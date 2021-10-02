@@ -16,4 +16,8 @@ public class IngredientFacade {
     public void createIngredients(List<RecipeIngredientsDto> ingredients, Recipe recipe) {
         ingredientService.createIngredients(ingredients, recipe);
     }
+
+    public void replaceIngredients(List<RecipeIngredientsDto> ingredients, Recipe recipe) {
+        ingredientService.replaceIngredients(ingredients, recipe);
+    }
 }

@@ -28,6 +28,14 @@ class IngredientService {
     private final ComponentFacade componentFacade;
 
     @Transactional(rollbackFor = Exception.class)
+    public void replaceIngredients(List<RecipeIngredientsDto> ingredients, Recipe recipe) {
+        ingredientRepository.findByRecipeId(recipe.getId()).stream()
+                .map(Ingredient::getId)
+                .forEach(this::deleteIngredient);
+        createIngredients(ingredients, recipe);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
     public void deleteIngredient(Long ingredientId) {
         var component = getIngredientById(ingredientId).getComponent();
         boolean shouldComponentBeDeleted = componentFacade.isNotAcceptedAndReferencedInJustOneIngredient(component);
@@ -38,6 +46,11 @@ class IngredientService {
         }
     }
 
+    void createIngredients(List<RecipeIngredientsDto> ingredientsDtos, Recipe recipe) {
+        ingredientsDtos.forEach(ingredientDto ->
+                ingredientRepository.save(createEntityFromRequest(ingredientDto, recipe)));
+    }
+
     IngredientResponse getResponseById(Long id) {
         return responseMapper.ingredientToResponse(getIngredientById(id));
     }
@@ -46,11 +59,6 @@ class IngredientService {
         validateCreateRequest(request);
         var createdIngredient = ingredientRepository.save(createEntityFromRequest(request));
         return responseMapper.ingredientToResponse(createdIngredient);
-    }
-
-    void createIngredients(List<RecipeIngredientsDto> ingredientsDtos, Recipe recipe) {
-        ingredientsDtos.forEach(ingredientDto ->
-                ingredientRepository.save(createEntityFromRecipeRequest(ingredientDto, recipe)));
     }
 
     IngredientResponse editIngredient(Long id, IngredientRequest request) {
@@ -107,7 +115,7 @@ class IngredientService {
         );
     }
 
-    private Ingredient createEntityFromRecipeRequest(RecipeIngredientsDto recipeIngredientsDto, Recipe recipe) {
+    private Ingredient createEntityFromRequest(RecipeIngredientsDto recipeIngredientsDto, Recipe recipe) {
         return new Ingredient(
                 recipeIngredientsDto.getAmount(),
                 recipeIngredientsDto.getAmountType(),

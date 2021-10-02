@@ -42,11 +42,6 @@ export class RecipeService {
     return this.http.get<GetPagedResponse>(url);
   }
 
-  getByUserIdPaged(userId: number, page: number, pageSize: number): Observable<GetPagedResponse> {
-    const url = `${RESOURCE_URL}/search/findByUserId/${userId}?page=${page}&size=${pageSize}`;
-    return this.http.get<GetPagedResponse>(url);
-  }
-
   getByUsernamePaged(username: string, page: number, pageSize: number): Observable<GetPagedResponse> {
     const url = `${RESOURCE_URL}/search/findByUsername/${username}?page=${page}&size=${pageSize}`;
     return this.http.get<GetPagedResponse>(url);
@@ -64,6 +59,11 @@ export class RecipeService {
 
   createRecipe(recipeCreateRequest: any): Observable<Recipe> {
     return this.http.post<Recipe>(RESOURCE_URL, recipeCreateRequest);
+  }
+
+  editRecipe(recipeEditRequest: any): Observable<Recipe> {
+    const url = `${RESOURCE_URL}/` + recipeEditRequest.id;
+    return this.http.put<Recipe>(url, recipeEditRequest);
   }
 
   deleteById(id: number): Observable<any> {

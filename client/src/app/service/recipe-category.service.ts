@@ -18,6 +18,11 @@ export class RecipeCategoryService {
     return this.http.get<RecipeCategory[]>(RESOURCE_URL);
   }
 
+  getAllByRecipeId(recipeId: number): Observable<RecipeCategory[]> {
+    const url = `${RESOURCE_URL}/recipes/` + recipeId;
+    return this.http.get<RecipeCategory[]>(url);
+  }
+
   getCategoriesWithImages(numberOfCategories: number): Observable<RecipeCategory[]> {
     const url = `${RESOURCE_URL}/limit/` + numberOfCategories;
     return this.http.get<RecipeCategory[]>(url);

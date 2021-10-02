@@ -10,4 +10,6 @@ interface DirectionRepository extends JpaRepository<Direction, Long> {
 
     @Query(value = "SELECT DISTINCT d FROM Direction d WHERE d.recipe.id=?1 ORDER BY d.order")
     LinkedHashSet<Direction> findByRecipeIdOrdered(Long id);
+
+    void deleteAllByRecipe_Id(Long recipeId);
 }

@@ -1,3 +1,5 @@
+import {CreateRecipeComponent} from '../create-recipe/create-recipe.component';
+import {MatDialog} from '@angular/material/dialog';
 import {RateService} from '../../service/rate.service';
 import {FormControl, Validators} from '@angular/forms';
 import {Direction} from '../../model/direction';
@@ -31,6 +33,7 @@ export class RecipeComponent implements OnInit {
 
   constructor(private rout: ActivatedRoute,
               private route: Router,
+              private dialog: MatDialog,
               private recipeService: RecipeService,
               private rateService: RateService,
               private ingredientService: IngredientService,
@@ -73,6 +76,14 @@ export class RecipeComponent implements OnInit {
     if (confirm('Do you really want to delete recipe?')) {
       this.recipeService.deleteById(this.recipe.id).subscribe(() => this.route.navigate(['recipes']));
     }
+  }
+
+  editRecipe(): void {
+    this.dialog.open(CreateRecipeComponent, {
+      data: {editRecipeId: this.recipe.id}
+    })
+      .afterClosed()
+      .subscribe(() => this.loadData());
   }
 
   onCommentSend(): void {

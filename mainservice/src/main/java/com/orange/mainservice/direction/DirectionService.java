@@ -7,6 +7,7 @@ import com.orange.mainservice.recipe.Recipe;
 import com.orange.mainservice.recipe.RecipeFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -23,16 +24,21 @@ class DirectionService {
     private final DirectionResponseMapper responseMapper;
     private final RecipeFacade recipeFacade;
 
-    DirectionResponse getResponseById(Long id) {
-        return responseMapper.directionToDto(getById(id));
+    @Transactional(rollbackFor = Exception.class)
+    public void replaceDirections(List<String> directions, Recipe recipe) {
+        directionRepository.deleteAllByRecipe_Id(recipe.getId());
+        directionRepository.flush();
+        createDirections(directions, recipe);
     }
 
-    public void createDirections(List<String> directions, Recipe recipe) {
+    void createDirections(List<String> directions, Recipe recipe) {
         IntStream.range(0, directions.size())
-                .forEach(i -> {
-                    var direction = new Direction(i + 1, directions.get(i), recipe);
-                    directionRepository.save(direction);
-                });
+                .mapToObj(i -> new Direction(i + 1, directions.get(i), recipe))
+                .forEach(directionRepository::save);
+    }
+
+    DirectionResponse getResponseById(Long id) {
+        return responseMapper.directionToDto(getById(id));
     }
 
     DirectionResponse createDirection(DirectionRequest request) {

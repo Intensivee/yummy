@@ -1,3 +1,4 @@
+import {DirectionService} from '../../service/direction.service';
 import {RecipeService} from '../../service/recipe.service';
 import {RecipeCategory} from '../../model/recipe-category';
 import {RecipeCategoryService} from '../../service/recipe-category.service';
@@ -7,10 +8,10 @@ import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, finalize, map, startWith, switchMap} from 'rxjs/operators';
 import {TimeType} from '../../model/TimeType';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {DEFAULT_IMG} from 'src/app/constants';
 import * as clone from 'clone';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {AngularFireStorage} from '@angular/fire/storage';
 
@@ -27,84 +28,28 @@ export class CreateRecipeComponent implements OnInit {
   TimeType = TimeType;
   imgErrorMessage: string = null;
   selectedImage = null;
+  editedRecipeId: number = null;
   amountTypes$: Observable<string[]>;
   categories$: Observable<RecipeCategory[]>;
 
-  constructor(private dialogRef: MatDialogRef<any>,
+  constructor(@Inject(MAT_DIALOG_DATA) private dialogData: { editRecipeId: number },
+              private dialogRef: MatDialogRef<any>,
               private router: Router,
               private fireStorage: AngularFireStorage,
               private formBuilder: FormBuilder,
               private ingredientService: IngredientService,
+              private directionsService: DirectionService,
               private componentService: ComponentService,
               private recipeCategoryService: RecipeCategoryService,
               private recipeService: RecipeService) {
   }
 
   get category() {
-    return this.recipeForm.get('category') as FormArray;
-  }
-
-  ngOnInit(): void {
-    this.dialogRef.updateSize('80vw', '90vh');
-    this.resetRecipeForm();
-    this.resetIngredientForm();
-    this.initializeComponentControl();
-    this.amountTypes$ = this.ingredientService.getAmountTypes();
-    this.categories$ = this.recipeCategoryService.getAll();
+    return this.recipeForm.get('category');
   }
 
   get componentName() {
     return this.ingredientForm.get('componentName');
-  }
-
-  initializeComponentControl(): void {
-    this.filteredComponentOptions = this.componentName.valueChanges.pipe(
-      startWith(''),
-      debounceTime(400),
-      distinctUntilChanged(),
-      switchMap(value => this.filterComponents(value || ''))
-    );
-  }
-
-  filterComponents(value: string): Observable<string[]> {
-    return this.componentService.getAllComponentNames()
-      .pipe(
-        map(response => response.filter(option => {
-          return option.toLowerCase().indexOf(value.toLowerCase()) === 0;
-        }))
-      );
-  }
-
-  addIngredientToList(): void {
-    this.ingredientForm.markAllAsTouched();
-    if (this.ingredientForm.valid) {
-      this.ingredients.push(clone(this.ingredientForm));
-      this.ingredientForm.reset();
-    }
-  }
-
-  removeIngredient(index: number): void {
-    this.ingredients.removeAt(index);
-  }
-
-  addDirectionStep(): void {
-    const control = new FormControl('', Validators.required);
-    this.directions.push(control);
-  }
-
-  removeDirectionStep(index: number): void {
-    this.directions.removeAt(index);
-  }
-
-  resetRecipeForm(): void {
-    this.recipeForm = this.formBuilder.group({
-      title: new FormControl('', Validators.required),
-      timeType: new FormControl('', Validators.required),
-      directions: new FormArray([new FormControl('')]),
-      imgSource: new FormControl(DEFAULT_IMG),
-      ingredients: new FormArray([], Validators.required),
-      category: new FormControl(null, Validators.required),
-    });
   }
 
   get amountType() {
@@ -135,13 +80,41 @@ export class CreateRecipeComponent implements OnInit {
     return this.recipeForm.get('ingredients') as FormArray;
   }
 
+  addIngredientToList(): void {
+    this.ingredientForm.markAllAsTouched();
+    if (this.ingredientForm.valid) {
+      this.ingredients.push(clone(this.ingredientForm));
+      this.ingredientForm.reset();
+    }
+  }
+
+  removeIngredient(index: number): void {
+    this.ingredients.removeAt(index);
+  }
+
+  ngOnInit(): void {
+    this.dialogRef.updateSize('80vw', '90vh');
+    this.resetRecipeForm();
+    this.resetIngredientForm();
+    this.initializeComponentControl();
+    this.amountTypes$ = this.ingredientService.getAmountTypes();
+    this.categories$ = this.recipeCategoryService.getAll();
+    if (this.dialogData?.editRecipeId) {
+      this.editedRecipeId = this.dialogData.editRecipeId;
+      this.initializeEditRecipeData();
+    }
+  }
+
+  removeDirectionStep(index: number): void {
+    this.directions.removeAt(index);
+  }
+
   onImgChange(event: any): void {
     this.imgErrorMessage = null;
     this.selectedImage = null;
 
     if (this.isImageValid(event)) {
       const reader = new FileReader();
-
       reader.onload = (e: any) => {
         this.recipeForm.patchValue({imgSource: e.target.result});
       };
@@ -158,54 +131,15 @@ export class CreateRecipeComponent implements OnInit {
       event.target.files[0].size / (1024 * 1024) < maxSizeInMB);
   }
 
-  onSubmit(): void {
-    this.imgErrorMessage = null;
-    this.recipeForm.markAllAsTouched();
-    if (!this.recipeForm.valid) {
-      return;
-    }
-
-    if (this.selectedImage == null) {
-      this.imgErrorMessage = "image is required"
-    } else {
-      this.saveRecipeWithImage();
-    }
-  }
-
-  saveRecipeWithImage(): void {
-    const filePath = `recipe-img/${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
-    const fileRef = this.fireStorage.ref(filePath);
-
-    this.fireStorage.upload(filePath, this.selectedImage)
-      .snapshotChanges().pipe(
-      finalize(() => {
-        fileRef.getDownloadURL().subscribe((url) => {
-          this.recipeForm.patchValue({imgSource: url});
-          this.saveRecipe();
-        });
-      })
-    ).subscribe();
-  }
-
-  saveRecipe(): void {
-    const recipeCreateRequest = this.mapFormToRecipeCreateRequest();
-    this.recipeService.createRecipe(recipeCreateRequest).subscribe(recipe => {
-      this.router.navigate(['recipe', recipe.id]);
-      this.dialogRef.close();
+  resetRecipeForm(): void {
+    this.recipeForm = this.formBuilder.group({
+      title: new FormControl('', Validators.required),
+      timeType: new FormControl('', Validators.required),
+      directions: new FormArray([new FormControl('')]),
+      imgSource: new FormControl(DEFAULT_IMG),
+      ingredients: new FormArray([], Validators.required),
+      category: new FormControl(null, Validators.required),
     });
-  }
-
-  mapFormToRecipeCreateRequest(): any {
-    return {
-      recipeRequest: {
-        timeType: this.timeType.value,
-        title: this.title.value,
-        img: this.imgSource.value,
-        categoriesIds: [this.category.value]
-      },
-      ingredients: this.ingredients.value,
-      directions: this.directions.value
-    };
   }
 
   resetIngredientForm(): void {
@@ -222,5 +156,152 @@ export class CreateRecipeComponent implements OnInit {
       ]),
       amountType: new FormControl('', Validators.required)
     });
+  }
+
+  initializeComponentControl(): void {
+    this.filteredComponentOptions = this.componentName.valueChanges.pipe(
+      startWith(''),
+      debounceTime(200),
+      distinctUntilChanged(),
+      switchMap(value => this.filterComponents(value || ''))
+    );
+  }
+
+  initializeEditRecipeData(): void {
+    this.populateRecipeData();
+    this.populateDirectionsData();
+    this.populateCategoryData();
+    this.populateIngredientsData();
+  }
+
+  populateRecipeData(): void {
+    this.recipeService.getById(this.editedRecipeId).subscribe(recipe => {
+      this.recipeForm.patchValue({
+        title: recipe.title,
+        timeType: recipe.timeType,
+        imgSource: recipe.img
+      });
+    });
+  }
+
+  populateDirectionsData(): void {
+    this.directionsService.getByRecipeId(this.editedRecipeId)
+      .subscribe(directions => {
+        this.directions.removeAt(0);
+        directions.forEach(direction => {
+          this.addDirectionStep(direction.description);
+        });
+      });
+  }
+
+  populateCategoryData(): void {
+    this.recipeCategoryService.getAllByRecipeId(this.editedRecipeId)
+      .subscribe(categories => {
+        this.category.setValue(categories[0].id);
+      });
+  }
+
+  populateIngredientsData(): void {
+    this.ingredientService.getByRecipeId(this.editedRecipeId)
+      .subscribe(ingredients => {
+        ingredients.forEach(ingredient => {
+          this.ingredientForm.setValue({
+            componentName: ingredient.componentName,
+            amount: ingredient.amount,
+            amountType: ingredient.amountType
+          });
+          this.addIngredientToList();
+        });
+      });
+  }
+
+  addDirectionStep(direction: string = ''): void {
+    const control = new FormControl(direction, Validators.required);
+    this.directions.push(control);
+  }
+
+  onSubmit(): void {
+    this.recipeForm.markAllAsTouched();
+    if (!this.recipeForm.valid) {
+      return;
+    }
+    if (this.editedRecipeId) {
+      this.handleEditSubmit();
+    } else {
+      this.handleCreateSubmit();
+    }
+
+
+  }
+
+  handleEditSubmit(): void {
+    if (this.selectedImage == null) {
+      this.editRecipe();
+    } else {
+      this.saveRecipeWithImage(false);
+    }
+  }
+
+  handleCreateSubmit(): void {
+    if (this.selectedImage) {
+      this.saveRecipeWithImage(true);
+    } else {
+      this.imgErrorMessage = 'image is required';
+    }
+  }
+
+  saveRecipeWithImage(isCreateRequest: boolean): void {
+    const filePath = `recipe-img/${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+    const fileRef = this.fireStorage.ref(filePath);
+    this.fireStorage.upload(filePath, this.selectedImage)
+      .snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe((url) => {
+          this.recipeForm.patchValue({imgSource: url});
+          if (isCreateRequest) {
+            this.saveRecipe();
+          } else {
+            this.editRecipe();
+          }
+        });
+      })
+    ).subscribe();
+  }
+
+  saveRecipe(): void {
+    const recipeCreateRequest = this.mapFormToRecipeRequest();
+    this.recipeService.createRecipe(recipeCreateRequest).subscribe(recipe => {
+      this.router.navigate(['recipe', recipe.id]);
+      this.dialogRef.close();
+    });
+  }
+
+  editRecipe(): void {
+    const recipeEditRequest = this.mapFormToRecipeRequest();
+    this.recipeService.editRecipe(recipeEditRequest).subscribe(recipe => {
+      this.router.navigate(['recipe', recipe.id]);
+      this.dialogRef.close();
+    });
+  }
+
+  mapFormToRecipeRequest(): any {
+    return {
+      id: this.editedRecipeId,
+      timeType: this.timeType.value,
+      title: this.title.value,
+      img: this.imgSource.value,
+      categoriesIds: [this.category.value],
+      ingredients: this.ingredients.value,
+      directions: this.directions.value
+    };
+  }
+
+  filterComponents(value: string): Observable<string[]> {
+    return this.componentService.getAllComponentNames()
+      .pipe(
+        map(response => response.filter(option => {
+          return option.toLowerCase().indexOf(value.toLowerCase()) === 0;
+        }))
+      );
   }
 }
