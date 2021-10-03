@@ -47,8 +47,10 @@ class IngredientService {
     }
 
     void createIngredients(List<RecipeIngredientsDto> ingredientsDtos, Recipe recipe) {
-        ingredientsDtos.forEach(ingredientDto ->
-                ingredientRepository.save(createEntityFromRequest(ingredientDto, recipe)));
+        List<Ingredient> ingredients = ingredientsDtos.stream()
+                .map(dto -> createEntityFromRequest(dto, recipe))
+                .collect(Collectors.toList());
+        this.ingredientRepository.saveAll(ingredients);
     }
 
     IngredientResponse getResponseById(Long id) {

@@ -98,3 +98,9 @@ main {
   margin: 1.5em .5em;
   cursor: pointer;
 }
+
+/* ======== SCROLLBAR ========*/
+
+::-webkit-scrollbar {
+  display: none;
+}

@@ -25,16 +25,17 @@ class DirectionService {
     private final RecipeFacade recipeFacade;
 
     @Transactional(rollbackFor = Exception.class)
-    public void replaceDirections(List<String> directions, Recipe recipe) {
+    public void replaceDirections(List<String> descriptions, Recipe recipe) {
         directionRepository.deleteAllByRecipe_Id(recipe.getId());
         directionRepository.flush();
-        createDirections(directions, recipe);
+        createDirections(descriptions, recipe);
     }
 
-    void createDirections(List<String> directions, Recipe recipe) {
-        IntStream.range(0, directions.size())
-                .mapToObj(i -> new Direction(i + 1, directions.get(i), recipe))
-                .forEach(directionRepository::save);
+    void createDirections(List<String> descriptions, Recipe recipe) {
+        var directions = IntStream.range(0, descriptions.size())
+                .mapToObj(i -> new Direction(i + 1, descriptions.get(i), recipe))
+                .collect(Collectors.toList());
+        this.directionRepository.saveAll(directions);
     }
 
     DirectionResponse getResponseById(Long id) {

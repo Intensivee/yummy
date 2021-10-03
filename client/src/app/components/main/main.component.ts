@@ -1,10 +1,11 @@
-import {RecipeCategoryService} from './../../service/recipe-category.service';
+import {RecipeCategoryService} from '../../service/recipe-category.service';
 import {Observable} from 'rxjs';
 import {RecipeService} from '../../service/recipe.service';
 import {Component, OnInit} from '@angular/core';
 import {Recipe} from 'src/app/model/recipe';
 import {TimeType} from 'src/app/model/timeType';
 import {RecipeCategory} from 'src/app/model/recipe-category';
+import {ViewportScroller} from '@angular/common';
 
 @Component({
   selector: 'app-main',
@@ -17,7 +18,8 @@ export class MainComponent implements OnInit {
   recipes$: Observable<Recipe[]>;
   categories: RecipeCategory[];
 
-  constructor(private recipeService: RecipeService,
+  constructor(private viewport: ViewportScroller,
+              private recipeService: RecipeService,
               private categoryService: RecipeCategoryService) {
   }
 

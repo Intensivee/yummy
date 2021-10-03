@@ -1,5 +1,5 @@
 <main>
-  <div #top class="section-top">
+  <div class="section-top">
     <section class="time-section">
 
       <div class="title-container">
@@ -53,11 +53,6 @@
 
   </div>
   <div #bottom class="section-bottom">
-
-    <div (click)="scroll(top)">
-      <span class="iconify top-arrow" data-icon="bx:bxs-up-arrow" data-inline="false"></span>
-    </div>
-
     <div class="bottom-categories">
       <div *ngFor="let category of categories">
         <div class="hero-image" routerLink="/recipes/byCategory/{{category.name}}">
