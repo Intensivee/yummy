@@ -18,7 +18,7 @@ nav {
 }
 
 .search-input {
-  height: 1.9em;
+  height: 2.4em;
 }
 
 /* ========== COMPONENTS ===========*/
@@ -45,6 +45,8 @@ nav {
 }
 
 .nav-icon-list {
+  display: flex;
+  align-items: center;
   margin-right: 30px;
   font-size: 1.3em;
 }
