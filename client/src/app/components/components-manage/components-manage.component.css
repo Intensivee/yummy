@@ -9,3 +9,26 @@ main {
   width: 600px;
 }
 
+.mat-column-actions {
+  padding-right: 0 !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .mat-table {
+    width: 90%;
+    font-size: 12px;
+  }
+
+  .mat-column-id {
+    display: none;
+  }
+
+  .mat-column-name {
+    padding-left: 1em;
+  }
+
+  .red-btn,
+  .green-btn {
+    margin: .1em;
+  }
+}

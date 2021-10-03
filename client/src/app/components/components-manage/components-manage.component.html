@@ -20,7 +20,7 @@
     </ng-container>
 
     <!-- Actions Column -->
-    <ng-container matColumnDef="actions">
+    <ng-container class="actions" matColumnDef="actions">
       <th *matHeaderCellDef mat-header-cell> Actions</th>
       <td *matCellDef="let element" mat-cell>
         <button (click)="onReject(element)" class="red-btn">Reject</button>

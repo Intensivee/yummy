@@ -14,3 +14,13 @@ main {
 .green-btn {
   margin-top: 3em;
 }
+
+@media only screen and (max-width: 500px) {
+  main {
+    font-size: .9em;
+  }
+
+  h3 {
+    text-align: center;
+  }
+}
