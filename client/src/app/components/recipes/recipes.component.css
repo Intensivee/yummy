@@ -8,7 +8,7 @@ main {
 
 .header-section {
   width: 100vw;
-  height: 20vh;
+  height: 200px;
 }
 
 .header-img {
@@ -45,5 +45,11 @@ main {
 @media only screen and (max-width: 800px) {
   .recipes-section {
     width: 100%;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .recipes {
+    margin-bottom: 20px;
   }
 }
