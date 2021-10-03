@@ -1,6 +1,6 @@
 # yummy
 The project is web application - rest-api in spring with Angular client.
-Yummy is a site that allows users find perfect recipe, comment and rate other people ideas
+Yummy is a site that allows users to find perfect recipe, comment and rate other people ideas
 
 ## technologies
 - Spring Boot
