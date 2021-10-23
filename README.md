@@ -1,6 +1,5 @@
 # yummy
-The project is web application - rest-api in spring with Angular client.
-Yummy is a site that allows users to find perfect recipe, comment and rate other people ideas
+Web application designed for sharing and finding kitchen recipes. It provides set of functionalities that allows administrators to manage the service. Among rating and commenting system there is also possibility to generate PDF files of selected recipes.
 
 ## technologies
 - Spring Boot
