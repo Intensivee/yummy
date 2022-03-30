@@ -1,7 +1,6 @@
 package com.orange.mainservice.user;
 
 import com.orange.mainservice.comment.Comment;
-import com.orange.mainservice.entity.enums.UserRole;
 import com.orange.mainservice.rate.Rate;
 import com.orange.mainservice.recipe.Recipe;
 import lombok.Data;
@@ -34,16 +33,16 @@ public class User {
     @Column(name = "email", nullable = false, columnDefinition = "VARCHAR(100)")
     private String email;
 
-    @Column(name = "username", nullable = false, columnDefinition = "VARCHAR(15)")
+    @Column(name = "username", nullable = false, columnDefinition = "VARCHAR(20)")
     private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "bio", columnDefinition = "VARCHAR(230)")
+    @Column(name = "bio", columnDefinition = "VARCHAR(250)")
     private String bio;
 
-    @Column(name = "img_url")
+    @Column(name = "img_url", columnDefinition = "VARCHAR(255)")
     private String imgUrl;
 
     @CreationTimestamp
@@ -51,7 +50,7 @@ public class User {
     private Date dateCreated;
 
     @Enumerated(EnumType.STRING)
-    @Type(type = "com.orange.mainservice.entity.enums.EnumTypePostgreSql")
+    @Type(type = "com.orange.mainservice.util.EnumTypePostgreSql")
     @Column(name = "role", nullable = false, columnDefinition = "user_role_type")
     private UserRole userRole;
 

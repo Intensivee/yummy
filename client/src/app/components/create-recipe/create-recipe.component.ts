@@ -287,7 +287,7 @@ export class CreateRecipeComponent implements OnInit {
   mapFormToRecipeRequest(): any {
     return {
       id: this.editedRecipeId,
-      timeType: this.timeType.value,
+      timeType: this.timeType.value.toString(),
       title: this.title.value,
       img: this.imgSource.value,
       categoriesIds: [this.category.value],

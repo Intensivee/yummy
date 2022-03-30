@@ -1,6 +1,5 @@
 package com.orange.mainservice.recipe;
 
-import com.orange.mainservice.entity.enums.TimeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

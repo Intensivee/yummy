@@ -1,9 +1,11 @@
 package com.orange.mainservice.recipe;
 
-import com.orange.mainservice.entity.enums.TimeType;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -56,6 +58,18 @@ class RecipeController {
     @GetMapping("/search/top3")
     public ResponseEntity<List<RecipeResponse>> get3TopRatedRecipes() {
         return ResponseEntity.ok(recipeService.getTop3RatedRecipes());
+    }
+
+    @GetMapping("/{recipeId}/export/pdf")
+    public ResponseEntity<InputStreamResource> exportToPDF(@PathVariable Long recipeId, RecipePdfRequest pdfRequest) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "filename=\"" + "test" + ".pdf\"");
+        InputStreamResource bytes = recipeService.generatePDFFileForRecipe(recipeId, pdfRequest);
+
+        return ResponseEntity.ok()
+                .headers(httpHeaders)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(bytes);
     }
 
     @PostMapping

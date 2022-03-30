@@ -3,16 +3,17 @@ package com.orange.mainservice.recipe;
 import com.orange.mainservice.component.Component;
 import com.orange.mainservice.component.ComponentFacade;
 import com.orange.mainservice.direction.DirectionFacade;
-import com.orange.mainservice.entity.enums.TimeType;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
 import com.orange.mainservice.ingredient.Ingredient;
 import com.orange.mainservice.ingredient.IngredientFacade;
+import com.orange.mainservice.print.RecipePdfUtils;
 import com.orange.mainservice.recipecategory.RecipeCategoryFacade;
 import com.orange.mainservice.security.AuthenticationFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -50,14 +51,14 @@ class RecipeService {
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteRecipe(Long recipeId) {
-        Set<Long> notAcceptedComponentIdList = getById(recipeId).getIngredients()
+        Set<Long> notAcceptedComponentsIds = getById(recipeId).getIngredients()
                 .stream()
                 .map(Ingredient::getComponent)
                 .filter(componentFacade::isNotAcceptedAndReferencedInJustOneIngredient)
                 .map(Component::getId)
                 .collect(Collectors.toSet());
         recipeRepository.deleteById(recipeId);
-        notAcceptedComponentIdList.forEach(componentFacade::deleteById);
+        notAcceptedComponentsIds.forEach(componentFacade::deleteById);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -155,5 +156,9 @@ class RecipeService {
                         .map(categoryFacade::getById)
                         .collect(Collectors.toSet())
         );
+    }
+
+    public InputStreamResource generatePDFFileForRecipe(Long recipeId, RecipePdfRequest pdfRequest) {
+        return RecipePdfUtils.generatePDFFileForRecipe(getById(recipeId), pdfRequest);
     }
 }

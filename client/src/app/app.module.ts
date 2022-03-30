@@ -1,3 +1,4 @@
+import {ErrorHttpInterceptorService} from './security/error-http-interceptor.service';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
@@ -37,6 +38,9 @@ import {ComponentCategoryMultiSelectComponent} from './components/components-man
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {RatingModule} from 'ng-starrating';
+import {PdfGenerateComponent} from './components/pdf-generate/pdf-generate.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ErrorPageComponent} from './components/error-page/error-page.component';
 
 const MAT_MODULES = [
   MatMenuModule,
@@ -69,7 +73,9 @@ const MAT_MODULES = [
     CreateRecipeComponent,
     AlignPipe,
     ComponentsManageComponent,
-    ComponentCategoryMultiSelectComponent
+    ComponentCategoryMultiSelectComponent,
+    PdfGenerateComponent,
+    ErrorPageComponent
   ],
   imports: [
     MAT_MODULES,
@@ -84,9 +90,11 @@ const MAT_MODULES = [
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
+    MatCheckboxModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptorService, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptorService, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorHttpInterceptorService, multi: true}
   ],
   bootstrap: [AppComponent]
 })

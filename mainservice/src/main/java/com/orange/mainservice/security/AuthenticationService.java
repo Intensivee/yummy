@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-import static com.orange.mainservice.entity.enums.UserRole.ROLE_USER;
+import static com.orange.mainservice.user.UserRole.ROLE_USER;
 
 @Service
 @RequiredArgsConstructor

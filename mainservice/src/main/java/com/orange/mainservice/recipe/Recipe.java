@@ -2,7 +2,6 @@ package com.orange.mainservice.recipe;
 
 import com.orange.mainservice.comment.Comment;
 import com.orange.mainservice.direction.Direction;
-import com.orange.mainservice.entity.enums.TimeType;
 import com.orange.mainservice.ingredient.Ingredient;
 import com.orange.mainservice.rate.Rate;
 import com.orange.mainservice.recipecategory.RecipeCategory;
@@ -27,14 +26,14 @@ public class Recipe {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Type(type = "com.orange.mainservice.entity.enums.EnumTypePostgreSql")
+    @Type(type = "com.orange.mainservice.util.EnumTypePostgreSql")
     @Column(name = "time_type", nullable = false, columnDefinition = "time_type")
     private TimeType timeType;
 
     @Column(name = "title", nullable = false, columnDefinition = "VARCHAR(40)")
     private String title;
 
-    @Column(name = "img_url")
+    @Column(name = "img_url", columnDefinition = "VARCHAR(255)")
     private String imgUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)

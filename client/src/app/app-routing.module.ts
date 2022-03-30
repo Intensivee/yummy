@@ -9,6 +9,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {UserComponent} from './components/user/user.component';
 import {ComponentsManageComponent} from './components/components-manage/components-manage.component';
+import {ErrorPageComponent} from './components/error-page/error-page.component';
 
 const routes: Routes = [
   {path: 'main', component: MainComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'recipes/byTimeType/:timeType', component: RecipesComponent},
   {path: 'recipes/search/:searchKey', component: RecipesComponent},
   {path: 'recipe/:id', component: RecipeComponent},
+  {path: 'error', component: ErrorPageComponent},
   {
     path: 'components-menage',
     component: ComponentsManageComponent,
@@ -29,7 +31,7 @@ const routes: Routes = [
     data: {expectedRole: UserRoleType.ROLE_ADMIN}
   },
   {path: '', redirectTo: '/welcome', pathMatch: 'full'},
-  { path: '**', redirectTo: '/main', pathMatch: 'full' }
+  {path: '**', redirectTo: '/main', pathMatch: 'full'}
 ];
 
 @NgModule({

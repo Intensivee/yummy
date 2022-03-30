@@ -1,7 +1,6 @@
 package com.orange.mainservice.ingredient;
 
 import com.orange.mainservice.component.ComponentFacade;
-import com.orange.mainservice.entity.enums.AmountType;
 import com.orange.mainservice.exception.PathNotMatchBodyException;
 import com.orange.mainservice.exception.ResourceCreateException;
 import com.orange.mainservice.exception.ResourceNotFoundException;
@@ -97,13 +96,13 @@ class IngredientService {
         return !isIdInRequest(request) || !request.getId().equals(pathId);
     }
 
-    private void validateCreateRequest(IngredientRequest request){
-        if(isIdInRequest(request)){
+    private void validateCreateRequest(IngredientRequest request) {
+        if (isIdInRequest(request)) {
             throw new ResourceCreateException(request.getId());
         }
     }
 
-    private boolean isIdInRequest(IngredientRequest request){
+    private boolean isIdInRequest(IngredientRequest request) {
         return Objects.nonNull(request.getId());
     }
 

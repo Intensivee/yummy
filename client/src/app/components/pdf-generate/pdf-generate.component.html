@@ -1,0 +1,11 @@
+<main>
+  <em [mat-dialog-close] class="dialog-close-btn fas fa-times"></em>
+  <h3>Select PDF file content:</h3>
+  <section class="checkbox-section">
+    <mat-checkbox [(ngModel)]="pdfDetails.image">recipe image</mat-checkbox>
+    <mat-checkbox [(ngModel)]="pdfDetails.socialSection">social details</mat-checkbox>
+    <mat-checkbox [(ngModel)]="pdfDetails.directionsSection">directions</mat-checkbox>
+    <mat-checkbox [(ngModel)]="pdfDetails.ingredientsSection">ingredients</mat-checkbox>
+  </section>
+  <button (click)="onSubmit()" class="green-btn">submit</button>
+</main>

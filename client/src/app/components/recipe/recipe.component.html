@@ -27,7 +27,8 @@
 
   <section class="info-section">
 
-    <button class="red-btn">Send recipe to email <em class="fas fa-chevron-right"></em></button>
+    <button (click)="openGeneratePdfPopup()" class="red-btn">Download to pdf <em class="fas fa-chevron-right"></em>
+    </button>
 
     <p class="rate">
       <star-rating (rate)="onRateChange($event)" [totalstars]="5" checkedcolor="green" readonly="false" size="24px"
@@ -35,7 +36,8 @@
       <span class="rate-value"> {{recipe.avgRate | number: '1.2-2' }}/5.00</span>
     </p>
 
-    <p class="recipe-time"><span class="iconify" data-icon="bi:clock" data-inline="false"> </span> < {{timeTypeEnum[recipe.timeType]}} min.</p>
+    <p class="recipe-time"><span class="iconify" data-icon="bi:clock" data-inline="false"> </span>
+      < {{timeTypeEnum[recipe.timeType]}} min.</p>
   </section>
 
   <section class="directions-section">

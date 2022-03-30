@@ -22,6 +22,10 @@ class ComponentService {
     private final ComponentResponseMapper responseMapper;
     private final ComponentCategoryFacade categoryFacade;
 
+    ComponentResponse getResponseById(Long id) {
+        return responseMapper.componentToResponse(getById(id));
+    }
+
     Component getById(Long id) {
         return this.componentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Component", "id", id));
@@ -37,10 +41,6 @@ class ComponentService {
         return componentRepository.findAllByIsAcceptedAndIsReviewedOrderByNameAsc(isAccepted, isReviewed).stream()
                 .map(responseMapper::componentToResponse)
                 .collect(Collectors.toList());
-    }
-
-    ComponentResponse getResponseById(Long id) {
-        return responseMapper.componentToResponse(getById(id));
     }
 
     ComponentResponse createComponent(ComponentRequest request) {

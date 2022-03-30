@@ -1,4 +1,4 @@
-package com.orange.mainservice.entity.enums;
+package com.orange.mainservice.util;
 
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.EnumType;

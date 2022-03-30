@@ -14,8 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.orange.mainservice.entity.enums.UserRole.ROLE_ADMIN;
-import static com.orange.mainservice.entity.enums.UserRole.ROLE_USER;
+import static com.orange.mainservice.user.UserRole.ROLE_ADMIN;
+import static com.orange.mainservice.user.UserRole.ROLE_USER;
 
 @Configuration
 @EnableWebSecurity

@@ -1,7 +1,6 @@
 package com.orange.mainservice.ingredient;
 
 import com.orange.mainservice.component.Component;
-import com.orange.mainservice.entity.enums.AmountType;
 import com.orange.mainservice.recipe.Recipe;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +26,7 @@ public class Ingredient {
     private Double amount;
 
     @Enumerated(EnumType.STRING)
-    @Type(type = "com.orange.mainservice.entity.enums.EnumTypePostgreSql")
+    @Type(type = "com.orange.mainservice.util.EnumTypePostgreSql")
     @Column(name = "amount_type", nullable = false, columnDefinition = "amount_type")
     private AmountType amountType;
 
@@ -47,5 +46,11 @@ public class Ingredient {
         this.amountType = amountType;
         this.recipe = recipe;
         this.component = component;
+    }
+
+    @Override
+    public String toString() {
+        int numberOfDashes = 50 - component.getName().length();
+        return component.getName() + " " + "-".repeat(numberOfDashes) + " " + amount + " " + amountType;
     }
 }

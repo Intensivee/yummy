@@ -1,5 +1,5 @@
 import {CreateRecipeComponent} from '../create-recipe/create-recipe.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {RateService} from '../../service/rate.service';
 import {FormControl, Validators} from '@angular/forms';
 import {Direction} from '../../model/direction';
@@ -16,6 +16,7 @@ import {TimeType} from 'src/app/model/timeType';
 import {AuthenticationService} from '../../security/authentication.service';
 import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {PdfGenerateComponent} from '../pdf-generate/pdf-generate.component';
 
 @Component({
   selector: 'app-recipe',
@@ -102,5 +103,12 @@ export class RecipeComponent implements OnInit {
   onRateChange(event: any): void {
     this.rateService.addOrReplaceRate(event.newValue, this.recipe.id)
       .subscribe(newAverageRate => this.recipe.avgRate = newAverageRate);
+  }
+
+  openGeneratePdfPopup(): void {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.data = {recipeId: this.recipe.id, title: this.recipe.title};
+    this.dialog.open(PdfGenerateComponent, dialogConfig);
   }
 }

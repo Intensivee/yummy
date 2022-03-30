@@ -8,5 +8,5 @@ public final class DummyConstants {
 
     public static final int DUMMY_INT = 123456789;
     public static final long DUMMY_LONG = 1234556789L;
-    public static final String F = "123456789";
+    public static final String DUMMY_STRING = "123456789";
 }

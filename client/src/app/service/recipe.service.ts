@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {API_URL} from '../constants';
 import {Recipe} from '../model/recipe';
 import {Observable} from 'rxjs';
+import {PdfDetails} from '../model/pdf-details';
 
 const RESOURCE_URL = `${API_URL}/recipes`;
 
@@ -58,6 +59,7 @@ export class RecipeService {
   }
 
   createRecipe(recipeCreateRequest: any): Observable<Recipe> {
+    console.log(recipeCreateRequest);
     return this.http.post<Recipe>(RESOURCE_URL, recipeCreateRequest);
   }
 
@@ -69,6 +71,15 @@ export class RecipeService {
   deleteById(id: number): Observable<any> {
     const url = `${RESOURCE_URL}/${id}`;
     return this.http.delete<any>(url);
+  }
+
+  exportToPdf(id: number, pdfDetails: PdfDetails): Observable<any> {
+    const httpOptions = {
+      responseType: 'arraybuffer' as 'json',
+      params: JSON.parse(JSON.stringify(pdfDetails))
+    };
+    const url = `${RESOURCE_URL}/${id}/export/pdf`;
+    return this.http.get<any>(url, httpOptions);
   }
 }
 

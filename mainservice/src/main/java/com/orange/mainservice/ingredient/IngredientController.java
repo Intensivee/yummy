@@ -1,6 +1,5 @@
 package com.orange.mainservice.ingredient;
 
-import com.orange.mainservice.entity.enums.AmountType;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

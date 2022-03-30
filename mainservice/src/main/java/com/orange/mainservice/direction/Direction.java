@@ -6,13 +6,15 @@ import lombok.Getter;
 
 import javax.persistence.*;
 
+import static com.orange.mainservice.util.Constants.COLON;
+
 @Entity(name = "Direction")
 @Table(
         name = "directions",
         uniqueConstraints = {
                 @UniqueConstraint(name = "direction_order_unique", columnNames = {"recipe_id", "direction_order"})
         },
-        indexes = @Index( name = "directions_recipe_id_index", columnList = "recipe_id")
+        indexes = @Index(name = "directions_recipe_id_index", columnList = "recipe_id")
 )
 @Getter
 @AllArgsConstructor
@@ -40,5 +42,9 @@ public class Direction {
         this.order = order;
         this.description = description;
         this.recipe = recipe;
+    }
+
+    public String getDirectionStepHeader() {
+        return "Step " + order + COLON;
     }
 }

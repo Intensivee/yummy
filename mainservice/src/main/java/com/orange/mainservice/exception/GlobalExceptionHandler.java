@@ -50,6 +50,21 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(createBody(e, HttpStatus.CONFLICT));
     }
 
+    @ExceptionHandler(FileDownloadException.class)
+    public ResponseEntity<ExceptionResponse> handleFileDownloadException(FileDownloadException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(createBody(e, HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    @ExceptionHandler(ImageConversionException.class)
+    public ResponseEntity<ExceptionResponse> handleImageConversionException(ImageConversionException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(createBody(e, HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    @ExceptionHandler(EmptyPdfTableDataException.class)
+    public ResponseEntity<ExceptionResponse> handleEmptyPFFTableDataException(EmptyPdfTableDataException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(createBody(e, HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
     private List<String> getMethodArgumentNotValidMessages(MethodArgumentNotValidException e) {
         return e.getBindingResult()
                 .getFieldErrors()
